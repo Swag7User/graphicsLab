@@ -43,10 +43,12 @@ void RenderProject::initFunction()
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
     bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties);
+    bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, guyShader, guyProperties);
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
-    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(0.0f, 0.0f, 10.0f), vmml::Vector3f(0.f, 0.0f, 0.f));
+    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(200.0f, 50.0f, 100.0f), vmml::Vector3f(0.f, 0.0f, 0.f));
+    
     
     // Update render queue
     updateRenderQueue("camera", 0.0f);
@@ -113,12 +115,13 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     vmml::Matrix4f modelMatrix = vmml::create_scaling(vmml::Vector3f(0.6f));
     vmml::Matrix4f viewMatrix = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
     
-    ShaderPtr shader = bRenderer().getObjects()->getShader("guy");
     
     // translate and scale
     modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(0.8f));
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     modelMatrix *= rotationMatrix;
+    ShaderPtr shader = bRenderer().getObjects()->getShader("guy");
+
     
     if (shader.get())
     {
@@ -148,6 +151,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrix));
     bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrix, std::vector<std::string>({ }));
+    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrix));
+    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrix, std::vector<std::string>({ }));
 }
 
 /* Camera movement */
