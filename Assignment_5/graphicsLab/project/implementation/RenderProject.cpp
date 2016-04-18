@@ -42,7 +42,7 @@ void RenderProject::initFunction()
     
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
-    bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, guyShader, guyProperties);
+    bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties);
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
@@ -147,7 +147,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrix));
-    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrix, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrix, std::vector<std::string>({ }));
 }
 
 /* Camera movement */

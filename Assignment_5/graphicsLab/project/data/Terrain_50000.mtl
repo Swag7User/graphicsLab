@@ -1,0 +1,15 @@
+# 3ds Max Wavefront OBJ Exporter v0.94b - (c)2007 guruware
+# File Created: 01.01.2011 21:03:10
+
+newmtl _Terrain_01_50000lambert2SG
+	Ns 30.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.5529 0.5529 0.5529
+	Ks 0.0243 0.0243 0.0243
+	Ke 0.0000 0.0000 0.0000
+

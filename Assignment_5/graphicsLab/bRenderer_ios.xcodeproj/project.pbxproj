@@ -15,6 +15,8 @@
 		A85E11CE1CC4FC2F00D4418A /* TAL16OBJ.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */; };
 		A85E11CF1CC4FC2F00D4418A /* TAL16OBJ.obj in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */; };
 		A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */; };
+		A85E11D31CC50D1F00D4418A /* Terrain_50000.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A85E11D11CC50D1F00D4418A /* Terrain_50000.mtl */; };
+		A85E11D41CC50D1F00D4418A /* Terrain_50000.obj in Resources */ = {isa = PBXBuildFile; fileRef = A85E11D21CC50D1F00D4418A /* Terrain_50000.obj */; };
 		B44186971BA331E300604D7F /* RenderProject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B44186961BA331E300604D7F /* RenderProject.cpp */; };
 		B47949AF1BA6742B00B5E9DC /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B47949921BA6742B00B5E9DC /* config.json */; };
 		B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B47949C41BA6743D00B5E9DC /* LICENSE.txt */; };
@@ -123,6 +125,8 @@
 		A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TAL16OBJ.mtl; sourceTree = "<group>"; };
 		A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TAL16OBJ.obj; sourceTree = "<group>"; };
 		A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TALTS.jpg; sourceTree = "<group>"; };
+		A85E11D11CC50D1F00D4418A /* Terrain_50000.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.mtl; sourceTree = "<group>"; };
+		A85E11D21CC50D1F00D4418A /* Terrain_50000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.obj; sourceTree = "<group>"; };
 		B44186941BA331E300604D7F /* RenderProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderProject.h; sourceTree = "<group>"; };
 		B44186961BA331E300604D7F /* RenderProject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderProject.cpp; sourceTree = "<group>"; };
 		B47949921BA6742B00B5E9DC /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -339,6 +343,8 @@
 		B47949841BA6742B00B5E9DC /* data */ = {
 			isa = PBXGroup;
 			children = (
+				A85E11D11CC50D1F00D4418A /* Terrain_50000.mtl */,
+				A85E11D21CC50D1F00D4418A /* Terrain_50000.obj */,
 				A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */,
 				A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */,
 				A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */,
@@ -668,11 +674,13 @@
 			files = (
 				A85E11CF1CC4FC2F00D4418A /* TAL16OBJ.obj in Resources */,
 				540DDD7C1CA0058A00DE3FCC /* guy.mtl in Resources */,
+				A85E11D41CC50D1F00D4418A /* Terrain_50000.obj in Resources */,
 				B4794A311BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				540DDD781CA0024A00DE3FCC /* guy.frag in Resources */,
 				540DDD791CA0024A00DE3FCC /* guy.obj in Resources */,
 				B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				540DDD7A1CA0024A00DE3FCC /* guy.vert in Resources */,
+				A85E11D31CC50D1F00D4418A /* Terrain_50000.mtl in Resources */,
 				B47949AF1BA6742B00B5E9DC /* config.json in Resources */,
 				B4794A301BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				540DDD7E1CA020B700DE3FCC /* diffuse.png in Resources */,
