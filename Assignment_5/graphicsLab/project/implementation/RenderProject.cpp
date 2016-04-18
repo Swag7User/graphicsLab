@@ -47,7 +47,7 @@ void RenderProject::initFunction()
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
-    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(200.0f, 50.0f, 100.0f), vmml::Vector3f(0.f, 0.0f, 0.f));
+    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(1000.0f, 0.0f, 100.0f), vmml::Vector3f(0.f, 4.0f, 0.f));
     
     
     // Update render queue
@@ -112,12 +112,12 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     // TODO: implement solar system here
     
-    vmml::Matrix4f modelMatrix = vmml::create_scaling(vmml::Vector3f(0.6f));
+    //vmml::Matrix4f modelMatrix = vmml::create_scaling(vmml::Vector3f(0.6f));
     vmml::Matrix4f viewMatrix = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
     
     
     // translate and scale
-    modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(0.8f));
+    vmml::Matrix4f modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(0.8f));
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     modelMatrix *= rotationMatrix;
     ShaderPtr shader = bRenderer().getObjects()->getShader("guy");
@@ -136,7 +136,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
         shader->setUniform("EyePos", eyePos);
         
-        shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, .5f, 1.f));
+        shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
         shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
         shader->setUniform("Ia", vmml::Vector3f(1.f));
         shader->setUniform("Id", vmml::Vector3f(1.f));
