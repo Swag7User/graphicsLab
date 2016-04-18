@@ -42,7 +42,7 @@ void RenderProject::initFunction()
     
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
-    bRenderer().getObjects()->loadObjModel("guy.obj", false, true, guyShader, guyProperties);
+    bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, guyShader, guyProperties);
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
@@ -93,6 +93,20 @@ void RenderProject::terminateFunction()
 void RenderProject::updateRenderQueue(const std::string &camera, const double &deltaTime)
 {
     /*** solar system ***/
+    /*** Guy ***/
+    // get input rotation
+    TouchMap touchMap = bRenderer().getInput()->getTouches();
+    int i = 0;
+    float rotation = 0.0f;
+    for (auto t = touchMap.begin(); t != touchMap.end(); ++t)
+    {
+        Touch touch = t->second;
+        rotation = (touch.currentPositionX - touch.startPositionX) / 100;
+        if (++i > 1)
+            break;
+    }
+    
+    
     
     // TODO: implement solar system here
     
@@ -100,6 +114,11 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     vmml::Matrix4f viewMatrix = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
     
     ShaderPtr shader = bRenderer().getObjects()->getShader("guy");
+    
+    // translate and scale
+    modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(0.8f));
+    vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
+    modelMatrix *= rotationMatrix;
     
     if (shader.get())
     {
@@ -114,7 +133,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
         shader->setUniform("EyePos", eyePos);
         
-        shader->setUniform("LightPos", vmml::Vector4f(0.f, 1.f, .5f, 1.f));
+        shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, .5f, 1.f));
+        shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
         shader->setUniform("Ia", vmml::Vector3f(1.f));
         shader->setUniform("Id", vmml::Vector3f(1.f));
         shader->setUniform("Is", vmml::Vector3f(1.f));
@@ -124,8 +144,10 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         bRenderer::log("No shader available.");
     }
     
+
+    
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrix));
-    bRenderer().getModelRenderer()->drawModel("guy", "camera", modelMatrix, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrix, std::vector<std::string>({ }));
 }
 
 /* Camera movement */

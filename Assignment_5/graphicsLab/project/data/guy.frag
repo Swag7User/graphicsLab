@@ -6,6 +6,8 @@ uniform mediump mat4 ProjectionMatrix;
 uniform mediump mat3 NormalMatrix;
 
 uniform mediump vec4 LightPos;
+uniform mediump vec4 LightPos2;
+
 uniform mediump vec4 EyePos;
 
 uniform lowp vec3 Ka;   // ambient material coefficient
@@ -22,6 +24,7 @@ uniform sampler2D DiffuseMap;
 
 lowp vec4 ambient;
 lowp vec4 diffuse;
+lowp vec4 diffuse2;
 lowp vec4 specular;
 lowp vec4 texCoord;
 
@@ -43,6 +46,10 @@ void main()
     highp vec3 l = normalize((LightPos - posVarying).xyz);
     highp vec3 diffLight = Kd * clamp(dot(normalVarying, l),0.0, 1.0) * Id;
     diffuse = vec4(clamp(diffLight, 0.0, 1.0), 1.0);
+    //difuse2
+    highp vec3 l2 = normalize((LightPos2 - posVarying).xyz);
+    highp vec3 diffLight2 = Kd * clamp(dot(normalVarying, l),0.0, 1.0) * Id;
+    diffuse2 = vec4(clamp(diffLight2, 0.0, 1.0), 1.0);
     
     
     //   vec3 halfDir = normalize(lightDir + viewDir);
@@ -61,6 +68,6 @@ void main()
         specular = vec4(clamp(spec,0.0,1.0),1.0);
     }
 
-    highp vec4 color = texture2DProj(DiffuseMap,texCoordVarying); // TODO: read color from DiffuseMap
-    gl_FragColor = (ambient + diffuse) * color + specular;
+    highp vec4 color ; // TODO: read color from DiffuseMap
+    gl_FragColor = (ambient + diffuse ) * color + specular;
 }
