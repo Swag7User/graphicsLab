@@ -48,6 +48,7 @@ void main()
     //   vec3 halfDir = normalize(lightDir + viewDir);
     //   float specAngle = max(dot(halfDir, normal), 0.0);
     //   specular = pow(specAngle, shininess);
+    //TEST PUSH
     
     //Bling Phong shading here
     specular = vec4(0.0);
