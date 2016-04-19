@@ -1,6 +1,7 @@
 #include "RenderProject.h"
 
 vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(1.f));
+
 float angle=0.f;
 /* Initialize the Project */
 void RenderProject::init()
@@ -137,7 +138,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     // translate and scale
-    vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(0.8f));
+    vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     modelMatrixTerrain *= rotationMatrix;
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
@@ -148,20 +149,34 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     modelMatrixTAL *= rotationMatrixTAL;
     modelMatrixTAL = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     
-    //turn plane right
+    
+    //move plane
+    angle++;
+    
+    vmml::Vector3f planeChange=vmml::Vector3f(0.f,0.f,angle/50*10.f);
+    
+    vmml::Matrix4f planeMotion=vmml::create_translation(planeChange);
+    modelMatrixTAL *=planeMotion;
+    //move camer with plane
     modelMatrixTAL *= vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X);
     modelMatrixTAL *= vmml::create_rotation((float)(0*M_PI_F/180), vmml::Vector3f::UNIT_Y);
     modelMatrixTAL *= vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
     
-    //move plane
-    angle++;
-    vmml::Matrix4f planeMotion=vmml::create_translation(vmml::Vector3f(1.f, -angle/50*10.0f, 1.0f));
-    modelMatrixTAL *=planeMotion;
     
-    //move camer with plane
+    vmml::Vector3f cameraPos=bRenderer().getObjects()->getCamera("camera")->getPosition();
     
-    bRenderer().getObjects()->getCamera("camera");
+    
+    
+    
+    
+    
+    cameraPos=vmml::Vector3f(planeChange.x(),planeChange.y(),-planeChange.z());
+    bRenderer().getObjects()->getCamera("camera")->setPosition(cameraPos);
     modelMatrixTerrain *= modelMatrixTAL;
+    
+    
+    //turn plane right
+    
     
 
     
