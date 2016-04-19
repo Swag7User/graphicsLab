@@ -36,9 +36,11 @@ void RenderProject::initFunction()
     
     // load materials and shaders before loading the model
     ShaderPtr guyShader = bRenderer().getObjects()->loadShaderFile("guy", 0, false, false, false, false, false);				// load shader from file without lighting, the number of lights won't ever change during rendering (no variable number of lights)
+    ShaderPtr TALShader = bRenderer().getObjects()->loadShaderFile("TAL", 0, false, false, false, false, false);
     
     // create additional properties for a model
     PropertiesPtr guyProperties = bRenderer().getObjects()->createProperties("guyProperties");
+    PropertiesPtr TALProperties = bRenderer().getObjects()->createProperties("TALProperties");
     
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
@@ -47,7 +49,7 @@ void RenderProject::initFunction()
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
-    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(1000.0f, 0.0f, 100.0f), vmml::Vector3f(0.f, 4.0f, 0.f));
+    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(300.0f, 0.0f, -50.0f), vmml::Vector3f(0.f, 4.5f, 0.f));
     
     
     // Update render queue
@@ -107,19 +109,41 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         if (++i > 1)
             break;
     }
+    // get input rotation
+    TouchMap touchMap2 = bRenderer().getInput()->getTouches();
+    int i2 = 0;
+    float rotation2 = 0.0f;
+    for (auto t = touchMap2.begin(); t != touchMap2.end(); ++t)
+    {
+        Touch touch = t->second;
+        rotation2 = (touch.currentPositionY - touch.startPositionY) / 100;
+        if (++i2 > 1)
+            break;
+    }
     
     
     
     // TODO: implement solar system here
     
-    //vmml::Matrix4f modelMatrix = vmml::create_scaling(vmml::Vector3f(0.6f));
+    //vmml::Matrix4f modelMatrixTerrain = vmml::create_scaling(vmml::Vector3f(0.6f));
     vmml::Matrix4f viewMatrix = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
     
     
     // translate and scale
-    vmml::Matrix4f modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(0.8f));
+    vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(0.8f));
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
-    modelMatrix *= rotationMatrix;
+    modelMatrixTerrain *= rotationMatrix;
+    rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
+    modelMatrixTerrain *= rotationMatrix;
+    
+    vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(1.f));
+    vmml::Matrix4f rotationMatrixTAL = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
+    modelMatrixTAL *= rotationMatrixTAL;
+    modelMatrixTAL = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
+    modelMatrixTerrain *= modelMatrixTAL;
+    
+
+    
     ShaderPtr shader = bRenderer().getObjects()->getShader("guy");
 
     
@@ -127,11 +151,15 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     {
         shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
         shader->setUniform("ViewMatrix", viewMatrix);
-        shader->setUniform("ModelMatrix", modelMatrix);
+        shader->setUniform("modelMatrixTerrain", modelMatrixTerrain);
+        shader->setUniform("modelMatrixTAL", modelMatrixTAL);
         
         vmml::Matrix3f normalMatrix;
-        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrix)), normalMatrix);
+        vmml::Matrix3f normalMatrixTAL;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTerrain)), normalMatrix);
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
         shader->setUniform("NormalMatrix", normalMatrix);
+        shader->setUniform("NormalMatrixTAL", normalMatrixTAL);
         
         vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
         shader->setUniform("EyePos", eyePos);
@@ -149,10 +177,10 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
 
     
-    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrix));
-    bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrix, std::vector<std::string>({ }));
-    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrix));
-    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrix, std::vector<std::string>({ }));
+    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
+    bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
+    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
+    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
 }
 
 /* Camera movement */

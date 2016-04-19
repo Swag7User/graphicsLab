@@ -1,9 +1,9 @@
 
 uniform mediump mat4 ViewMatrix;
-uniform mediump mat4 modelMatrixTerrain;
+uniform mediump mat4 modelMatrixTAL;
 uniform mediump mat4 ProjectionMatrix;
 
-uniform mediump mat3 NormalMatrix;
+uniform mediump mat3 NormalMatrixTAL;
 
 uniform mediump vec4 LightPos;
 uniform mediump vec4 EyePos;
@@ -66,9 +66,8 @@ void main()
 //        specularVarying = vec4(clamp(specular, 0.0, 1.0), 1.0);
 //    }
     
-    texCoordVarying = TexCoord;
-    posVarying = modelMatrixTerrain * Position;
-    normalVarying = normalize(NormalMatrix * Normal);
+    posVarying = modelMatrixTAL * Position;
+    normalVarying = normalize(NormalMatrixTAL * Normal);
 
     gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
 }
