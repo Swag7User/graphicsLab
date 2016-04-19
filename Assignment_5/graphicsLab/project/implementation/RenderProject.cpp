@@ -1,5 +1,7 @@
 #include "RenderProject.h"
 
+vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(1.f));
+float angle=0.f;
 /* Initialize the Project */
 void RenderProject::init()
 {
@@ -49,7 +51,7 @@ void RenderProject::initFunction()
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
-    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(300.0f, 0.0f, -50.0f), vmml::Vector3f(0.f, 4.5f, 0.f));
+    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, .0f), vmml::Vector3f(0.f, 0.f, 0.f));
     
     
     // Update render queue
@@ -126,7 +128,12 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     // TODO: implement solar system here
     
     //vmml::Matrix4f modelMatrixTerrain = vmml::create_scaling(vmml::Vector3f(0.6f));
+   // vmml::Matrix4f rotationMatrixView = vmml::create_rotation(5.0f, vmml::Vector3f::UNIT_X);
+    
+    
     vmml::Matrix4f viewMatrix = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
+    
+    bRenderer().getObjects()->getCamera("camera")->setRotation(vmml::Vector3f(0.f,0.f,0.f));
     
     
     // translate and scale
@@ -136,10 +143,24 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     modelMatrixTerrain *= rotationMatrix;
     
-    vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(1.f));
+    
     vmml::Matrix4f rotationMatrixTAL = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     modelMatrixTAL *= rotationMatrixTAL;
     modelMatrixTAL = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
+    
+    //turn plane right
+    modelMatrixTAL *= vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X);
+    modelMatrixTAL *= vmml::create_rotation((float)(0*M_PI_F/180), vmml::Vector3f::UNIT_Y);
+    modelMatrixTAL *= vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
+    
+    //move plane
+    angle++;
+    vmml::Matrix4f planeMotion=vmml::create_translation(vmml::Vector3f(1.f, -angle/50*10.0f, 1.0f));
+    modelMatrixTAL *=planeMotion;
+    
+    //move camer with plane
+    
+    bRenderer().getObjects()->getCamera("camera");
     modelMatrixTerrain *= modelMatrixTAL;
     
 
@@ -166,7 +187,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         
         shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
         shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
-        shader->setUniform("Ia", vmml::Vector3f(1.f));
+        shader->setUniform("Ia", vmml::Vector3f(5.f));
         shader->setUniform("Id", vmml::Vector3f(1.f));
         shader->setUniform("Is", vmml::Vector3f(1.f));
     }
@@ -178,7 +199,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
-    bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
+    //bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
 }
