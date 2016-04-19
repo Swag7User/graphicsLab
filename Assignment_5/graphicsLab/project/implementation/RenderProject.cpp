@@ -130,7 +130,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     // translate and scale
-    vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f));
+    vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(1000.0f, 0.0f, 0.f));
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     modelMatrixTerrain *= rotationMatrix;
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
@@ -152,14 +152,12 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixTerrain", modelMatrixTerrain);
-        shader->setUniform("modelMatrixTAL", modelMatrixTAL);
+
         
         vmml::Matrix3f normalMatrix;
-        vmml::Matrix3f normalMatrixTAL;
         vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTerrain)), normalMatrix);
-        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
         shader->setUniform("NormalMatrix", normalMatrix);
-        shader->setUniform("NormalMatrixTAL", normalMatrixTAL);
+  
         
         vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
         shader->setUniform("EyePos", eyePos);
@@ -182,14 +180,10 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     {
         shader2->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
         shader2->setUniform("ViewMatrix", viewMatrix);
-        shader2->setUniform("modelMatrixTerrain", modelMatrixTerrain);
         shader2->setUniform("modelMatrixTAL", modelMatrixTAL);
         
-        vmml::Matrix3f normalMatrix;
         vmml::Matrix3f normalMatrixTAL;
-        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTerrain)), normalMatrix);
         vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
-        shader2->setUniform("NormalMatrix", normalMatrix);
         shader2->setUniform("NormalMatrixTAL", normalMatrixTAL);
         
         vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
@@ -203,7 +197,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
     else
     {
-        bRenderer::log("No shader available.22222");
+        bRenderer::log("No shader2 available.");
     }
     
     
