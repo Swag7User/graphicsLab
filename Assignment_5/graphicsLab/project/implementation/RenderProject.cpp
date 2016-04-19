@@ -45,11 +45,11 @@ void RenderProject::initFunction()
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
     bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties);
-    bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, guyShader, guyProperties);
+    bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties);
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
-    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(300.0f, 0.0f, -50.0f), vmml::Vector3f(0.f, 4.5f, 0.f));
+    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(40.0f, 0.0f, -20.0f), vmml::Vector3f(0.f, 4.5f, 0.f));
     
     
     // Update render queue
@@ -115,8 +115,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     float rotation2 = 0.0f;
     for (auto t = touchMap2.begin(); t != touchMap2.end(); ++t)
     {
-        Touch touch = t->second;
-        rotation2 = (touch.currentPositionY - touch.startPositionY) / 100;
+        Touch touch2 = t->second;
+        rotation2 = (touch2.currentPositionY - touch2.startPositionY) / 100;
         if (++i2 > 1)
             break;
     }
@@ -130,17 +130,17 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     // translate and scale
-    vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(0.8f));
+    vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f));
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     modelMatrixTerrain *= rotationMatrix;
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     modelMatrixTerrain *= rotationMatrix;
     
-    vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(1.f));
+    vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(5.f));
     vmml::Matrix4f rotationMatrixTAL = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     modelMatrixTAL *= rotationMatrixTAL;
-    modelMatrixTAL = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
-    modelMatrixTerrain *= modelMatrixTAL;
+    rotationMatrixTAL = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
+    modelMatrixTAL *= rotationMatrixTAL;
     
 
     
@@ -174,6 +174,38 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     {
         bRenderer::log("No shader available.");
     }
+    
+    ShaderPtr shader2 = bRenderer().getObjects()->getShader("TAL");
+    
+    
+    if (shader2.get())
+    {
+        shader2->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader2->setUniform("ViewMatrix", viewMatrix);
+        shader2->setUniform("modelMatrixTerrain", modelMatrixTerrain);
+        shader2->setUniform("modelMatrixTAL", modelMatrixTAL);
+        
+        vmml::Matrix3f normalMatrix;
+        vmml::Matrix3f normalMatrixTAL;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTerrain)), normalMatrix);
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
+        shader2->setUniform("NormalMatrix", normalMatrix);
+        shader2->setUniform("NormalMatrixTAL", normalMatrixTAL);
+        
+        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
+        shader2->setUniform("EyePos", eyePos);
+        
+        shader2->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
+        shader2->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
+        shader2->setUniform("Ia", vmml::Vector3f(1.f));
+        shader2->setUniform("Id", vmml::Vector3f(1.f));
+        shader2->setUniform("Is", vmml::Vector3f(1.f));
+    }
+    else
+    {
+        bRenderer::log("No shader available.22222");
+    }
+    
     
 
     

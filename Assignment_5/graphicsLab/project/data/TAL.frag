@@ -68,6 +68,6 @@ void main()
         specular = vec4(clamp(spec,0.0,1.0),1.0);
     }
 
-    highp vec4 color ; // TODO: read color from DiffuseMap
+    highp vec4 color = texture2DProj(DiffuseMap,texCoordVarying);; // TODO: read color from DiffuseMap
     gl_FragColor = (ambient + diffuse ) * color + specular;
 }

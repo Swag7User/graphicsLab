@@ -66,6 +66,7 @@ void main()
 //        specularVarying = vec4(clamp(specular, 0.0, 1.0), 1.0);
 //    }
     
+    texCoordVarying = TexCoord;
     posVarying = modelMatrixTAL * Position;
     normalVarying = normalize(NormalMatrixTAL * Normal);
 
