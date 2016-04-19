@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52BDFA6F1CC68DEA0002163D /* Color.tif in Resources */ = {isa = PBXBuildFile; fileRef = 52BDFA6E1CC68DEA0002163D /* Color.tif */; };
 		52CA70801CC6651900269197 /* TAL.frag in Resources */ = {isa = PBXBuildFile; fileRef = 52CA707F1CC6651900269197 /* TAL.frag */; };
 		52CA70821CC6652700269197 /* TAL.vert in Resources */ = {isa = PBXBuildFile; fileRef = 52CA70811CC6652700269197 /* TAL.vert */; };
 		540DDD781CA0024A00DE3FCC /* guy.frag in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD751CA0024A00DE3FCC /* guy.frag */; };
@@ -120,6 +121,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		52BDFA6E1CC68DEA0002163D /* Color.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Color.tif; sourceTree = "<group>"; };
 		52CA707F1CC6651900269197 /* TAL.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TAL.frag; sourceTree = "<group>"; };
 		52CA70811CC6652700269197 /* TAL.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TAL.vert; sourceTree = "<group>"; };
 		540DDD751CA0024A00DE3FCC /* guy.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = guy.frag; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
@@ -350,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				52CA707F1CC6651900269197 /* TAL.frag */,
+				52BDFA6E1CC68DEA0002163D /* Color.tif */,
 				A85E11D11CC50D1F00D4418A /* Terrain_50000.mtl */,
 				A85E11D21CC50D1F00D4418A /* Terrain_50000.obj */,
 				52CA70811CC6652700269197 /* TAL.vert */,
@@ -699,6 +702,7 @@
 				A85E11CE1CC4FC2F00D4418A /* TAL16OBJ.mtl in Resources */,
 				A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */,
 				B4CB8CD01B72E43300FE041B /* Project-Info.plist in Resources */,
+				52BDFA6F1CC68DEA0002163D /* Color.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
