@@ -170,7 +170,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     
-    cameraPos=vmml::Vector3f(planeChange.x(),planeChange.y(),-planeChange.z());
+    cameraPos=vmml::Vector3f(-planeChange.x(),-planeChange.y(),-planeChange.z()+10.f);
     bRenderer().getObjects()->getCamera("camera")->setPosition(cameraPos);
     modelMatrixTerrain *= modelMatrixTAL;
     
@@ -213,8 +213,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
 
     
-    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
-    //bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
+    shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
+    bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
 }
