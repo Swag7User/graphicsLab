@@ -134,15 +134,15 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     vmml::Matrix4f viewMatrix = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
     
-    bRenderer().getObjects()->getCamera("camera")->setRotation(vmml::Vector3f(0.f,0.f,0.f));
+    ;
     
     
     // translate and scale
     vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
-    modelMatrixTerrain *= rotationMatrix;
+    //modelMatrixTerrain *= rotationMatrix;
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
-    modelMatrixTerrain *= rotationMatrix;
+    //modelMatrixTerrain *= rotationMatrix;
     
     
     vmml::Matrix4f rotationMatrixTAL = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
@@ -158,8 +158,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     vmml::Matrix4f planeMotion=vmml::create_translation(planeChange);
     modelMatrixTAL *=planeMotion;
     //move camer with plane
-    modelMatrixTAL *= vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X);
-    modelMatrixTAL *= vmml::create_rotation((float)(0*M_PI_F/180), vmml::Vector3f::UNIT_Y);
+    modelMatrixTAL *= vmml::create_rotation((float)(rotation2*M_PI_F/180), vmml::Vector3f::UNIT_X);
+    modelMatrixTAL *= vmml::create_rotation((float)(rotation*M_PI_F/180), vmml::Vector3f::UNIT_Y);
     modelMatrixTAL *= vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
     
     
@@ -170,8 +170,13 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     
-    cameraPos=vmml::Vector3f(-planeChange.x(),-planeChange.y(),-planeChange.z()+10.f);
+    
+    
+    bRenderer().getObjects()->getCamera("camera")->setRotation(vmml::Vector3f((float)(45*M_PI_F/180),0.f,0.f));
+    
+    cameraPos=vmml::Vector3f(-planeChange.x()+0.0f,-planeChange.y()-0.f,-planeChange.z()+0.f);
     bRenderer().getObjects()->getCamera("camera")->setPosition(cameraPos);
+    
     modelMatrixTerrain *= modelMatrixTAL;
     
     
@@ -197,11 +202,11 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         shader->setUniform("NormalMatrix", normalMatrix);
         shader->setUniform("NormalMatrixTAL", normalMatrixTAL);
         
-        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
+        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 0.0f, 1.0f);
         shader->setUniform("EyePos", eyePos);
         
-        shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
-        shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
+        shader->setUniform("LightPos", vmml::Vector4f(.5f, 100.f, 30.5f, 1.f));
+        shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, 15.5f, 1.f));
         shader->setUniform("Ia", vmml::Vector3f(5.f));
         shader->setUniform("Id", vmml::Vector3f(1.f));
         shader->setUniform("Is", vmml::Vector3f(1.f));
