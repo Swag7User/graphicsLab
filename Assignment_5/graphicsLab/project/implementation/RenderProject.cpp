@@ -1,7 +1,11 @@
 #include "RenderProject.h"
+#ifdef __OBJC__
+#import <CoreMotion/CoreMotion.h>
+#endif
 
 vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(1.f));
-
+double _time = 0;
+//CMMotionManager *cmMotionManager=CMMotionManager();
 float angle=0.f;
 /* Initialize the Project */
 void RenderProject::init()
@@ -99,7 +103,8 @@ void RenderProject::terminateFunction()
 /* Update render queue */
 void RenderProject::updateRenderQueue(const std::string &camera, const double &deltaTime)
 {
-    /*** solar system ***/
+    /*** GYRO ***/
+    
     /*** Guy ***/
     // get input rotation
     TouchMap touchMap = bRenderer().getInput()->getTouches();
