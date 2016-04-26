@@ -136,7 +136,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     modelMatrixTerrain *= rotationMatrix;
     
-    vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_rotation(90*M_PI_F, vmml::Vector3f::UNIT_X)* vmml::create_scaling(vmml::Vector3f(5.f));
+    vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_rotation((float) 90*M_PI_F/180, vmml::Vector3f::UNIT_X)* vmml::create_scaling(vmml::Vector3f(5.f));
     vmml::Matrix4f rotationMatrixTAL = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     modelMatrixTAL *= rotationMatrixTAL;
     rotationMatrixTAL = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
@@ -207,7 +207,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     
-    bRenderer().getObjects()->getCamera("camera")->setPosition(vmml::Vector3f(10.f,5.f,5.f));
+    bRenderer().getObjects()->getCamera("camera")->setPosition(vmml::Vector3f(0.f,0.f,30.f));
 
     
     

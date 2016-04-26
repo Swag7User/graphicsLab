@@ -1,4 +1,3 @@
-
 uniform mediump mat4 ViewMatrix;
 uniform mediump mat4 modelMatrixTAL;
 uniform mediump mat4 ProjectionMatrix;
@@ -27,6 +26,8 @@ lowp vec4 diffuse;
 lowp vec4 diffuse2;
 lowp vec4 specular;
 lowp vec4 texCoord;
+varying mediump float intensity;
+
 
 varying mediump vec4 posVarying;       // pos in world space
 varying mediump vec3 normalVarying;    // normal in world space
@@ -41,6 +42,7 @@ void main()
     // TODO: implement Phong Shading (per-fragment lighting)
     //ambient here
     ambient = vec4(Ka * Ia, 1.0);
+    
    
     //diffuse here
     highp vec3 l = normalize((LightPos - posVarying).xyz);
@@ -67,7 +69,21 @@ void main()
         highp vec3 spec = Ks * pow(dot(normalVarying,h), Ns) * Is;
         specular = vec4(clamp(spec,0.0,1.0),1.0);
     }
+    
 
-    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
+//    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
+    
+    mediump vec4 color;
+    
+    if (intensity > 0.95){
+        color = vec4(1.0,0.5,0.5,1.0);}
+    else if (intensity > 0.5){
+        color = vec4(0.6,0.3,0.3,1.0);}
+    else if (intensity > 0.25){
+        color = vec4(0.4,0.2,0.2,1.0);}
+    else{
+        color = vec4(0.2,0.1,0.1,1.0);}
+    
+    
     gl_FragColor = (ambient + diffuse ) * color + specular;
 }
