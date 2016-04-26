@@ -49,7 +49,7 @@ void RenderProject::initFunction()
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
-    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(40.0f, 0.0f, -20.0f), vmml::Vector3f(0.f, 4.5f, 0.f));
+    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(0.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
     
     
     // Update render queue
@@ -136,7 +136,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     modelMatrixTerrain *= rotationMatrix;
     
-    vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(5.f));
+    vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_rotation(90*M_PI_F, vmml::Vector3f::UNIT_X)* vmml::create_scaling(vmml::Vector3f(5.f));
     vmml::Matrix4f rotationMatrixTAL = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     modelMatrixTAL *= rotationMatrixTAL;
     rotationMatrixTAL = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
@@ -145,6 +145,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     ShaderPtr shader = bRenderer().getObjects()->getShader("guy");
+
 
     
     if (shader.get())
@@ -157,6 +158,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         vmml::Matrix3f normalMatrix;
         vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTerrain)), normalMatrix);
         shader->setUniform("NormalMatrix", normalMatrix);
+
   
         
         vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
@@ -173,33 +175,40 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         bRenderer::log("No shader available.");
     }
     
-    ShaderPtr shader2 = bRenderer().getObjects()->getShader("TAL");
-    
-    
-    if (shader2.get())
+    shader = bRenderer().getObjects()->getShader("TAL");
+    if (shader.get())
     {
-        shader2->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
-        shader2->setUniform("ViewMatrix", viewMatrix);
-        shader2->setUniform("modelMatrixTAL", modelMatrixTAL);
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixTAL", modelMatrixTAL);
+        
         
         vmml::Matrix3f normalMatrixTAL;
         vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
-        shader2->setUniform("NormalMatrixTAL", normalMatrixTAL);
+        shader->setUniform("NormalMatrixTAL", normalMatrixTAL);
+        
+        
         
         vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
-        shader2->setUniform("EyePos", eyePos);
+        shader->setUniform("EyePos", eyePos);
         
-        shader2->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
-        shader2->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
-        shader2->setUniform("Ia", vmml::Vector3f(1.f));
-        shader2->setUniform("Id", vmml::Vector3f(1.f));
-        shader2->setUniform("Is", vmml::Vector3f(1.f));
+        shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
+        shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
+        shader->setUniform("Ia", vmml::Vector3f(1.f));
+        shader->setUniform("Id", vmml::Vector3f(1.f));
+        shader->setUniform("Is", vmml::Vector3f(1.f));
     }
     else
     {
-        bRenderer::log("No shader2 available.");
+        bRenderer::log("No shader available.");
     }
+
+
     
+    
+    bRenderer().getObjects()->getCamera("camera")->setPosition(vmml::Vector3f(10.f,5.f,5.f));
+
     
     
 
