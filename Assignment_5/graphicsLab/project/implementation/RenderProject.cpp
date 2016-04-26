@@ -5,6 +5,7 @@
 
 vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(1.f));
 double _time = 0;
+double _pitchSum;
 //CMMotionManager *cmMotionManager=CMMotionManager();
 float angle=0.f;
 /* Initialize the Project */
@@ -105,6 +106,17 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 {
     /*** GYRO ***/
     
+    _time += deltaTime;
+    float angle = _time * 0.9;
+    int timer = 1;
+    int start = 2;
+    
+    _pitchSum += bRenderer().getInput()->getGyroscopePitch()* 1.0f;
+    
+    vmml::Matrix4f rotationX = vmml::create_rotation((float)(bRenderer().getInput()->getGyroscopeRoll() - 0.8f), vmml::Vector3f::UNIT_X);
+    vmml::Matrix4f rotationY = vmml::create_rotation((float)_pitchSum, vmml::Vector3f::UNIT_Y);
+    vmml::Matrix4f rotationZ = vmml::create_rotation((float)(2 * bRenderer().getInput()->getGyroscopePitch()), vmml::Vector3f::UNIT_Z);
+    //print("EY THIS IS ROATION:"+bRenderer().);
     /*** Guy ***/
     // get input rotation
     TouchMap touchMap = bRenderer().getInput()->getTouches();
@@ -139,8 +151,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     vmml::Matrix4f viewMatrix = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
     
-    ;
-    
     
     // translate and scale
     vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
@@ -150,9 +160,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //modelMatrixTerrain *= rotationMatrix;
     
     
-    vmml::Matrix4f rotationMatrixTAL = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
-    modelMatrixTAL *= rotationMatrixTAL;
-    modelMatrixTAL = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
+    
+    
+    //modelMatrixTAL = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     
     
     //move plane
@@ -161,12 +171,13 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     vmml::Vector3f planeChange=vmml::Vector3f(0.f,0.f,angle/50*10.f);
     
     vmml::Matrix4f planeMotion=vmml::create_translation(planeChange);
-    modelMatrixTAL *=planeMotion;
+    //modelMatrixTAL *=planeMotion;
     //move camer with plane
     modelMatrixTAL *= vmml::create_rotation((float)(rotation2*M_PI_F/180), vmml::Vector3f::UNIT_X);
     modelMatrixTAL *= vmml::create_rotation((float)(rotation*M_PI_F/180), vmml::Vector3f::UNIT_Y);
     modelMatrixTAL *= vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
-    
+    vmml::Matrix4f rotationMatrixTAL = rotationX;//*rotationY;//*rotationZ;
+    //modelMatrixTAL *= rotationMatrixTAL;
     
     vmml::Vector3f cameraPos=bRenderer().getObjects()->getCamera("camera")->getPosition();
     
