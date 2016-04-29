@@ -1,5 +1,5 @@
 #include "RenderProject.h"
-
+int speed;
 /* Initialize the Project */
 void RenderProject::init()
 {
@@ -136,8 +136,10 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     modelMatrixTerrain *= rotationMatrix;
     
-    vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_rotation((float) 90*M_PI_F/180, vmml::Vector3f::UNIT_X)* vmml::create_scaling(vmml::Vector3f(5.f));
-    vmml::Matrix4f rotationMatrixTAL = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
+    vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_rotation((float) 90*M_PI_F/180, vmml::Vector3f::UNIT_X)*vmml::create_rotation((float) 180*M_PI_F/180, vmml::Vector3f::UNIT_Z)* vmml::create_scaling(vmml::Vector3f(5.f));
+    
+    speed++;
+    vmml::Matrix4f rotationMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f,-speed,0.0f)) * vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     modelMatrixTAL *= rotationMatrixTAL;
     rotationMatrixTAL = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     modelMatrixTAL *= rotationMatrixTAL;
@@ -216,7 +218,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
-    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL*speed, std::vector<std::string>({ }));
 }
 
 /* Camera movement */
