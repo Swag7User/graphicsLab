@@ -8,6 +8,7 @@ double _time = 0;
 double _pitchSum;
 //CMMotionManager *cmMotionManager=CMMotionManager();
 float angle=0.f;
+float PlaneSpeed=-1.0f;
 /* Initialize the Project */
 void RenderProject::init()
 {
@@ -113,35 +114,33 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     _pitchSum += bRenderer().getInput()->getGyroscopePitch()* 1.0f;
     
+    
+//    vmml::Matrix4f rotationX = vmml::create_rotation((float)(angle/300), vmml::Vector3f::UNIT_X);
+//    vmml::Matrix4f rotationZ = vmml::create_rotation((float)(angle/64), vmml::Vector3f::UNIT_Z);
+
+
+    
     vmml::Matrix4f rotationX = vmml::create_rotation((float)(bRenderer().getInput()->getGyroscopeRoll()/300), vmml::Vector3f::UNIT_X);
     vmml::Matrix4f rotationY = vmml::create_rotation((float)_pitchSum, vmml::Vector3f::UNIT_Y);
     vmml::Matrix4f rotationZ = vmml::create_rotation((float)(bRenderer().getInput()->getGyroscopePitch()/64), vmml::Vector3f::UNIT_Z);
     //print("EY THIS IS ROATION:"+bRenderer().);
     /*** Guy ***/
     // get input rotation
+    GLboolean touchBool=false;
     TouchMap touchMap = bRenderer().getInput()->getTouches();
     int i = 0;
     float rotation = 0.0f;
     for (auto t = touchMap.begin(); t != touchMap.end(); ++t)
     {
         Touch touch = t->second;
-        rotation = (touch.currentPositionX - touch.startPositionX) / 100;
-        if (++i > 1)
-            break;
+        PlaneSpeed-=.1f;
+        touchBool=true;
     }
-    // get input rotation
-    TouchMap touchMap2 = bRenderer().getInput()->getTouches();
-    int i2 = 0;
-    float rotation2 = 0.0f;
-    for (auto t = touchMap2.begin(); t != touchMap2.end(); ++t)
-    {
-        Touch touch = t->second;
-        rotation2 = (touch.currentPositionY - touch.startPositionY) / 100;
-        if (++i2 > 1)
-            break;
+    if(!touchBool){
+        if(PlaneSpeed<-1.0f){
+            PlaneSpeed+=.05f;
+        }
     }
-    
-    
     
     // TODO: implement solar system here
     
@@ -167,7 +166,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     //move plane
     angle++;
-    float PlaneSpeed=-1.0f;
+    
     
     vmml::Vector3f planeChange=vmml::Vector3f(0.f,PlaneSpeed,0.f);
     
@@ -176,15 +175,15 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //move camer with plane
 //    modelMatrixTAL *= vmml::create_rotation((float)(rotation2*M_PI_F/180), vmml::Vector3f::UNIT_X);
 //    modelMatrixTAL *= vmml::create_rotation((float)(rotation*M_PI_F/180), vmml::Vector3f::UNIT_Y);
-    vmml::Matrix4f rotationMatrixTAL = rotationX;//*rotationZ;
+    vmml::Matrix4f rotationMatrixTAL = rotationX*rotationZ;
     modelMatrixTAL *= rotationMatrixTAL;
-    rotationMatrixTAL = rotationZ;
-    modelMatrixTAL *= rotationMatrixTAL;
+//    rotationMatrixTAL = rotationZ;
+//    modelMatrixTAL *= rotationMatrixTAL;
     
     
     bRenderer().getObjects()->getCamera("camera")->setPosition(-modelMatrixTAL.get_translation());
     vmml::Vector3f cameraPos=bRenderer().getObjects()->getCamera("camera")->getPosition();
-    bRenderer().getObjects()->getCamera("camera")->setPosition(vmml::Vector3f(cameraPos.x(),cameraPos.y(),cameraPos.z()));
+    bRenderer().getObjects()->getCamera("camera")->setPosition(vmml::Vector3f(cameraPos.x(),cameraPos.y()-10.f,cameraPos.z()));
     
     
     bRenderer().getObjects()->getCamera("camera")->setRotation(vmml::Vector3f((float)(-90*M_PI_F/180),(float)(0*M_PI_F/180),(float)(180*M_PI_F/180)));
@@ -212,7 +211,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
   
         
-        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
+        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 0.0f, 1.0f);
         shader->setUniform("EyePos", eyePos);
         
         shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
