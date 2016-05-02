@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		526351BF1CCF9F410040FA1A /* Terrain_50000.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 526351BD1CCF9F410040FA1A /* Terrain_50000.mtl */; };
+		526351C01CCF9F410040FA1A /* Terrain_50000.obj in Resources */ = {isa = PBXBuildFile; fileRef = 526351BE1CCF9F410040FA1A /* Terrain_50000.obj */; };
+		52BDFA6F1CC68DEA0002163D /* Color.tif in Resources */ = {isa = PBXBuildFile; fileRef = 52BDFA6E1CC68DEA0002163D /* Color.tif */; };
 		52CA70801CC6651900269197 /* TAL.frag in Resources */ = {isa = PBXBuildFile; fileRef = 52CA707F1CC6651900269197 /* TAL.frag */; };
 		52CA70821CC6652700269197 /* TAL.vert in Resources */ = {isa = PBXBuildFile; fileRef = 52CA70811CC6652700269197 /* TAL.vert */; };
 		540DDD781CA0024A00DE3FCC /* guy.frag in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD751CA0024A00DE3FCC /* guy.frag */; };
@@ -17,8 +20,6 @@
 		A85E11CE1CC4FC2F00D4418A /* TAL16OBJ.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */; };
 		A85E11CF1CC4FC2F00D4418A /* TAL16OBJ.obj in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */; };
 		A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */; };
-		A85E11D31CC50D1F00D4418A /* Terrain_50000.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A85E11D11CC50D1F00D4418A /* Terrain_50000.mtl */; };
-		A85E11D41CC50D1F00D4418A /* Terrain_50000.obj in Resources */ = {isa = PBXBuildFile; fileRef = A85E11D21CC50D1F00D4418A /* Terrain_50000.obj */; };
 		A85E11E41CC512AE00D4418A /* Normal_Map.tif in Resources */ = {isa = PBXBuildFile; fileRef = A85E11E11CC512AE00D4418A /* Normal_Map.tif */; };
 		B44186971BA331E300604D7F /* RenderProject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B44186961BA331E300604D7F /* RenderProject.cpp */; };
 		B47949AF1BA6742B00B5E9DC /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B47949921BA6742B00B5E9DC /* config.json */; };
@@ -120,6 +121,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		526351BD1CCF9F410040FA1A /* Terrain_50000.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.mtl; sourceTree = "<group>"; };
+		526351BE1CCF9F410040FA1A /* Terrain_50000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.obj; sourceTree = "<group>"; };
+		52BDFA6E1CC68DEA0002163D /* Color.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Color.tif; sourceTree = "<group>"; };
 		52CA707F1CC6651900269197 /* TAL.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TAL.frag; sourceTree = "<group>"; };
 		52CA70811CC6652700269197 /* TAL.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TAL.vert; sourceTree = "<group>"; };
 		540DDD751CA0024A00DE3FCC /* guy.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = guy.frag; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
@@ -130,8 +134,6 @@
 		A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TAL16OBJ.mtl; sourceTree = "<group>"; };
 		A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TAL16OBJ.obj; sourceTree = "<group>"; };
 		A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TALTS.jpg; sourceTree = "<group>"; };
-		A85E11D11CC50D1F00D4418A /* Terrain_50000.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.mtl; sourceTree = "<group>"; };
-		A85E11D21CC50D1F00D4418A /* Terrain_50000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.obj; sourceTree = "<group>"; };
 		A85E11E11CC512AE00D4418A /* Normal_Map.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Normal_Map.tif; sourceTree = "<group>"; };
 		B44186941BA331E300604D7F /* RenderProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderProject.h; sourceTree = "<group>"; };
 		B44186961BA331E300604D7F /* RenderProject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderProject.cpp; sourceTree = "<group>"; };
@@ -350,9 +352,10 @@
 			isa = PBXGroup;
 			children = (
 				52CA707F1CC6651900269197 /* TAL.frag */,
-				A85E11D11CC50D1F00D4418A /* Terrain_50000.mtl */,
-				A85E11D21CC50D1F00D4418A /* Terrain_50000.obj */,
+				52BDFA6E1CC68DEA0002163D /* Color.tif */,
 				52CA70811CC6652700269197 /* TAL.vert */,
+				526351BD1CCF9F410040FA1A /* Terrain_50000.mtl */,
+				526351BE1CCF9F410040FA1A /* Terrain_50000.obj */,
 				A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */,
 				A85E11E11CC512AE00D4418A /* Normal_Map.tif */,
 				A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */,
@@ -683,22 +686,23 @@
 			files = (
 				A85E11CF1CC4FC2F00D4418A /* TAL16OBJ.obj in Resources */,
 				540DDD7C1CA0058A00DE3FCC /* guy.mtl in Resources */,
-				A85E11D41CC50D1F00D4418A /* Terrain_50000.obj in Resources */,
 				B4794A311BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				540DDD781CA0024A00DE3FCC /* guy.frag in Resources */,
+				526351C01CCF9F410040FA1A /* Terrain_50000.obj in Resources */,
 				540DDD791CA0024A00DE3FCC /* guy.obj in Resources */,
 				B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				52CA70801CC6651900269197 /* TAL.frag in Resources */,
 				A85E11E41CC512AE00D4418A /* Normal_Map.tif in Resources */,
 				540DDD7A1CA0024A00DE3FCC /* guy.vert in Resources */,
-				A85E11D31CC50D1F00D4418A /* Terrain_50000.mtl in Resources */,
 				B47949AF1BA6742B00B5E9DC /* config.json in Resources */,
 				B4794A301BA6743D00B5E9DC /* LICENSE.txt in Resources */,
+				526351BF1CCF9F410040FA1A /* Terrain_50000.mtl in Resources */,
 				540DDD7E1CA020B700DE3FCC /* diffuse.png in Resources */,
 				52CA70821CC6652700269197 /* TAL.vert in Resources */,
 				A85E11CE1CC4FC2F00D4418A /* TAL16OBJ.mtl in Resources */,
 				A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */,
 				B4CB8CD01B72E43300FE041B /* Project-Info.plist in Resources */,
+				52BDFA6F1CC68DEA0002163D /* Color.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

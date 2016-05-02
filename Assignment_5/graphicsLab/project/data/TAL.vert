@@ -6,6 +6,7 @@ uniform mediump mat4 ProjectionMatrix;
 uniform mediump mat3 NormalMatrixTAL;
 
 uniform mediump vec4 LightPos;
+uniform mediump vec3 lightDir;
 uniform mediump vec4 EyePos;
 
 uniform lowp vec3 Ka;   // ambient material coefficient
@@ -23,6 +24,8 @@ attribute vec3 Normal;
 attribute vec3 Tangent;
 attribute vec3 Bitangent;
 attribute vec4 TexCoord;
+varying mediump float intensity;
+
 
 varying lowp vec4 ambientVarying;
 varying lowp vec4 diffuseVarying;
@@ -65,7 +68,13 @@ void main()
 //        mediump vec3 specular = Ks * pow(dot(n,h),Ns) * Is;
 //        specularVarying = vec4(clamp(specular, 0.0, 1.0), 1.0);
 //    }
+
     
+    intensity = dot(normalize(lightDir), normalVarying);
+    
+    
+    
+    texCoordVarying = TexCoord;
     posVarying = modelMatrixTAL * Position;
     normalVarying = normalize(NormalMatrixTAL * Normal);
 
