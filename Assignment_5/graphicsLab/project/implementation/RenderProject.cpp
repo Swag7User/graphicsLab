@@ -57,7 +57,7 @@ void RenderProject::initFunction()
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
-    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, +10.0f), vmml::Vector3f(0.f, 0.f, 0.f));
+    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, -10.0f), vmml::Vector3f(0.f, 0.f, 0.f));
     
     
     // Update render queue
@@ -155,12 +155,15 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     // translate, rotate and scale
     vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
     modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
-    bRenderer().getObjects()->getCamera("camera")->setPosition(-(modelMatrixTAL.get_translation()));
+    vmml::Vector3f camTranslation = modelMatrixTAL.get_translation();
+    camTranslation.z() = camTranslation.z() - 10.0f;
+    bRenderer().getObjects()->getCamera("camera")->setPosition(-(camTranslation));
     
     
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     //modelMatrixTerrain *= rotationMatrix;
     modelMatrixTAL *= rotationMatrix;
+    bRenderer().getObjects()->getCamera("camera")->lookAt(bRenderer().getObjects()->getCamera("camera")->getPosition(), modelMatrixTAL.get_translation(), vmml::Vector3f(0.0f, 0.0f,0.0f));
     
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     modelMatrixTAL *= rotationMatrix;
