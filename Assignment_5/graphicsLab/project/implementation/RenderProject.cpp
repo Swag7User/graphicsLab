@@ -152,11 +152,18 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     vmml::Matrix4f viewMatrix = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
     
     
-    // translate and scale
+    // translate, rotate and scale
     vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
+    modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
+    bRenderer().getObjects()->getCamera("camera")->setPosition(-(modelMatrixTAL.get_translation()));
+    
+    
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     //modelMatrixTerrain *= rotationMatrix;
+    modelMatrixTAL *= rotationMatrix;
+    
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
+    modelMatrixTAL *= rotationMatrix;
     //modelMatrixTerrain *= rotationMatrix;
     
     
