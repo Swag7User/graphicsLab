@@ -172,7 +172,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     vmml::Vector3f planeChange=vmml::Vector3f(0.f,PlaneSpeed,0.f);
     
     vmml::Matrix4f planeMotion=vmml::create_translation(planeChange);
-    vmml::Matrix4f planeMotion=vmml::create_translation(planeChange);
     modelMatrixTAL *=planeMotion;
     //move camer with plane
 //    modelMatrixTAL *= vmml::create_rotation((float)(rotation2*M_PI_F/180), vmml::Vector3f::UNIT_X);
