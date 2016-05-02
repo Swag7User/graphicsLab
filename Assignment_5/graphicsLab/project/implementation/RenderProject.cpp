@@ -3,7 +3,7 @@
 #import <CoreMotion/CoreMotion.h>
 #endif
 
-vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f)) * vmml::create_scaling(vmml::Vector3f(1.f));
+vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))* vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);;
 double _time = 0;
 double _pitchSum;
 //CMMotionManager *cmMotionManager=CMMotionManager();
@@ -113,9 +113,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     _pitchSum += bRenderer().getInput()->getGyroscopePitch()* 1.0f;
     
-    vmml::Matrix4f rotationX = vmml::create_rotation((float)(bRenderer().getInput()->getGyroscopeRoll() - 0.8f), vmml::Vector3f::UNIT_X);
+    vmml::Matrix4f rotationX = vmml::create_rotation((float)(bRenderer().getInput()->getGyroscopeRoll()/300), vmml::Vector3f::UNIT_X);
     vmml::Matrix4f rotationY = vmml::create_rotation((float)_pitchSum, vmml::Vector3f::UNIT_Y);
-    vmml::Matrix4f rotationZ = vmml::create_rotation((float)(2 * bRenderer().getInput()->getGyroscopePitch()), vmml::Vector3f::UNIT_Z);
+    vmml::Matrix4f rotationZ = vmml::create_rotation((float)(bRenderer().getInput()->getGyroscopePitch()/64), vmml::Vector3f::UNIT_Z);
     //print("EY THIS IS ROATION:"+bRenderer().);
     /*** Guy ***/
     // get input rotation
@@ -171,13 +171,12 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     vmml::Vector3f planeChange=vmml::Vector3f(0.f,0.f,angle/50*10.f);
     
     vmml::Matrix4f planeMotion=vmml::create_translation(planeChange);
-    //modelMatrixTAL *=planeMotion;
+    modelMatrixTAL *=planeMotion;
     //move camer with plane
-    modelMatrixTAL *= vmml::create_rotation((float)(rotation2*M_PI_F/180), vmml::Vector3f::UNIT_X);
-    modelMatrixTAL *= vmml::create_rotation((float)(rotation*M_PI_F/180), vmml::Vector3f::UNIT_Y);
-    modelMatrixTAL *= vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
-    vmml::Matrix4f rotationMatrixTAL = rotationX;//*rotationY;//*rotationZ;
-    //modelMatrixTAL *= rotationMatrixTAL;
+//    modelMatrixTAL *= vmml::create_rotation((float)(rotation2*M_PI_F/180), vmml::Vector3f::UNIT_X);
+//    modelMatrixTAL *= vmml::create_rotation((float)(rotation*M_PI_F/180), vmml::Vector3f::UNIT_Y);
+    vmml::Matrix4f rotationMatrixTAL = rotationX*rotationZ;//*rotationZ;
+    modelMatrixTAL *= rotationMatrixTAL;
     
     vmml::Vector3f cameraPos=bRenderer().getObjects()->getCamera("camera")->getPosition();
     
@@ -188,9 +187,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     
-    bRenderer().getObjects()->getCamera("camera")->setRotation(vmml::Vector3f((float)(45*M_PI_F/180),0.f,0.f));
+    bRenderer().getObjects()->getCamera("camera")->setRotation(vmml::Vector3f((float)(0*M_PI_F/180),0.f,0.f));
     
-    cameraPos=vmml::Vector3f(-planeChange.x()+0.0f,-planeChange.y()-0.f,-planeChange.z()+0.f);
+    cameraPos=vmml::Vector3f(cameraPos.x()-planeChange.x()+0.0f,-planeChange.y()+cameraPos.y()-0.f,-planeChange.z()+cameraPos.z()+0.f);
     bRenderer().getObjects()->getCamera("camera")->setPosition(cameraPos);
     
     modelMatrixTerrain *= modelMatrixTAL;
