@@ -135,8 +135,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     float rotation2 = 0.0f;
     for (auto t = touchMap2.begin(); t != touchMap2.end(); ++t)
     {
-        Touch touch2 = t->second;
-        rotation2 = (touch2.currentPositionY - touch2.startPositionY) / 100;
+        Touch touch = t->second;
+        rotation2 = (touch.currentPositionY - touch.startPositionY) / 100;
         if (++i2 > 1)
             break;
     }
@@ -202,7 +202,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     ShaderPtr shader = bRenderer().getObjects()->getShader("guy");
 
-
     
     if (shader.get())
     {
@@ -244,12 +243,14 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
         shader->setUniform("NormalMatrixTAL", normalMatrixTAL);
         
-        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 0.0f, 1.0f);
+        
+        
+        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
         shader->setUniform("EyePos", eyePos);
         
-        shader->setUniform("LightPos", vmml::Vector4f(.5f, 100.f, 30.5f, 1.f));
-        shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, 15.5f, 1.f));
-        shader->setUniform("Ia", vmml::Vector3f(5.f));
+        shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
+        shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
+        shader->setUniform("Ia", vmml::Vector3f(1.f));
         shader->setUniform("Id", vmml::Vector3f(1.f));
         shader->setUniform("Is", vmml::Vector3f(1.f));
     }
@@ -260,17 +261,15 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
 
     
-    
-    bRenderer().getObjects()->getCamera("camera")->setPosition(vmml::Vector3f(0.f,0.f,30.f));
 
     
     
 
     
-    shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
+    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
-    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL*speed, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
 }
 
 /* Camera movement */
