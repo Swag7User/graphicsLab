@@ -5,7 +5,6 @@ uniform mediump mat4 ProjectionMatrix;
 uniform mediump mat3 NormalMatrixTAL;
 
 uniform mediump vec4 LightPos;
-uniform mediump vec4 LightPos2;
 
 uniform mediump vec4 EyePos;
 
@@ -48,12 +47,7 @@ void main()
     highp vec3 l = normalize((LightPos - posVarying).xyz);
     highp vec3 diffLight = Kd * clamp(dot(normalVarying, l),0.0, 1.0) * Id;
     diffuse = vec4(clamp(diffLight, 0.0, 1.0), 1.0);
-    //difuse2
-    highp vec3 l2 = normalize((LightPos2 - posVarying).xyz);
-    highp vec3 diffLight2 = Kd * clamp(dot(normalVarying, l),0.0, 1.0) * Id;
-    diffuse2 = vec4(clamp(diffLight2, 0.0, 1.0), 1.0);
-    
-    
+    //difuse2    
     //   vec3 halfDir = normalize(lightDir + viewDir);
     //   float specAngle = max(dot(halfDir, normal), 0.0);
     //   specular = pow(specAngle, shininess);
