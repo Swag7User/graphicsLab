@@ -24,7 +24,6 @@ attribute vec3 Normal;
 attribute vec3 Tangent;
 attribute vec3 Bitangent;
 attribute vec4 TexCoord;
-varying mediump float intensity;
 
 
 varying lowp vec4 ambientVarying;
@@ -37,23 +36,23 @@ varying mediump vec3 normalVarying;    // normal in world space
 
 void main()
 {
-    mediump vec4 pos = modelMatrixTAL * Position;
-    mediump vec3 normal = normalize(NormalMatrixTAL * Normal);
+//    mediump vec4 pos = modelMatrixTAL * Position;
+//    mediump vec3 normal = normalize(NormalMatrixTAL * Normal);
     //texCoordVarying = TexCoord;
     
     //ambientVarying = vec4(Ka * Ia, 1.0);
     
     // TODO: calculate diffuse lighting
     //diffuseVarying = vec4(0.0);
-    mediump vec3 n = normal ;
-    mediump vec3 l = normalize(vec3(LightPos-pos)) ;
-//    
+//    mediump vec3 n = normal ;
+//    mediump vec3 l = normalize(vec3(LightPos-pos)) ;
+////    
 ////    vec3 Cs = vec3(0.0);
 ////    if( dot(n, l) >= 0.0 ) {
 ////        vec3 V = normalize(cameraPos-vertexPos); vec3 R = reflect( l, n ); Cs = pow( max( 0.0, dot( R, V ) ), Ns );
 ////    }
-//    
-    intensity = dot(n,l) ;
+////    
+//    intensity = dot(n,l) ;
 //    lowp vec3 diffuse = Kd * clamp(intensity, 0.0, 1.0) * Id;
 //    diffuseVarying = vec4(clamp(diffuse, 0.0, 1.0), 1.0);
 //    
