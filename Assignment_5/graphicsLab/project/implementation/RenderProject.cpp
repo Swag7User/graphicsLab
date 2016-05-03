@@ -190,15 +190,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     vmml::Vector3f cameraPos=bRenderer().getObjects()->getCamera("camera")->getPosition();
     
-    
-    
-    
-    
-    
-    
-    
-    bRenderer().getObjects()->getCamera("camera")->setRotation(vmml::Vector3f((float)(0*M_PI_F/180),0.f,0.f));
-    
     cameraPos=vmml::Vector3f(cameraPos.x()-planeChange.x()+0.0f,-planeChange.y()+cameraPos.y()-0.f,-planeChange.z()+cameraPos.z());
     //bRenderer().getObjects()->getCamera("camera")->setPosition(cameraPos);
     
