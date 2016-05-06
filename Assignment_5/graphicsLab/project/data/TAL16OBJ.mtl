@@ -8,7 +8,7 @@ Ks 0.259720 0.259720 0.259720
 Ni 1.000000
 
 illum 2
-map_Kd TALTS.jpg
+map_Kd TALTS.tif
 
 
 newmtl GLASS_TALTS.jpg
@@ -19,6 +19,6 @@ Ks 0.199650 0.199650 0.199650
 Ni 1.000000
 d 0.456309
 illum 2
-map_Kd TALTS.jpg
+map_Kd TALTS.tif
 
 

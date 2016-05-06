@@ -88,6 +88,9 @@ void main()
     else{
         color = vec4(0.2,0.1,0.1,1.0);}
     
+//    highp vec4 color = texture2DProj(DiffuseMap,texCoordVarying); // TODO: read color from DiffuseMap
+
+    
     
     gl_FragColor = (ambient + diffuse ) * color + specular;
 }
