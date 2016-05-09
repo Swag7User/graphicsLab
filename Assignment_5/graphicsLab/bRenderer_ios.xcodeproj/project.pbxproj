@@ -17,6 +17,7 @@
 		540DDD7A1CA0024A00DE3FCC /* guy.vert in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD771CA0024A00DE3FCC /* guy.vert */; };
 		540DDD7C1CA0058A00DE3FCC /* guy.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD7B1CA0058A00DE3FCC /* guy.mtl */; };
 		540DDD7E1CA020B700DE3FCC /* diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD7D1CA020B700DE3FCC /* diffuse.png */; };
+		823321D21CE0A19C006BF35E /* sneaky.c in Sources */ = {isa = PBXBuildFile; fileRef = 823321D01CE0A19C006BF35E /* sneaky.c */; };
 		9528E7ED1CD7601100414F6F /* lowpoly_terrain.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 9528E7EB1CD7601100414F6F /* lowpoly_terrain.mtl */; };
 		9528E7EE1CD7601100414F6F /* lowpoly_terrain.obj in Resources */ = {isa = PBXBuildFile; fileRef = 9528E7EC1CD7601100414F6F /* lowpoly_terrain.obj */; };
 		A85E11CE1CC4FC2F00D4418A /* TAL16OBJ.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */; };
@@ -133,6 +134,7 @@
 		540DDD771CA0024A00DE3FCC /* guy.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = guy.vert; sourceTree = "<group>"; };
 		540DDD7B1CA0058A00DE3FCC /* guy.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = guy.mtl; sourceTree = "<group>"; };
 		540DDD7D1CA020B700DE3FCC /* diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diffuse.png; sourceTree = "<group>"; };
+		823321D01CE0A19C006BF35E /* sneaky.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sneaky.c; sourceTree = "<group>"; };
 		9528E7EB1CD7601100414F6F /* lowpoly_terrain.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lowpoly_terrain.mtl; sourceTree = "<group>"; };
 		9528E7EC1CD7601100414F6F /* lowpoly_terrain.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lowpoly_terrain.obj; sourceTree = "<group>"; };
 		A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TAL16OBJ.mtl; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 			isa = PBXGroup;
 			children = (
 				B44186961BA331E300604D7F /* RenderProject.cpp */,
+				823321D01CE0A19C006BF35E /* sneaky.c */,
 			);
 			path = implementation;
 			sourceTree = "<group>";
@@ -751,6 +754,7 @@
 				B47AD6C11B827DF200AFC632 /* ftlcdfil.c in Sources */,
 				B47AD6E91B827FA900AFC632 /* autofit.c in Sources */,
 				B4794A491BA6743D00B5E9DC /* Sprite.cpp in Sources */,
+				823321D21CE0A19C006BF35E /* sneaky.c in Sources */,
 				B4794A2B1BA6743D00B5E9DC /* platform.c in Sources */,
 				B4794A451BA6743D00B5E9DC /* Shader.cpp in Sources */,
 				B4794A4C1BA6743D00B5E9DC /* TextureData.cpp in Sources */,
