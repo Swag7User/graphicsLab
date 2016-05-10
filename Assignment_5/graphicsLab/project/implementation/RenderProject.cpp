@@ -165,7 +165,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     // translate, rotate and scale
     modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
-    modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
+    modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -0.5f, 0.0f));
     vmml::Vector3f camTranslation = modelMatrixTAL.get_translation();
     camTranslation.z() = camTranslation.z() - 10.0f;
     bRenderer().getObjects()->getCamera("camera")->setPosition(-(camTranslation));
@@ -209,7 +209,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     //turn plane right
     
-    modelMatrixSKY = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 60.f))*vmml::create_scaling(vmml::Vector3f(20.f));
+    modelMatrixSKY = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 40.f))*vmml::create_scaling(vmml::Vector3f(4.f));
     
     
     
