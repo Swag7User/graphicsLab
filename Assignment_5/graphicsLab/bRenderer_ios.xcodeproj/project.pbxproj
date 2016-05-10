@@ -17,9 +17,9 @@
 		540DDD7A1CA0024A00DE3FCC /* guy.vert in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD771CA0024A00DE3FCC /* guy.vert */; };
 		540DDD7C1CA0058A00DE3FCC /* guy.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD7B1CA0058A00DE3FCC /* guy.mtl */; };
 		540DDD7E1CA020B700DE3FCC /* diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD7D1CA020B700DE3FCC /* diffuse.png */; };
-		82E6480A1CE213BF00AD6876 /* camo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82E648091CE213BF00AD6876 /* camo.jpg */; };
-		82E6480C1CE2170200AD6876 /* bloomcamo.png in Resources */ = {isa = PBXBuildFile; fileRef = 82E6480B1CE2170200AD6876 /* bloomcamo.png */; };
-		82E6480E1CE217E700AD6876 /* bloomcamo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82E6480D1CE217E700AD6876 /* bloomcamo.jpg */; };
+		82E648101CE21D4500AD6876 /* camobloom.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82E6480F1CE21D4500AD6876 /* camobloom.jpg */; };
+		82E648121CE21E7F00AD6876 /* camo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82E648111CE21E7F00AD6876 /* camo.jpg */; };
+		82E648141CE21EE000AD6876 /* bloomcamo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82E648131CE21EE000AD6876 /* bloomcamo.jpg */; };
 		9528E7ED1CD7601100414F6F /* lowpoly_terrain.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 9528E7EB1CD7601100414F6F /* lowpoly_terrain.mtl */; };
 		9528E7EE1CD7601100414F6F /* lowpoly_terrain.obj in Resources */ = {isa = PBXBuildFile; fileRef = 9528E7EC1CD7601100414F6F /* lowpoly_terrain.obj */; };
 		A85E11CE1CC4FC2F00D4418A /* TAL16OBJ.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */; };
@@ -136,9 +136,9 @@
 		540DDD771CA0024A00DE3FCC /* guy.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = guy.vert; sourceTree = "<group>"; };
 		540DDD7B1CA0058A00DE3FCC /* guy.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = guy.mtl; sourceTree = "<group>"; };
 		540DDD7D1CA020B700DE3FCC /* diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diffuse.png; sourceTree = "<group>"; };
-		82E648091CE213BF00AD6876 /* camo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = camo.jpg; path = "../../../../../../Downloads/jet/Jet Fighter/SC Jet Fighter/textures/camo.jpg"; sourceTree = "<group>"; };
-		82E6480B1CE2170200AD6876 /* bloomcamo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bloomcamo.png; path = ../../../../../../Downloads/bloomcamo.png; sourceTree = "<group>"; };
-		82E6480D1CE217E700AD6876 /* bloomcamo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bloomcamo.jpg; path = ../../../../../../Downloads/bloomcamo.jpg; sourceTree = "<group>"; };
+		82E6480F1CE21D4500AD6876 /* camobloom.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = camobloom.jpg; path = ../../../../../../Downloads/camobloom.jpg; sourceTree = "<group>"; };
+		82E648111CE21E7F00AD6876 /* camo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = camo.jpg; sourceTree = "<group>"; };
+		82E648131CE21EE000AD6876 /* bloomcamo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bloomcamo.jpg; sourceTree = "<group>"; };
 		9528E7EB1CD7601100414F6F /* lowpoly_terrain.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lowpoly_terrain.mtl; sourceTree = "<group>"; };
 		9528E7EC1CD7601100414F6F /* lowpoly_terrain.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lowpoly_terrain.obj; sourceTree = "<group>"; };
 		A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TAL16OBJ.mtl; sourceTree = "<group>"; };
@@ -361,9 +361,9 @@
 		B47949841BA6742B00B5E9DC /* data */ = {
 			isa = PBXGroup;
 			children = (
-				82E6480D1CE217E700AD6876 /* bloomcamo.jpg */,
-				82E6480B1CE2170200AD6876 /* bloomcamo.png */,
-				82E648091CE213BF00AD6876 /* camo.jpg */,
+				82E648131CE21EE000AD6876 /* bloomcamo.jpg */,
+				82E648111CE21E7F00AD6876 /* camo.jpg */,
+				82E6480F1CE21D4500AD6876 /* camobloom.jpg */,
 				9528E7EB1CD7601100414F6F /* lowpoly_terrain.mtl */,
 				9528E7EC1CD7601100414F6F /* lowpoly_terrain.obj */,
 				52CA707F1CC6651900269197 /* TAL.frag */,
@@ -706,21 +706,21 @@
 				526351C01CCF9F410040FA1A /* Terrain_50000.obj in Resources */,
 				540DDD791CA0024A00DE3FCC /* guy.obj in Resources */,
 				B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */,
-				82E6480C1CE2170200AD6876 /* bloomcamo.png in Resources */,
 				52CA70801CC6651900269197 /* TAL.frag in Resources */,
 				9528E7ED1CD7601100414F6F /* lowpoly_terrain.mtl in Resources */,
 				A85E11E41CC512AE00D4418A /* Normal_Map.tif in Resources */,
 				540DDD7A1CA0024A00DE3FCC /* guy.vert in Resources */,
 				B47949AF1BA6742B00B5E9DC /* config.json in Resources */,
-				82E6480E1CE217E700AD6876 /* bloomcamo.jpg in Resources */,
+				82E648101CE21D4500AD6876 /* camobloom.jpg in Resources */,
 				B4794A301BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				526351BF1CCF9F410040FA1A /* Terrain_50000.mtl in Resources */,
 				540DDD7E1CA020B700DE3FCC /* diffuse.png in Resources */,
-				82E6480A1CE213BF00AD6876 /* camo.jpg in Resources */,
 				52CA70821CC6652700269197 /* TAL.vert in Resources */,
 				9528E7EE1CD7601100414F6F /* lowpoly_terrain.obj in Resources */,
 				A85E11CE1CC4FC2F00D4418A /* TAL16OBJ.mtl in Resources */,
+				82E648121CE21E7F00AD6876 /* camo.jpg in Resources */,
 				A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */,
+				82E648141CE21EE000AD6876 /* bloomcamo.jpg in Resources */,
 				B4CB8CD01B72E43300FE041B /* Project-Info.plist in Resources */,
 				52BDFA6F1CC68DEA0002163D /* Color.tif in Resources */,
 			);

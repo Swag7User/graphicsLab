@@ -89,7 +89,7 @@ void main()
     else{
         color2 = vec4(0.2,0.2,0.2,1.0);}
     mediump vec4 color = texture2DProj(DiffuseMap,texCoordVarying);
-    
+    texture2DProj(bloomcamo.jpg, texCoordVarying);
     
     gl_FragColor = (ambient + diffuse ) * (color*color2) + specular;
 }
