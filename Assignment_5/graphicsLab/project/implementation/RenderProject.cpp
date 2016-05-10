@@ -163,10 +163,12 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     //modelMatrixTerrain *= rotationMatrix;
     modelMatrixTAL *= rotationMatrix;
+    //viewMatrix*=rotationMatrix;
     bRenderer().getObjects()->getCamera("camera")->lookAt(bRenderer().getObjects()->getCamera("camera")->getPosition(), modelMatrixTAL.get_translation(), vmml::Vector3f(0.0f, 0.0f,0.0f));
     
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     modelMatrixTAL *= rotationMatrix;
+    //viewMatrix*=rotationMatrix;
     //modelMatrixTerrain *= rotationMatrix;
     
     
@@ -178,9 +180,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //move plane
     angle++;
     
-    vmml::Vector3f planeChange=vmml::Vector3f(0.f,0.f,angle/50*10.f);
+    //vmml::Vector3f planeChange=vmml::Vector3f(0.f,0.f,angle/50*10.f);
     
-    vmml::Matrix4f planeMotion=vmml::create_translation(planeChange);
+    //vmml::Matrix4f planeMotion=vmml::create_translation(planeChange);
     //modelMatrixTAL *=planeMotion;
     //move camer with plane
 //    modelMatrixTAL *= vmml::create_rotation((float)(rotation2*M_PI_F/180), vmml::Vector3f::UNIT_X);
@@ -188,9 +190,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     vmml::Matrix4f rotationMatrixTAL = rotationX*rotationZ;//*rotationZ;
     modelMatrixTAL *= rotationMatrixTAL;
     
-    vmml::Vector3f cameraPos=bRenderer().getObjects()->getCamera("camera")->getPosition();
+ //   vmml::Vector3f cameraPos=bRenderer().getObjects()->getCamera("camera")->getPosition();
     
-    cameraPos=vmml::Vector3f(cameraPos.x()-planeChange.x()+0.0f,-planeChange.y()+cameraPos.y()-0.f,-planeChange.z()+cameraPos.z());
+    //cameraPos=vmml::Vector3f(cameraPos.x()-planeChange.x()+0.0f,-planeChange.y()+cameraPos.y()-0.f,-planeChange.z()+cameraPos.z());
     //bRenderer().getObjects()->getCamera("camera")->setPosition(cameraPos);
     
     //modelMatrixTerrain *= modelMatrixTAL;
