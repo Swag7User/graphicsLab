@@ -4,7 +4,17 @@
 #endif
 
 vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
-vmml::Matrix4f modelMatrixZep = vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 1000.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
+vmml::Matrix4f modelMatrixZep = vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
+vmml::AABBf hit_TAL;
+vmml::AABBf hit_Zep;
+vmml::AABBf hit_Terrain;
+ShaderPtr guyShader;
+ShaderPtr TALShader;
+ShaderPtr ZepShader;
+PropertiesPtr guyProperties;
+PropertiesPtr TALProperties;
+PropertiesPtr ZepProperties;
+
 double _time = 0;
 double _pitchSum;
 //CMMotionManager *cmMotionManager=CMMotionManager();
@@ -44,22 +54,22 @@ void RenderProject::initFunction()
     bRenderer().getObjects()->setShaderVersionES("#version 100");
     
     // load materials and shaders before loading the model
-    ShaderPtr guyShader = bRenderer().getObjects()->loadShaderFile("guy", 0, false, false, false, false, false);				// load shader from file without lighting, the number of lights won't ever change during rendering (no variable number of lights)
-    ShaderPtr TALShader = bRenderer().getObjects()->loadShaderFile("TAL", 0, false, false, false, false, false);
+    guyShader = bRenderer().getObjects()->loadShaderFile("guy", 0, false, false, false, false, false);				// load shader from file without lighting, the number of lights won't ever change during rendering (no variable number of lights)
+    TALShader = bRenderer().getObjects()->loadShaderFile("TAL", 0, false, false, false, false, false);
     
-    ShaderPtr ZepShader = bRenderer().getObjects()->loadShaderFile("Zep", 0, false, false, false, false, false);
+    ZepShader = bRenderer().getObjects()->loadShaderFile("Zep", 0, false, false, false, false, false);
 
     
     // create additional properties for a model
-    PropertiesPtr guyProperties = bRenderer().getObjects()->createProperties("guyProperties");
-    PropertiesPtr TALProperties = bRenderer().getObjects()->createProperties("TALProperties");
-    PropertiesPtr ZepProperties = bRenderer().getObjects()->createProperties("ZepProperties");
+    guyProperties = bRenderer().getObjects()->createProperties("guyProperties");
+    TALProperties = bRenderer().getObjects()->createProperties("TALProperties");
+    ZepProperties = bRenderer().getObjects()->createProperties("ZepProperties");
     
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
-    bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties);
-    bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties);
-    bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties);
+    hit_Terrain=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
+    hit_TAL=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
+    hit_Zep=bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties)->getBoundingBoxObjectSpace();
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
@@ -160,7 +170,11 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     // translate, rotate and scale
     vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
-    modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
+    if (hit_Terrain.isIn(modelMatrixTAL.get_translation())&hit_Zep. .isIn(modelMatrixTAL.get_translation())) {
+        modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
+    }
+    
+    
     vmml::Vector3f camTranslation = modelMatrixTAL.get_translation();
     camTranslation.z() = camTranslation.z() - 10.0f;
     bRenderer().getObjects()->getCamera("camera")->setPosition(-(camTranslation));
@@ -206,6 +220,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     //turn plane right
+    hit_Terrain=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
+    hit_TAL=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
+    hit_Zep=bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties)->getBoundingBoxObjectSpace();
     
     
 
