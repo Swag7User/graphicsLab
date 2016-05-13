@@ -1,8 +1,8 @@
 uniform mediump mat4 ViewMatrix;
-uniform mediump mat4 modelMatrixTAL;
+uniform mediump mat4 modelMatrixZep;
 uniform mediump mat4 ProjectionMatrix;
 
-uniform mediump mat3 NormalMatrixTAL;
+uniform mediump mat3 NormalMatrixZep;
 
 uniform mediump vec4 LightPos;
 uniform mediump vec3 lightDir;
@@ -41,8 +41,8 @@ varying lowp vec4 texCoordVarying;
 void main()
 {
     
-    mediump vec4 pos = modelMatrixTAL * posVarying;
-    mediump vec3 normal = normalize(NormalMatrixTAL * normalVarying);
+    mediump vec4 pos = modelMatrixZep * posVarying;
+    mediump vec3 normal = normalize(NormalMatrixZep * normalVarying);
     mediump vec3 n = normal ;
     mediump vec3 l = normalize(vec3(LightPos-pos)) ;
     
@@ -80,16 +80,16 @@ void main()
     
     mediump vec4 color2;
     
-    if (intensity > 0.95){
-        color2 = vec4(0.7,0.7,0.7,1.0);}
-    else if (intensity > 0.5){
-        color2 = vec4(0.6,0.6,0.6,1.0);}
-    else if (intensity > 0.25){
-        color2 = vec4(0.4,0.4,0.4,1.0);}
-    else{
-        color2 = vec4(0.2,0.2,0.2,1.0);}
-    mediump vec4 color = texture2DProj(DiffuseMap,texCoordVarying);
+//    if (intensity > 0.95){
+//        color2 = vec4(0.7,0.7,0.7,1.0);}
+//    else if (intensity > 0.5){
+//        color2 = vec4(0.6,0.6,0.6,1.0);}
+//    else if (intensity > 0.25){
+//        color2 = vec4(0.4,0.4,0.4,1.0);}
+//    else{
+//        color2 = vec4(0.2,0.2,0.2,1.0);}
+    mediump vec4 color = vec4(1.0,0.5,0.5,1.0);//texture2DProj(DiffuseMap,texCoordVarying);
     //texture2DProj(bloomcamo.jpg, texCoordVarying);
     
-    gl_FragColor = (ambient + diffuse ) * (color*color2) + specular;
+    gl_FragColor = (ambient + diffuse ) * (color) + specular;
 }
