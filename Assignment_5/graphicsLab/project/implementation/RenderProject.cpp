@@ -170,7 +170,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     // translate, rotate and scale
     vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
-    if (hit_Terrain.isIn(modelMatrixTAL.get_translation())&hit_Zep. .isIn(modelMatrixTAL.get_translation())) {
+    if (hit_Terrain.isIn(modelMatrixTAL.get_translation())|hit_Zep.isIn(modelMatrixTAL.get_translation())) {
         modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
     }
     
@@ -183,7 +183,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
     //modelMatrixTerrain *= rotationMatrix;
     modelMatrixTAL *= rotationMatrix;
-    viewMatrix*=rotationMatrix;
+    //viewMatrix*=rotationMatrix;
     //viewMatrix*=rotationMatrix;
     bRenderer().getObjects()->getCamera("camera")->lookAt(bRenderer().getObjects()->getCamera("camera")->getPosition(), modelMatrixTAL.get_translation(), vmml::Vector3f(0.0f, 0.0f,0.0f));
     
