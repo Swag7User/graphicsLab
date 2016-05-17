@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4681EBC61CEB7816009695CA /* blurShader.frag in Resources */ = {isa = PBXBuildFile; fileRef = 4681EBC41CEB7816009695CA /* blurShader.frag */; };
+		4681EBC71CEB7816009695CA /* blurShader.vert in Resources */ = {isa = PBXBuildFile; fileRef = 4681EBC51CEB7816009695CA /* blurShader.vert */; };
 		526351BF1CCF9F410040FA1A /* Terrain_50000.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 526351BD1CCF9F410040FA1A /* Terrain_50000.mtl */; };
 		526351C01CCF9F410040FA1A /* Terrain_50000.obj in Resources */ = {isa = PBXBuildFile; fileRef = 526351BE1CCF9F410040FA1A /* Terrain_50000.obj */; };
 		52BDFA6F1CC68DEA0002163D /* Color.tif in Resources */ = {isa = PBXBuildFile; fileRef = 52BDFA6E1CC68DEA0002163D /* Color.tif */; };
@@ -129,6 +131,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4681EBC41CEB7816009695CA /* blurShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blurShader.frag; sourceTree = "<group>"; };
+		4681EBC51CEB7816009695CA /* blurShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blurShader.vert; sourceTree = "<group>"; };
 		526351BD1CCF9F410040FA1A /* Terrain_50000.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.mtl; sourceTree = "<group>"; };
 		526351BE1CCF9F410040FA1A /* Terrain_50000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.obj; sourceTree = "<group>"; };
 		52BDFA6E1CC68DEA0002163D /* Color.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Color.tif; sourceTree = "<group>"; };
@@ -370,6 +374,8 @@
 				82DC60CB1CE5D41500EF7560 /* Zep.mtl */,
 				82DC60CC1CE5D41500EF7560 /* Zep.obj */,
 				82DC60C31CE5D23A00EF7560 /* Zep.frag */,
+				4681EBC41CEB7816009695CA /* blurShader.frag */,
+				4681EBC51CEB7816009695CA /* blurShader.vert */,
 				82DC60C41CE5D23A00EF7560 /* Zep.vert */,
 				82E648131CE21EE000AD6876 /* bloomcamo.jpg */,
 				82E648111CE21E7F00AD6876 /* camo.jpg */,
@@ -713,6 +719,8 @@
 				B4794A311BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				540DDD781CA0024A00DE3FCC /* guy.frag in Resources */,
 				526351C01CCF9F410040FA1A /* Terrain_50000.obj in Resources */,
+				4681EBC61CEB7816009695CA /* blurShader.frag in Resources */,
+				4681EBC71CEB7816009695CA /* blurShader.vert in Resources */,
 				82DC60C51CE5D23A00EF7560 /* Zep.frag in Resources */,
 				540DDD791CA0024A00DE3FCC /* guy.obj in Resources */,
 				B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */,
