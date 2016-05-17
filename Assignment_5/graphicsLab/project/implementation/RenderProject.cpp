@@ -176,7 +176,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     vmml::Vector3f camTranslation = modelMatrixTAL.get_translation();
-    camTranslation.z() = camTranslation.z() - 10.0f;
+    
     bRenderer().getObjects()->getCamera("camera")->setPosition(-(camTranslation));
     
     
@@ -185,7 +185,20 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     modelMatrixTAL *= rotationMatrix;
     //viewMatrix*=rotationMatrix;
     //viewMatrix*=rotationMatrix;
+    
+    bRenderer().getObjects()->getCamera("camera")->rotateCamera(-rotation2, 0.0f, 0.0f);
+    bRenderer().getObjects()->getCamera("camera")->moveCameraUpward(sin(rotation2)*10.0f);
+    bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation2)*-10.0f);
+    bRenderer().getObjects()->getCamera("camera")->rotateCamera(0.0f, 0.0f, -rotation);
+    //bRenderer().getObjects()->getCamera("camera")->moveCameraSideward(sin(-rotation)*10.0f);
+//    bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation)*-10.0f);
+    
+    
+    
     bRenderer().getObjects()->getCamera("camera")->lookAt(bRenderer().getObjects()->getCamera("camera")->getPosition(), modelMatrixTAL.get_translation(), vmml::Vector3f(0.0f, 0.0f,0.0f));
+    
+    
+    //camTranslation.z() = camTranslation.z() - 10.0f;
     
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
     modelMatrixTAL *= rotationMatrix;
