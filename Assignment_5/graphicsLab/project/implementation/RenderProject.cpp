@@ -209,7 +209,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     //turn plane right
     
-    modelMatrixSKY = vmml::create_translation(modelMatrixTAL.get_translation())*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f,2000.0f))*vmml::create_scaling(vmml::Vector3f(1500.f));
+    modelMatrixSKY = vmml::create_translation(modelMatrixTAL.get_translation())*vmml::create_translation(vmml::Vector3f(0.0f, -225.0f,2000.0f))*vmml::create_scaling(vmml::Vector3f(1500.f));
     
     
     
