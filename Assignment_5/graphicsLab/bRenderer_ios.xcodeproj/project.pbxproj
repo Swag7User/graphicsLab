@@ -42,11 +42,11 @@
 		A8BFA7CD1CDCC3CB003DFCEB /* right_test.png in Resources */ = {isa = PBXBuildFile; fileRef = A8BFA7BF1CDCC3CB003DFCEB /* right_test.png */; };
 		A8BFA7CE1CDCC3CB003DFCEB /* rightright.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A8BFA7C01CDCC3CB003DFCEB /* rightright.jpg */; };
 		A8BFA7CF1CDCC3CB003DFCEB /* rightright_test.png in Resources */ = {isa = PBXBuildFile; fileRef = A8BFA7C11CDCC3CB003DFCEB /* rightright_test.png */; };
-		A8BFA7D01CDCC3CB003DFCEB /* skybox.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A8BFA7C21CDCC3CB003DFCEB /* skybox.mtl */; };
-		A8BFA7D11CDCC3CB003DFCEB /* skybox.obj in Resources */ = {isa = PBXBuildFile; fileRef = A8BFA7C31CDCC3CB003DFCEB /* skybox.obj */; };
 		A8BFA7D21CDCC3CB003DFCEB /* top.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A8BFA7C41CDCC3CB003DFCEB /* top.jpg */; };
 		A8BFA7D41CDCC621003DFCEB /* SKY.frag in Resources */ = {isa = PBXBuildFile; fileRef = A8BFA7D31CDCC621003DFCEB /* SKY.frag */; };
 		A8BFA7D61CDCC62D003DFCEB /* SKY.vert in Resources */ = {isa = PBXBuildFile; fileRef = A8BFA7D51CDCC62D003DFCEB /* SKY.vert */; };
+		A8ED53411CEB446000B57FFD /* skybox.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A8ED533F1CEB446000B57FFD /* skybox.mtl */; };
+		A8ED53421CEB446000B57FFD /* skybox.obj in Resources */ = {isa = PBXBuildFile; fileRef = A8ED53401CEB446000B57FFD /* skybox.obj */; };
 		B44186971BA331E300604D7F /* RenderProject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B44186961BA331E300604D7F /* RenderProject.cpp */; };
 		B47949AF1BA6742B00B5E9DC /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B47949921BA6742B00B5E9DC /* config.json */; };
 		B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B47949C41BA6743D00B5E9DC /* LICENSE.txt */; };
@@ -184,11 +184,11 @@
 		A8BFA7BF1CDCC3CB003DFCEB /* right_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_test.png; sourceTree = "<group>"; };
 		A8BFA7C01CDCC3CB003DFCEB /* rightright.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rightright.jpg; sourceTree = "<group>"; };
 		A8BFA7C11CDCC3CB003DFCEB /* rightright_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightright_test.png; sourceTree = "<group>"; };
-		A8BFA7C21CDCC3CB003DFCEB /* skybox.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skybox.mtl; sourceTree = "<group>"; };
-		A8BFA7C31CDCC3CB003DFCEB /* skybox.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skybox.obj; sourceTree = "<group>"; };
 		A8BFA7C41CDCC3CB003DFCEB /* top.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = top.jpg; sourceTree = "<group>"; };
 		A8BFA7D31CDCC621003DFCEB /* SKY.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SKY.frag; sourceTree = "<group>"; };
 		A8BFA7D51CDCC62D003DFCEB /* SKY.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SKY.vert; sourceTree = "<group>"; };
+		A8ED533F1CEB446000B57FFD /* skybox.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skybox.mtl; sourceTree = "<group>"; };
+		A8ED53401CEB446000B57FFD /* skybox.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skybox.obj; sourceTree = "<group>"; };
 		B44186941BA331E300604D7F /* RenderProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderProject.h; sourceTree = "<group>"; };
 		B44186961BA331E300604D7F /* RenderProject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderProject.cpp; sourceTree = "<group>"; };
 		B47949921BA6742B00B5E9DC /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -406,6 +406,8 @@
 			isa = PBXGroup;
 			children = (
 				A8BFA7B71CDCC3CB003DFCEB /* bottom.jpg */,
+				A8ED533F1CEB446000B57FFD /* skybox.mtl */,
+				A8ED53401CEB446000B57FFD /* skybox.obj */,
 				A8BFA7B81CDCC3CB003DFCEB /* bottom_test.png */,
 				A8BFA7B91CDCC3CB003DFCEB /* left.jpg */,
 				A8BFA7BA1CDCC3CB003DFCEB /* left_test.png */,
@@ -416,8 +418,6 @@
 				A8BFA7BF1CDCC3CB003DFCEB /* right_test.png */,
 				A8BFA7C01CDCC3CB003DFCEB /* rightright.jpg */,
 				A8BFA7C11CDCC3CB003DFCEB /* rightright_test.png */,
-				A8BFA7C21CDCC3CB003DFCEB /* skybox.mtl */,
-				A8BFA7C31CDCC3CB003DFCEB /* skybox.obj */,
 				A8BFA7C41CDCC3CB003DFCEB /* top.jpg */,
 			);
 			path = skybox;
@@ -797,6 +797,7 @@
 				A8BFA7AF1CDCC107003DFCEB /* BackImage.png in Resources */,
 				540DDD7C1CA0058A00DE3FCC /* guy.mtl in Resources */,
 				B4794A311BA6743D00B5E9DC /* LICENSE.txt in Resources */,
+				A8ED53421CEB446000B57FFD /* skybox.obj in Resources */,
 				540DDD781CA0024A00DE3FCC /* guy.frag in Resources */,
 				526351C01CCF9F410040FA1A /* Terrain_50000.obj in Resources */,
 				540DDD791CA0024A00DE3FCC /* guy.obj in Resources */,
@@ -806,19 +807,18 @@
 				A8BFA7D41CDCC621003DFCEB /* SKY.frag in Resources */,
 				A85E11E41CC512AE00D4418A /* Normal_Map.tif in Resources */,
 				A8BFA7D61CDCC62D003DFCEB /* SKY.vert in Resources */,
-				A8BFA7D11CDCC3CB003DFCEB /* skybox.obj in Resources */,
 				540DDD7A1CA0024A00DE3FCC /* guy.vert in Resources */,
 				A8BFA7B51CDCC107003DFCEB /* TopImage.png in Resources */,
 				B47949AF1BA6742B00B5E9DC /* config.json in Resources */,
 				A8BFA7CD1CDCC3CB003DFCEB /* right_test.png in Resources */,
 				A8BFA7C91CDCC3CB003DFCEB /* Mat_Farbe.tif in Resources */,
+				A8ED53411CEB446000B57FFD /* skybox.mtl in Resources */,
 				B4794A301BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				526351BF1CCF9F410040FA1A /* Terrain_50000.mtl in Resources */,
 				540DDD7E1CA020B700DE3FCC /* diffuse.png in Resources */,
 				52CA70821CC6652700269197 /* TAL.vert in Resources */,
 				9528E7EE1CD7601100414F6F /* lowpoly_terrain.obj in Resources */,
 				A8BFA7B11CDCC107003DFCEB /* FrontImage.png in Resources */,
-				A8BFA7D01CDCC3CB003DFCEB /* skybox.mtl in Resources */,
 				A8BFA7CE1CDCC3CB003DFCEB /* rightright.jpg in Resources */,
 				A8BFA7CF1CDCC3CB003DFCEB /* rightright_test.png in Resources */,
 				A8BFA7C51CDCC3CB003DFCEB /* bottom.jpg in Resources */,
