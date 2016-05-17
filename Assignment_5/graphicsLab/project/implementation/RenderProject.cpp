@@ -73,7 +73,7 @@ void RenderProject::initFunction()
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     
     // create camera
-    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, -10.0f), vmml::Vector3f(0.f, 0.f, 0.f));
+    bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
     
     
     // Update render queue
@@ -186,11 +186,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //viewMatrix*=rotationMatrix;
     //viewMatrix*=rotationMatrix;
     
-    bRenderer().getObjects()->getCamera("camera")->rotateCamera(-rotation2, 0.0f, 0.0f);
-    bRenderer().getObjects()->getCamera("camera")->moveCameraUpward(sin(rotation2)*10.0f);
-    bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation2)*-10.0f);
-    bRenderer().getObjects()->getCamera("camera")->rotateCamera(0.0f, 0.0f, -rotation);
-    //bRenderer().getObjects()->getCamera("camera")->moveCameraSideward(sin(-rotation)*10.0f);
+
 //    bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation)*-10.0f);
     
     
@@ -204,6 +200,14 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     modelMatrixTAL *= rotationMatrix;
     //viewMatrix*=rotationMatrix;
     //modelMatrixTerrain *= rotationMatrix;
+    bRenderer().getObjects()->getCamera("camera")->rotateCamera(-rotation2, 0.0f, 0.0f);
+
+    bRenderer().getObjects()->getCamera("camera")->rotateCamera(0.0f, 0.0f, -rotation);
+    
+    bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation2)*-10.0f);
+    //bRenderer().getObjects()->getCamera("camera")->moveCameraSideward(cos(rotation2)*10.0f*sin(rotation));
+    
+    bRenderer().getObjects()->getCamera("camera")->moveCameraUpward(sin(rotation2)*10.0f);
     
     
     
