@@ -5,6 +5,7 @@
 
 vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
 vmml::Matrix4f modelMatrixZep = vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
+vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
 vmml::AABBf hit_TAL;
 vmml::AABBf hit_Zep;
 vmml::AABBf hit_Terrain;
@@ -124,7 +125,7 @@ void RenderProject::loopFunction(const double &deltaTime, const double &elapsedT
             bRenderer().getObjects()->getMaterial("blurMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture(b ? "fbo_texture1" : "fbo_texture2"));
             bRenderer().getObjects()->getMaterial("blurMaterial")->setScalar("isVertical", static_cast<GLfloat>(b));
             // draw
-            bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("blurSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
+            bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("blurSprite"), modelMatrixTerrain, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
             b = !b;
         }
     }
@@ -200,7 +201,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     // translate, rotate and scale
-    vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
+    
     if (hit_Terrain.isIn(modelMatrixTAL.get_translation())|hit_Zep.isIn(modelMatrixTAL.get_translation())) {
         modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
     }
