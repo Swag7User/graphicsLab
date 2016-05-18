@@ -270,6 +270,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         shader->setUniform("Ia", vmml::Vector3f(1.f));
         shader->setUniform("Id", vmml::Vector3f(1.f));
         shader->setUniform("Is", vmml::Vector3f(1.f));
+        shader->setUniform("PosPlane", vmml::Vector3f(modelMatrixTAL.get_translation()));
     }
     else
     {

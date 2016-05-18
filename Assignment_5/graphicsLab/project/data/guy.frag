@@ -19,6 +19,7 @@ uniform mediump float Ns;   // specular material exponent (shininess)
 uniform lowp vec3 Ia;   // ambient light intensity
 uniform lowp vec3 Id;   // diffuse light intensity
 uniform lowp vec3 Is;   // specular light intensity
+uniform lowp vec3 PosPlane;
 
 uniform sampler2D DiffuseMap;
 //uniform float bias;
@@ -69,7 +70,7 @@ void main()
     }
     highp float no=1.0;
     highp float f=20000.0;
-    highp vec4 color = texture2DProj(DiffuseMap,texCoordVarying,posVarying.z/100.0); // TODO: read color from DiffuseMap
+    highp vec4 color = texture2DProj(DiffuseMap,texCoordVarying,((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0); // TODO: read color from DiffuseMap
     //highp float depth=texture2D(DiffuseMap,texCoordVarying.xy).r;
     //highp vec4 blure = texture2DProj(DiffuseMap,texCoordVarying,bias);
     //depth=(2.0*no)/(f+no-depth*(f-no));
