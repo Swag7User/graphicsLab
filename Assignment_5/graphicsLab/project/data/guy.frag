@@ -100,6 +100,6 @@ void main()
     //color=(2.0*no)/(f+n)
     
     //gl_FragColor = (color*0.666 + color2*0.333) ;
-    gl_FragColor = (color) ;
+    gl_FragColor =  (color) + specular;
 }
 
