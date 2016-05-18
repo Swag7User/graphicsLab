@@ -1,6 +1,6 @@
 
 uniform mediump mat4 ViewMatrix;
-uniform mediump mat4 modelMatrixTerrain;
+uniform mediump mat4 modelMatrixSKY;
 uniform mediump mat4 ProjectionMatrix;
 
 uniform mediump mat3 NormalMatrix;
@@ -19,11 +19,8 @@ uniform mediump float Ns;   // specular material exponent (shininess)
 uniform lowp vec3 Ia;   // ambient light intensity
 uniform lowp vec3 Id;   // diffuse light intensity
 uniform lowp vec3 Is;   // specular light intensity
-uniform lowp vec3 PosPlane;
 
 uniform sampler2D DiffuseMap;
-uniform sampler2D SpecularMap;
-//uniform float bias;
 
 lowp vec4 ambient;
 lowp vec4 diffuse;
@@ -39,18 +36,12 @@ varying lowp vec4 diffuseVarying;
 varying lowp vec4 specularVarying;
 varying lowp vec4 texCoordVarying;
 
-uniform highp vec3 wsEyePosition;
-varying highp vec3 wsInterpolatedEye;
-varying highp vec3 wsInterpolatedNormal;
-
-varying highp float dist;
-
 void main()
 {
     // TODO: implement Phong Shading (per-fragment lighting)
     //ambient here
     ambient = vec4(Ka * Ia, 1.0);
-    //bias=1.0;
+    
     //diffuse here
     highp vec3 l = normalize((LightPos - posVarying).xyz);
     highp vec3 diffLight = Kd * clamp(dot(normalVarying, l),0.0, 1.0) * Id;
@@ -72,34 +63,12 @@ void main()
     {
         highp vec3 eyeVec = normalize((EyePos - posVarying).xyz);
         highp vec3 h = normalize((l + eyeVec)/length(l+eyeVec));
+        
         highp vec3 spec = Ks * pow(dot(normalVarying,h), Ns) * Is;
         specular = vec4(clamp(spec,0.0,1.0),1.0);
     }
-    highp float no=1.0;
-    highp float f=20000.0;
-    //highp vec4 color3 = texture2DProj(DiffuseMap,texCoordVarying,((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0); // TODO: read color from DiffuseMap
     
-    //uiiuugjefejjfifiuerguifernfnrifgnregebg
+    highp vec4 color = texture2DProj(DiffuseMap,texCoordVarying); // TODO: read color from DiffuseMap
     
-    highp vec3 wsNormal = normalize(wsInterpolatedNormal);
-    highp vec3 wsEye = normalize(wsInterpolatedEye);
-    highp vec2 selector;
-    selector.x = (1.0 + dot(wsNormal,wsEye))/2.0;
-    selector.y = dist/2.0;
-    
-    
-    //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
-    
-    highp vec4 color = texture2D(DiffuseMap,selector.st, ((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0);
-    //highp vec4 color2 = texture2DProj(SpecularMap,texCoordVarying,((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0);
-    
-    //highp float depth=texture2D(DiffuseMap,texCoordVarying.xy).r;
-    //highp vec4 blure = texture2DProj(DiffuseMap,texCoordVarying,bias);
-    //depth=(2.0*no)/(f+no-depth*(f-no));
-    //color*=depth;
-    //color=(2.0*no)/(f+n)
-    
-    //gl_FragColor = (color*0.666 + color2*0.333) ;
-    gl_FragColor = (color) ;
+    gl_FragColor = (ambient ) * color;
 }
-

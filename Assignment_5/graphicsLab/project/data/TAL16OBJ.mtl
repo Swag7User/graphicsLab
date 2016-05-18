@@ -6,9 +6,8 @@ Ka 0.800000 0.800000 0.800000
 Kd 0.640000 0.640000 0.640000
 Ks 0.759720 0.759720 0.759720
 Ni 1.000000
-
 illum 2
-map_Kd bloomcamo.jpg
+map_Kd LOD_map2_orig.png
 
 
 

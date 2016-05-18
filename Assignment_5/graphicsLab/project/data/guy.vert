@@ -33,6 +33,12 @@ varying lowp vec4 texCoordVarying;
 varying mediump vec4 posVarying;       // pos in world space
 varying mediump vec3 normalVarying;    // normal in world space
 
+uniform highp vec3 wsEyePosition;
+varying highp vec3 wsInterpolatedEye;
+varying highp vec3 wsInterpolatedNormal;
+
+varying highp float dist;
+
 void main()
 {
 //    mediump vec4 pos = ModelMatrix * Position;
@@ -66,10 +72,15 @@ void main()
 //        mediump vec3 specular = Ks * pow(dot(n,h),Ns) * Is;
 //        specularVarying = vec4(clamp(specular, 0.0, 1.0), 1.0);
 //    }
+    wsInterpolatedNormal = normalize(NormalMatrix * Normal);
+    wsInterpolatedEye = normalize(vec3(EyePos) - (modelMatrixTerrain * Position).xyz);
+    
     
     texCoordVarying = TexCoord;
     posVarying = modelMatrixTerrain * Position;
     normalVarying = normalize(NormalMatrix * Normal);
 
     gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
+    dist = sqrt(dot( wsInterpolatedEye, wsInterpolatedEye));
+
 }

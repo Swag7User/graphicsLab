@@ -1,12 +1,11 @@
 
-uniform highp mat4 ViewMatrix;
-uniform highp mat4 modelMatrixTAL;
-uniform highp mat4 ProjectionMatrix;
+uniform mediump mat4 ViewMatrix;
+uniform mediump mat4 modelMatrixSKY;
+uniform mediump mat4 ProjectionMatrix;
 
-uniform mediump mat3 NormalMatrixTAL;
+uniform mediump mat3 NormalMatrix;
 
 uniform mediump vec4 LightPos;
-uniform mediump vec3 lightDir;
 uniform mediump vec4 EyePos;
 
 uniform lowp vec3 Ka;   // ambient material coefficient
@@ -25,7 +24,6 @@ attribute vec3 Tangent;
 attribute vec3 Bitangent;
 attribute vec4 TexCoord;
 
-
 varying lowp vec4 ambientVarying;
 varying lowp vec4 diffuseVarying;
 varying lowp vec4 specularVarying;
@@ -34,32 +32,25 @@ varying lowp vec4 texCoordVarying;
 varying mediump vec4 posVarying;       // pos in world space
 varying mediump vec3 normalVarying;    // normal in world space
 
-varying highp vec3 wsEyePosition;
-varying highp vec3 wsInterpolatedEye;
-varying highp vec3 wsInterpolatedNormal;
-
-varying highp float dist;
-
-
 void main()
 {
-    //    mediump vec4 pos = modelMatrixTAL * Position;
-    //    mediump vec3 normal = normalize(NormalMatrixTAL * Normal);
-    //texCoordVarying = TexCoord;
-    
-    //ambientVarying = vec4(Ka * Ia, 1.0);
-    
-    // TODO: calculate diffuse lighting
-    //diffuseVarying = vec4(0.0);
+    //    mediump vec4 pos = ModelMatrix * Position;
+    //    mediump vec3 normal = normalize(NormalMatrix * Normal);
+    //    texCoordVarying = TexCoord;
+    //
+    //    ambientVarying = vec4(Ka * Ia, 1.0);
+    //
+    //    // TODO: calculate diffuse lighting
+    //    diffuseVarying = vec4(0.0);
     //    mediump vec3 n = normal ;
     //    mediump vec3 l = normalize(vec3(LightPos-pos)) ;
-    ////
+    //
     ////    vec3 Cs = vec3(0.0);
     ////    if( dot(n, l) >= 0.0 ) {
     ////        vec3 V = normalize(cameraPos-vertexPos); vec3 R = reflect( l, n ); Cs = pow( max( 0.0, dot( R, V ) ), Ns );
     ////    }
-    ////
-    //    intensity = dot(n,l) ;
+    //
+    //    lowp float intensity = dot(n,l) ;
     //    lowp vec3 diffuse = Kd * clamp(intensity, 0.0, 1.0) * Id;
     //    diffuseVarying = vec4(clamp(diffuse, 0.0, 1.0), 1.0);
     //
@@ -75,19 +66,9 @@ void main()
     //        specularVarying = vec4(clamp(specular, 0.0, 1.0), 1.0);
     //    }
     
-    
-    //    intensity = dot(normalize(lightDir), normalVarying);
-    
-    
-    wsInterpolatedNormal = normalize(NormalMatrixTAL * Normal);
-    wsInterpolatedEye = normalize(vec3(EyePos) - (modelMatrixTAL * Position).xyz);
-    
-    
-    
     texCoordVarying = TexCoord;
-    posVarying = modelMatrixTAL * Position;
-    normalVarying = normalize(NormalMatrixTAL * Normal);
+    posVarying = modelMatrixSKY * Position;
+    normalVarying = normalize(NormalMatrix * Normal);
     
     gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
-    dist = sqrt(dot( wsInterpolatedEye, wsInterpolatedEye));
 }
