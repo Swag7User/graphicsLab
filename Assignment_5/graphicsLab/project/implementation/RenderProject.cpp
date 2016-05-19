@@ -14,6 +14,7 @@ ShaderPtr guyShader;
 ShaderPtr TALShader;
 ShaderPtr ZepShader;
 ShaderPtr SKYShader;
+ShaderPtr blurShader;
 PropertiesPtr guyProperties;
 PropertiesPtr TALProperties;
 PropertiesPtr ZepProperties;
@@ -72,6 +73,15 @@ void RenderProject::initFunction()
     ZepProperties = bRenderer().getObjects()->createProperties("ZepProperties");
     SKYProperties = bRenderer().getObjects()->createProperties("SKYProperties");
     
+    
+    // postprocessing
+    bRenderer().getObjects()->createFramebuffer("fbo");					// create framebuffer object
+    bRenderer().getObjects()->createTexture("fbo_texture1", 0.f,0.f);	// create texture to bind to the fbo
+    bRenderer().getObjects()->createTexture("fbo_texture2", 0.f, 0.f);	// create texture to bind to the fbo
+    blurShader = bRenderer().getObjects()->loadShaderFile("blurShader", 0, false, false, false, false, false);			// load shader that blurs the texture
+    MaterialPtr blurMaterial = bRenderer().getObjects()->createMaterial("blurMaterial", blurShader);								// create an empty material to assign either texture1 or texture2 to
+    bRenderer().getObjects()->createSprite("blurSprite", blurMaterial);																// create a sprite using the material created above
+    
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
     hit_Terrain=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
@@ -79,10 +89,14 @@ void RenderProject::initFunction()
     hit_Zep=bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties)->getBoundingBoxObjectSpace();
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     bRenderer().getObjects()->loadObjModel("skybox.obj", false, true, SKYShader, SKYProperties);
-    
+    bRenderer().getObjects()->loadObjModel("TALblur.obj", false, true, blurShader, TALProperties);
+
     // create camera
     bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
     
+    
+    
+
     
     // Update render queue
     updateRenderQueue("camera", 0.0f);
@@ -94,20 +108,60 @@ void RenderProject::loopFunction(const double &deltaTime, const double &elapsedT
     //	bRenderer::log("FPS: " + std::to_string(1 / deltaTime));	// write number of frames per second to the console every frame
     
     //// Draw Scene and do post processing ////
+    GLint defaultFBO;
+    if (!_running){
+        bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth() / 5, bRenderer().getView()->getHeight() / 5);		// reduce viewport size
+        defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
+        bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture1"), false);	// bind the fbo
+    }
     
-    /// Begin post processing ///
-    //	GLint defaultFBO;
-    //	if (!_running){
-    //		bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth() / 5, bRenderer().getView()->getHeight() / 5);		// reduce viewport size
-    //		defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
-    //		bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture1"), false);	// bind the fbo
-    //	}
     
     /// Draw scene ///
     
     bRenderer().getModelRenderer()->drawQueue(/*GL_LINES*/);
     bRenderer().getModelRenderer()->clearQueue();
     
+    
+    
+    if (!_running){
+        /// End post processing ///
+        /*** Blur ***/
+        // translate
+        vmml::Matrix4f modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, -0.5));
+        // blur vertically and horizontally
+        bool b = true;
+        int numberOfBlurSteps = 5;
+        for (int i = 0; i < numberOfBlurSteps; i++) {
+            if (i == numberOfBlurSteps - 1){
+                bRenderer().getObjects()->getFramebuffer("fbo")->unbind(defaultFBO); //unbind (original fbo will be bound)
+                bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());								// reset vieport size
+            }
+            else
+                bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture(b ? "fbo_texture2" : "fbo_texture1"), false);
+            bRenderer().getObjects()->getMaterial("blurMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture(b ? "fbo_texture1" : "fbo_texture2"));
+            bRenderer().getObjects()->getMaterial("blurMaterial")->setScalar("isVertical", static_cast<GLfloat>(b));
+            // draw
+            bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("blurSprite"), modelMatrixTAL, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
+            b = !b;
+        }
+        
+        /*** Title ***/
+        // translate and scale
+        GLfloat titleScale = 0.5f;
+        vmml::Matrix4f scaling = vmml::create_scaling(vmml::Vector3f(titleScale / bRenderer().getView()->getAspectRatio(), titleScale, titleScale));
+        modelMatrix = vmml::create_translation(vmml::Vector3f(-0.4f, 0.0f, -0.65f)) * scaling;
+        // draw
+        bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("bTitle"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false, false);
+        
+        /*** Instructions ***/
+        titleScale = 0.1f;
+        scaling = vmml::create_scaling(vmml::Vector3f(titleScale / bRenderer().getView()->getAspectRatio(), titleScale, titleScale));
+        modelMatrix = vmml::create_translation(vmml::Vector3f(-0.45f / bRenderer().getView()->getAspectRatio(), -0.6f, -0.65f)) * scaling;
+        // draw
+        bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getTextSprite("instructions"), modelMatrixTAL, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
+    }
+
+
     //// Camera Movement ////
     updateCamera("camera", deltaTime);
     
@@ -115,8 +169,10 @@ void RenderProject::loopFunction(const double &deltaTime, const double &elapsedT
     updateRenderQueue("camera", deltaTime);
     
     // Quit renderer when escape is pressed
-    if (bRenderer().getInput()->getKeyState(bRenderer::KEY_ESCAPE) == bRenderer::INPUT_PRESS)
-        bRenderer().terminateRenderer();
+//    if (bRenderer().getInput()->getKeyState(bRenderer::KEY_ESCAPE) == bRenderer::INPUT_PRESS)
+//        bRenderer().terminateRenderer();
+    
+    
 }
 
 /* This function is executed when terminating the renderer */
@@ -207,7 +263,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
-    //modelMatrixTAL *= rotationMatrix;
+    modelMatrixTAL *= rotationMatrix;
     //viewMatrix*=rotationMatrix;
     //modelMatrixTerrain *= rotationMatrix;
     bRenderer().getObjects()->getCamera("camera")->rotateCamera(rotation2/100, 0.0f, 0.0f);
@@ -371,6 +427,35 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     {
         bRenderer::log("No shader available.");
     }
+    
+    shader = bRenderer().getObjects()->getShader("blurShader");
+    if (shader.get())
+    {
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixTAL", modelMatrixTAL);
+        
+        
+        vmml::Matrix3f normalMatrixTAL;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
+        shader->setUniform("NormalMatrixTAL", normalMatrixTAL);
+        
+        
+        
+        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
+        shader->setUniform("EyePos", eyePos);
+        
+        shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
+        shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
+        
+        shader->setUniform("fbo_texture", bRenderer().getObjects()->getTexture("fbo_texture1"));
+        
+        //uniform sampler2D fbo_texture;
+    }
+    else
+    {
+        bRenderer::log("No shader available.");
+    }
 
 
 
@@ -383,10 +468,15 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
+    
     bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("blurSprite", "camera", modelMatrixTAL, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("TALblur", "camera", modelMatrixTAL*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f,10.0f)), std::vector<std::string>({ }));
+    
     bRenderer().getModelRenderer()->drawModel("Zep", "camera", modelMatrixZep, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("skybox", "camera", modelMatrixSKY, std::vector<std::string>({ }));
-
+    
+    
 }
 
 /* Camera movement */

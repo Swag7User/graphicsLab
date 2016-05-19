@@ -1,0 +1,26 @@
+# Blender3D MTL File: TAL16.blend
+# Material Count: 2
+newmtl fuselaje_TALTS.jpg
+Ns 276.470588
+Ka 0.800000 0.800000 0.800000
+Kd 0.640000 0.640000 0.640000
+Ks 0.759720 0.759720 0.759720
+Ni 1.000000
+illum 2
+map_Kd LOD_map2_orig.png
+
+
+
+newmtl GLASS_TALTS.jpg
+Ns 96.078431
+Ka 0.800000 0.800000 0.800000
+Kd 0.640000 0.640000 0.640000
+Ks 0.799650 0.799650 0.799650
+Ni 1.000000
+d 0.456309
+illum 2
+map_Kd Color.tif
+
+
+
+
