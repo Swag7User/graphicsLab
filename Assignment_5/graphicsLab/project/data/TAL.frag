@@ -85,16 +85,16 @@ void main()
     //uiiuugjefejjfifiuerguifernfnrifgnregebg
     
     highp vec3 wsNormal = normalize(wsInterpolatedNormal);
-    highp vec3 wsEye = normalize(wsInterpolatedEye);
+    highp vec3 wsEye = normalize(vec3(vVertex));
     highp vec2 selector;
     selector.x = (1.0 + dot(wsNormal,wsEye))/2.0;
     
     highp float xxx = length(EyePos+vVertex);
     highp float sel = 1.0-(log(xxx/-1.0))/(log(1.0/-1.0));
     
-    selector.y = ((xxx/100.0)-(1.0))*(-1.0);
+    selector.y = (xxx/10.0);
     
-   // selector.y = dist/2.0;
+    //selector.y = dist/10.0;
     
     
     //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap

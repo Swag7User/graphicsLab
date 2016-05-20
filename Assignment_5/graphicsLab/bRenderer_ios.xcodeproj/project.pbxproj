@@ -45,6 +45,9 @@
 		A889BC4A1CECA86500370DBC /* AER_map3_orig_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC491CECA86500370DBC /* AER_map3_orig_sm.png */; };
 		A8F8D54F1CEF000E00707F04 /* debug.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F8D54D1CEF000E00707F04 /* debug.png */; };
 		A8F8D5501CEF000E00707F04 /* ydebug.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F8D54E1CEF000E00707F04 /* ydebug.png */; };
+		A8F8D55A1CEF1F1B00707F04 /* HLG_map3_orig.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F8D5591CEF1F1B00707F04 /* HLG_map3_orig.png */; };
+		A8F8D55C1CEF227900707F04 /* HLG_map3_orig_smut.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F8D55B1CEF227900707F04 /* HLG_map3_orig_smut.png */; };
+		A8F8D55E1CEF235700707F04 /* HLG_map3_orig_2.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F8D55D1CEF235700707F04 /* HLG_map3_orig_2.png */; };
 		B44186971BA331E300604D7F /* RenderProject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B44186961BA331E300604D7F /* RenderProject.cpp */; };
 		B47949AF1BA6742B00B5E9DC /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B47949921BA6742B00B5E9DC /* config.json */; };
 		B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B47949C41BA6743D00B5E9DC /* LICENSE.txt */; };
@@ -183,6 +186,9 @@
 		A889BC491CECA86500370DBC /* AER_map3_orig_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AER_map3_orig_sm.png; sourceTree = "<group>"; };
 		A8F8D54D1CEF000E00707F04 /* debug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = debug.png; sourceTree = "<group>"; };
 		A8F8D54E1CEF000E00707F04 /* ydebug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ydebug.png; sourceTree = "<group>"; };
+		A8F8D5591CEF1F1B00707F04 /* HLG_map3_orig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HLG_map3_orig.png; sourceTree = "<group>"; };
+		A8F8D55B1CEF227900707F04 /* HLG_map3_orig_smut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HLG_map3_orig_smut.png; sourceTree = "<group>"; };
+		A8F8D55D1CEF235700707F04 /* HLG_map3_orig_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HLG_map3_orig_2.png; sourceTree = "<group>"; };
 		B44186941BA331E300604D7F /* RenderProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderProject.h; sourceTree = "<group>"; };
 		B44186961BA331E300604D7F /* RenderProject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderProject.cpp; sourceTree = "<group>"; };
 		B47949921BA6742B00B5E9DC /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -416,7 +422,10 @@
 			children = (
 				82DC60CB1CE5D41500EF7560 /* Zep.mtl */,
 				82DC60CC1CE5D41500EF7560 /* Zep.obj */,
+				A8F8D55D1CEF235700707F04 /* HLG_map3_orig_2.png */,
+				A8F8D55B1CEF227900707F04 /* HLG_map3_orig_smut.png */,
 				82DC60C31CE5D23A00EF7560 /* Zep.frag */,
+				A8F8D5591CEF1F1B00707F04 /* HLG_map3_orig.png */,
 				82DC60C41CE5D23A00EF7560 /* Zep.vert */,
 				82E648131CE21EE000AD6876 /* bloomcamo.jpg */,
 				82E648111CE21E7F00AD6876 /* camo.jpg */,
@@ -767,6 +776,7 @@
 				A85E11CF1CC4FC2F00D4418A /* TAL16OBJ.obj in Resources */,
 				A889BC3B1CEC9B4700370DBC /* rightright_test.png in Resources */,
 				540DDD7C1CA0058A00DE3FCC /* guy.mtl in Resources */,
+				A8F8D55A1CEF1F1B00707F04 /* HLG_map3_orig.png in Resources */,
 				A889BC461CECA5CE00370DBC /* LOD_map2_orig.png in Resources */,
 				A889BC481CECA69F00370DBC /* AER_map3_orig.png in Resources */,
 				A889BC371CEC9B4700370DBC /* bottom_test.jpg in Resources */,
@@ -775,9 +785,11 @@
 				A889BC3A1CEC9B4700370DBC /* right_test.png in Resources */,
 				A889BC421CEC9B6500370DBC /* SKY.vert in Resources */,
 				A8F8D5501CEF000E00707F04 /* ydebug.png in Resources */,
+				A8F8D55E1CEF235700707F04 /* HLG_map3_orig_2.png in Resources */,
 				540DDD781CA0024A00DE3FCC /* guy.frag in Resources */,
 				A889BC3D1CEC9B4700370DBC /* skybox.obj in Resources */,
 				526351C01CCF9F410040FA1A /* Terrain_50000.obj in Resources */,
+				A8F8D55C1CEF227900707F04 /* HLG_map3_orig_smut.png in Resources */,
 				82DC60C51CE5D23A00EF7560 /* Zep.frag in Resources */,
 				A889BC381CEC9B4700370DBC /* left_test.png in Resources */,
 				A889BC441CECA3FA00370DBC /* LOD_map3_orig.png in Resources */,
