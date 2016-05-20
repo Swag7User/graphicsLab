@@ -331,7 +331,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         
         
         vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
-        shader->setUniform("EyePos", eyePos);
+        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
         
         shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
         shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
@@ -359,7 +359,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         
         
         vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
-        shader->setUniform("EyePos", eyePos);
+        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
         
         shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
         shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
