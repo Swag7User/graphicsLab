@@ -7,29 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		526351BF1CCF9F410040FA1A /* Terrain_50000.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 526351BD1CCF9F410040FA1A /* Terrain_50000.mtl */; };
-		526351C01CCF9F410040FA1A /* Terrain_50000.obj in Resources */ = {isa = PBXBuildFile; fileRef = 526351BE1CCF9F410040FA1A /* Terrain_50000.obj */; };
-		52BDFA6F1CC68DEA0002163D /* Color.tif in Resources */ = {isa = PBXBuildFile; fileRef = 52BDFA6E1CC68DEA0002163D /* Color.tif */; };
 		52CA70801CC6651900269197 /* TAL.frag in Resources */ = {isa = PBXBuildFile; fileRef = 52CA707F1CC6651900269197 /* TAL.frag */; };
 		52CA70821CC6652700269197 /* TAL.vert in Resources */ = {isa = PBXBuildFile; fileRef = 52CA70811CC6652700269197 /* TAL.vert */; };
 		540DDD781CA0024A00DE3FCC /* guy.frag in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD751CA0024A00DE3FCC /* guy.frag */; };
-		540DDD791CA0024A00DE3FCC /* guy.obj in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD761CA0024A00DE3FCC /* guy.obj */; };
 		540DDD7A1CA0024A00DE3FCC /* guy.vert in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD771CA0024A00DE3FCC /* guy.vert */; };
-		540DDD7C1CA0058A00DE3FCC /* guy.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD7B1CA0058A00DE3FCC /* guy.mtl */; };
-		540DDD7E1CA020B700DE3FCC /* diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD7D1CA020B700DE3FCC /* diffuse.png */; };
 		82DC60C51CE5D23A00EF7560 /* Zep.frag in Resources */ = {isa = PBXBuildFile; fileRef = 82DC60C31CE5D23A00EF7560 /* Zep.frag */; };
 		82DC60C61CE5D23A00EF7560 /* Zep.vert in Resources */ = {isa = PBXBuildFile; fileRef = 82DC60C41CE5D23A00EF7560 /* Zep.vert */; };
 		82DC60CD1CE5D41500EF7560 /* Zep.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 82DC60CB1CE5D41500EF7560 /* Zep.mtl */; };
 		82DC60CE1CE5D41500EF7560 /* Zep.obj in Resources */ = {isa = PBXBuildFile; fileRef = 82DC60CC1CE5D41500EF7560 /* Zep.obj */; };
 		82E648121CE21E7F00AD6876 /* camo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82E648111CE21E7F00AD6876 /* camo.jpg */; };
 		82E648141CE21EE000AD6876 /* bloomcamo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82E648131CE21EE000AD6876 /* bloomcamo.jpg */; };
-		9528E7ED1CD7601100414F6F /* lowpoly_terrain.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 9528E7EB1CD7601100414F6F /* lowpoly_terrain.mtl */; };
-		9528E7EE1CD7601100414F6F /* lowpoly_terrain.obj in Resources */ = {isa = PBXBuildFile; fileRef = 9528E7EC1CD7601100414F6F /* lowpoly_terrain.obj */; };
 		A85E11CE1CC4FC2F00D4418A /* TAL16OBJ.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */; };
 		A85E11CF1CC4FC2F00D4418A /* TAL16OBJ.obj in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */; };
 		A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */; };
 		A85E11E41CC512AE00D4418A /* Normal_Map.tif in Resources */ = {isa = PBXBuildFile; fileRef = A85E11E11CC512AE00D4418A /* Normal_Map.tif */; };
-		A889BC371CEC9B4700370DBC /* bottom_test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A889BC2F1CEC9B4700370DBC /* bottom_test.jpg */; };
 		A889BC381CEC9B4700370DBC /* left_test.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC301CEC9B4700370DBC /* left_test.png */; };
 		A889BC391CEC9B4700370DBC /* middle_test.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC311CEC9B4700370DBC /* middle_test.png */; };
 		A889BC3A1CEC9B4700370DBC /* right_test.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC321CEC9B4700370DBC /* right_test.png */; };
@@ -43,6 +34,13 @@
 		A889BC461CECA5CE00370DBC /* LOD_map2_orig.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC451CECA5CE00370DBC /* LOD_map2_orig.png */; };
 		A889BC481CECA69F00370DBC /* AER_map3_orig.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC471CECA69F00370DBC /* AER_map3_orig.png */; };
 		A889BC4A1CECA86500370DBC /* AER_map3_orig_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC491CECA86500370DBC /* AER_map3_orig_sm.png */; };
+		A8BFF1FE1CEF36F300D63D59 /* Color.png in Resources */ = {isa = PBXBuildFile; fileRef = A8BFF1FD1CEF36F300D63D59 /* Color.png */; };
+		A8BFF2051CEF5EC500D63D59 /* Terrain_50000.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A8BFF2031CEF5EC500D63D59 /* Terrain_50000.mtl */; };
+		A8BFF2061CEF5EC500D63D59 /* Terrain_50000.obj in Resources */ = {isa = PBXBuildFile; fileRef = A8BFF2041CEF5EC500D63D59 /* Terrain_50000.obj */; };
+		A8BFF2081CEF621700D63D59 /* iceburn.png in Resources */ = {isa = PBXBuildFile; fileRef = A8BFF2071CEF621700D63D59 /* iceburn.png */; };
+		A8BFF20E1CEF682F00D63D59 /* iceburn5.png in Resources */ = {isa = PBXBuildFile; fileRef = A8BFF20D1CEF682F00D63D59 /* iceburn5.png */; };
+		A8BFF2101CEF6A0700D63D59 /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = A8BFF20F1CEF6A0700D63D59 /* metal.png */; };
+		A8BFF2131CEF6CED00D63D59 /* bottom_test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A8BFF2121CEF6CED00D63D59 /* bottom_test.jpg */; };
 		A8F8D54F1CEF000E00707F04 /* debug.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F8D54D1CEF000E00707F04 /* debug.png */; };
 		A8F8D5501CEF000E00707F04 /* ydebug.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F8D54E1CEF000E00707F04 /* ydebug.png */; };
 		A8F8D55A1CEF1F1B00707F04 /* HLG_map3_orig.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F8D5591CEF1F1B00707F04 /* HLG_map3_orig.png */; };
@@ -148,29 +146,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		526351BD1CCF9F410040FA1A /* Terrain_50000.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.mtl; sourceTree = "<group>"; };
-		526351BE1CCF9F410040FA1A /* Terrain_50000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.obj; sourceTree = "<group>"; };
-		52BDFA6E1CC68DEA0002163D /* Color.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Color.tif; sourceTree = "<group>"; };
 		52CA707F1CC6651900269197 /* TAL.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TAL.frag; sourceTree = "<group>"; };
 		52CA70811CC6652700269197 /* TAL.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TAL.vert; sourceTree = "<group>"; };
 		540DDD751CA0024A00DE3FCC /* guy.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = guy.frag; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
-		540DDD761CA0024A00DE3FCC /* guy.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = guy.obj; sourceTree = "<group>"; };
 		540DDD771CA0024A00DE3FCC /* guy.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = guy.vert; sourceTree = "<group>"; };
-		540DDD7B1CA0058A00DE3FCC /* guy.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = guy.mtl; sourceTree = "<group>"; };
-		540DDD7D1CA020B700DE3FCC /* diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diffuse.png; sourceTree = "<group>"; };
 		82DC60C31CE5D23A00EF7560 /* Zep.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Zep.frag; sourceTree = "<group>"; };
 		82DC60C41CE5D23A00EF7560 /* Zep.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Zep.vert; sourceTree = "<group>"; };
 		82DC60CB1CE5D41500EF7560 /* Zep.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Zep.mtl; sourceTree = "<group>"; };
 		82DC60CC1CE5D41500EF7560 /* Zep.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Zep.obj; sourceTree = "<group>"; };
 		82E648111CE21E7F00AD6876 /* camo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = camo.jpg; sourceTree = "<group>"; };
 		82E648131CE21EE000AD6876 /* bloomcamo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bloomcamo.jpg; sourceTree = "<group>"; };
-		9528E7EB1CD7601100414F6F /* lowpoly_terrain.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lowpoly_terrain.mtl; sourceTree = "<group>"; };
-		9528E7EC1CD7601100414F6F /* lowpoly_terrain.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lowpoly_terrain.obj; sourceTree = "<group>"; };
 		A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TAL16OBJ.mtl; sourceTree = "<group>"; };
 		A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TAL16OBJ.obj; sourceTree = "<group>"; };
 		A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TALTS.jpg; sourceTree = "<group>"; };
 		A85E11E11CC512AE00D4418A /* Normal_Map.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Normal_Map.tif; sourceTree = "<group>"; };
-		A889BC2F1CEC9B4700370DBC /* bottom_test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bottom_test.jpg; sourceTree = "<group>"; };
 		A889BC301CEC9B4700370DBC /* left_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_test.png; sourceTree = "<group>"; };
 		A889BC311CEC9B4700370DBC /* middle_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middle_test.png; sourceTree = "<group>"; };
 		A889BC321CEC9B4700370DBC /* right_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_test.png; sourceTree = "<group>"; };
@@ -178,12 +167,19 @@
 		A889BC341CEC9B4700370DBC /* skybox.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skybox.mtl; sourceTree = "<group>"; };
 		A889BC351CEC9B4700370DBC /* skybox.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skybox.obj; sourceTree = "<group>"; };
 		A889BC361CEC9B4700370DBC /* top.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = top.jpg; sourceTree = "<group>"; };
-		A889BC3F1CEC9B6500370DBC /* SKY.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SKY.frag; sourceTree = "<group>"; };
-		A889BC401CEC9B6500370DBC /* SKY.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SKY.vert; sourceTree = "<group>"; };
+		A889BC3F1CEC9B6500370DBC /* SKY.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = SKY.frag; path = ../SKY.frag; sourceTree = "<group>"; };
+		A889BC401CEC9B6500370DBC /* SKY.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = SKY.vert; path = ../SKY.vert; sourceTree = "<group>"; };
 		A889BC431CECA3FA00370DBC /* LOD_map3_orig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LOD_map3_orig.png; sourceTree = "<group>"; };
 		A889BC451CECA5CE00370DBC /* LOD_map2_orig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LOD_map2_orig.png; sourceTree = "<group>"; };
 		A889BC471CECA69F00370DBC /* AER_map3_orig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AER_map3_orig.png; sourceTree = "<group>"; };
 		A889BC491CECA86500370DBC /* AER_map3_orig_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AER_map3_orig_sm.png; sourceTree = "<group>"; };
+		A8BFF1FD1CEF36F300D63D59 /* Color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Color.png; sourceTree = "<group>"; };
+		A8BFF2031CEF5EC500D63D59 /* Terrain_50000.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.mtl; sourceTree = "<group>"; };
+		A8BFF2041CEF5EC500D63D59 /* Terrain_50000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Terrain_50000.obj; sourceTree = "<group>"; };
+		A8BFF2071CEF621700D63D59 /* iceburn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iceburn.png; sourceTree = "<group>"; };
+		A8BFF20D1CEF682F00D63D59 /* iceburn5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iceburn5.png; sourceTree = "<group>"; };
+		A8BFF20F1CEF6A0700D63D59 /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
+		A8BFF2121CEF6CED00D63D59 /* bottom_test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bottom_test.jpg; sourceTree = "<group>"; };
 		A8F8D54D1CEF000E00707F04 /* debug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = debug.png; sourceTree = "<group>"; };
 		A8F8D54E1CEF000E00707F04 /* ydebug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ydebug.png; sourceTree = "<group>"; };
 		A8F8D5591CEF1F1B00707F04 /* HLG_map3_orig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HLG_map3_orig.png; sourceTree = "<group>"; };
@@ -389,8 +385,10 @@
 		A889BC2E1CEC9B4700370DBC /* skybox */ = {
 			isa = PBXGroup;
 			children = (
-				A889BC2F1CEC9B4700370DBC /* bottom_test.jpg */,
+				A889BC401CEC9B6500370DBC /* SKY.vert */,
+				A889BC3F1CEC9B6500370DBC /* SKY.frag */,
 				A889BC301CEC9B4700370DBC /* left_test.png */,
+				A8BFF2121CEF6CED00D63D59 /* bottom_test.jpg */,
 				A889BC311CEC9B4700370DBC /* middle_test.png */,
 				A889BC321CEC9B4700370DBC /* right_test.png */,
 				A889BC331CEC9B4700370DBC /* rightright_test.png */,
@@ -399,6 +397,52 @@
 				A889BC361CEC9B4700370DBC /* top.jpg */,
 			);
 			path = skybox;
+			sourceTree = "<group>";
+		};
+		A8BFF2111CEF6C4A00D63D59 /* Plane */ = {
+			isa = PBXGroup;
+			children = (
+				82E648131CE21EE000AD6876 /* bloomcamo.jpg */,
+				82E648111CE21E7F00AD6876 /* camo.jpg */,
+				A8F8D55D1CEF235700707F04 /* HLG_map3_orig_2.png */,
+				A889BC451CECA5CE00370DBC /* LOD_map2_orig.png */,
+				A8F8D55B1CEF227900707F04 /* HLG_map3_orig_smut.png */,
+				A8F8D5591CEF1F1B00707F04 /* HLG_map3_orig.png */,
+				A8BFF20F1CEF6A0700D63D59 /* metal.png */,
+				A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */,
+				52CA707F1CC6651900269197 /* TAL.frag */,
+				52CA70811CC6652700269197 /* TAL.vert */,
+				A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */,
+				A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */,
+			);
+			name = Plane;
+			sourceTree = "<group>";
+		};
+		A8BFF2141CEF6D1600D63D59 /* Zeppelin */ = {
+			isa = PBXGroup;
+			children = (
+				82DC60C31CE5D23A00EF7560 /* Zep.frag */,
+				82DC60C41CE5D23A00EF7560 /* Zep.vert */,
+				82DC60CB1CE5D41500EF7560 /* Zep.mtl */,
+				82DC60CC1CE5D41500EF7560 /* Zep.obj */,
+			);
+			name = Zeppelin;
+			sourceTree = "<group>";
+		};
+		A8BFF2151CEF6D4400D63D59 /* Terrain */ = {
+			isa = PBXGroup;
+			children = (
+				A889BC491CECA86500370DBC /* AER_map3_orig_sm.png */,
+				A889BC471CECA69F00370DBC /* AER_map3_orig.png */,
+				A8BFF20D1CEF682F00D63D59 /* iceburn5.png */,
+				A8BFF2071CEF621700D63D59 /* iceburn.png */,
+				A8BFF2031CEF5EC500D63D59 /* Terrain_50000.mtl */,
+				A8BFF2041CEF5EC500D63D59 /* Terrain_50000.obj */,
+				540DDD751CA0024A00DE3FCC /* guy.frag */,
+				540DDD771CA0024A00DE3FCC /* guy.vert */,
+				A85E11E11CC512AE00D4418A /* Normal_Map.tif */,
+			);
+			name = Terrain;
 			sourceTree = "<group>";
 		};
 		B44186931BA331E300604D7F /* headers */ = {
@@ -420,40 +464,14 @@
 		B47949841BA6742B00B5E9DC /* data */ = {
 			isa = PBXGroup;
 			children = (
-				82DC60CB1CE5D41500EF7560 /* Zep.mtl */,
-				82DC60CC1CE5D41500EF7560 /* Zep.obj */,
-				A8F8D55D1CEF235700707F04 /* HLG_map3_orig_2.png */,
-				A8F8D55B1CEF227900707F04 /* HLG_map3_orig_smut.png */,
-				82DC60C31CE5D23A00EF7560 /* Zep.frag */,
-				A8F8D5591CEF1F1B00707F04 /* HLG_map3_orig.png */,
-				82DC60C41CE5D23A00EF7560 /* Zep.vert */,
-				82E648131CE21EE000AD6876 /* bloomcamo.jpg */,
-				82E648111CE21E7F00AD6876 /* camo.jpg */,
-				9528E7EB1CD7601100414F6F /* lowpoly_terrain.mtl */,
-				9528E7EC1CD7601100414F6F /* lowpoly_terrain.obj */,
+				A8BFF2151CEF6D4400D63D59 /* Terrain */,
+				A8BFF2111CEF6C4A00D63D59 /* Plane */,
+				A8BFF1FD1CEF36F300D63D59 /* Color.png */,
+				A8BFF2141CEF6D1600D63D59 /* Zeppelin */,
 				A889BC2E1CEC9B4700370DBC /* skybox */,
-				52CA707F1CC6651900269197 /* TAL.frag */,
-				52CA70811CC6652700269197 /* TAL.vert */,
-				A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */,
-				A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */,
-				52BDFA6E1CC68DEA0002163D /* Color.tif */,
-				A889BC491CECA86500370DBC /* AER_map3_orig_sm.png */,
-				A889BC3F1CEC9B6500370DBC /* SKY.frag */,
 				A8F8D54D1CEF000E00707F04 /* debug.png */,
 				A8F8D54E1CEF000E00707F04 /* ydebug.png */,
-				A889BC471CECA69F00370DBC /* AER_map3_orig.png */,
-				A889BC451CECA5CE00370DBC /* LOD_map2_orig.png */,
-				A889BC401CEC9B6500370DBC /* SKY.vert */,
-				526351BD1CCF9F410040FA1A /* Terrain_50000.mtl */,
 				A889BC431CECA3FA00370DBC /* LOD_map3_orig.png */,
-				526351BE1CCF9F410040FA1A /* Terrain_50000.obj */,
-				A85E11E11CC512AE00D4418A /* Normal_Map.tif */,
-				A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */,
-				540DDD7D1CA020B700DE3FCC /* diffuse.png */,
-				540DDD7B1CA0058A00DE3FCC /* guy.mtl */,
-				540DDD751CA0024A00DE3FCC /* guy.frag */,
-				540DDD761CA0024A00DE3FCC /* guy.obj */,
-				540DDD771CA0024A00DE3FCC /* guy.vert */,
 				B47949921BA6742B00B5E9DC /* config.json */,
 			);
 			path = data;
@@ -774,12 +792,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A85E11CF1CC4FC2F00D4418A /* TAL16OBJ.obj in Resources */,
+				A8BFF1FE1CEF36F300D63D59 /* Color.png in Resources */,
+				A8BFF2051CEF5EC500D63D59 /* Terrain_50000.mtl in Resources */,
 				A889BC3B1CEC9B4700370DBC /* rightright_test.png in Resources */,
-				540DDD7C1CA0058A00DE3FCC /* guy.mtl in Resources */,
+				A8BFF2081CEF621700D63D59 /* iceburn.png in Resources */,
 				A8F8D55A1CEF1F1B00707F04 /* HLG_map3_orig.png in Resources */,
 				A889BC461CECA5CE00370DBC /* LOD_map2_orig.png in Resources */,
 				A889BC481CECA69F00370DBC /* AER_map3_orig.png in Resources */,
-				A889BC371CEC9B4700370DBC /* bottom_test.jpg in Resources */,
 				B4794A311BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				A889BC411CEC9B6500370DBC /* SKY.frag in Resources */,
 				A889BC3A1CEC9B4700370DBC /* right_test.png in Resources */,
@@ -788,37 +807,34 @@
 				A8F8D55E1CEF235700707F04 /* HLG_map3_orig_2.png in Resources */,
 				540DDD781CA0024A00DE3FCC /* guy.frag in Resources */,
 				A889BC3D1CEC9B4700370DBC /* skybox.obj in Resources */,
-				526351C01CCF9F410040FA1A /* Terrain_50000.obj in Resources */,
 				A8F8D55C1CEF227900707F04 /* HLG_map3_orig_smut.png in Resources */,
 				82DC60C51CE5D23A00EF7560 /* Zep.frag in Resources */,
 				A889BC381CEC9B4700370DBC /* left_test.png in Resources */,
 				A889BC441CECA3FA00370DBC /* LOD_map3_orig.png in Resources */,
-				540DDD791CA0024A00DE3FCC /* guy.obj in Resources */,
 				B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				82DC60C61CE5D23A00EF7560 /* Zep.vert in Resources */,
 				A889BC4A1CECA86500370DBC /* AER_map3_orig_sm.png in Resources */,
 				52CA70801CC6651900269197 /* TAL.frag in Resources */,
-				9528E7ED1CD7601100414F6F /* lowpoly_terrain.mtl in Resources */,
 				A85E11E41CC512AE00D4418A /* Normal_Map.tif in Resources */,
 				540DDD7A1CA0024A00DE3FCC /* guy.vert in Resources */,
 				A889BC3E1CEC9B4700370DBC /* top.jpg in Resources */,
 				B47949AF1BA6742B00B5E9DC /* config.json in Resources */,
 				A889BC3C1CEC9B4700370DBC /* skybox.mtl in Resources */,
+				A8BFF20E1CEF682F00D63D59 /* iceburn5.png in Resources */,
 				B4794A301BA6743D00B5E9DC /* LICENSE.txt in Resources */,
-				526351BF1CCF9F410040FA1A /* Terrain_50000.mtl in Resources */,
-				540DDD7E1CA020B700DE3FCC /* diffuse.png in Resources */,
 				52CA70821CC6652700269197 /* TAL.vert in Resources */,
+				A8BFF2131CEF6CED00D63D59 /* bottom_test.jpg in Resources */,
 				82DC60CE1CE5D41500EF7560 /* Zep.obj in Resources */,
-				9528E7EE1CD7601100414F6F /* lowpoly_terrain.obj in Resources */,
 				82DC60CD1CE5D41500EF7560 /* Zep.mtl in Resources */,
 				A85E11CE1CC4FC2F00D4418A /* TAL16OBJ.mtl in Resources */,
+				A8BFF2061CEF5EC500D63D59 /* Terrain_50000.obj in Resources */,
 				82E648121CE21E7F00AD6876 /* camo.jpg in Resources */,
 				A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */,
 				A8F8D54F1CEF000E00707F04 /* debug.png in Resources */,
 				82E648141CE21EE000AD6876 /* bloomcamo.jpg in Resources */,
+				A8BFF2101CEF6A0700D63D59 /* metal.png in Resources */,
 				B4CB8CD01B72E43300FE041B /* Project-Info.plist in Resources */,
 				A889BC391CEC9B4700370DBC /* middle_test.png in Resources */,
-				52BDFA6F1CC68DEA0002163D /* Color.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

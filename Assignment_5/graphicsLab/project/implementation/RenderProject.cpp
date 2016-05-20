@@ -112,6 +112,7 @@ void RenderProject::loopFunction(const double &deltaTime, const double &elapsedT
     updateCamera("camera", deltaTime);
     
     /// Update render queue ///
+    updateSKYQueue("camera", deltaTime);
     updateRenderQueue("camera", deltaTime);
     
     // Quit renderer when escape is pressed
@@ -124,6 +125,51 @@ void RenderProject::terminateFunction()
 {
     bRenderer::log("I totally terminated this Renderer :-)");
 }
+/* Update render queue */
+void RenderProject::updateSKYQueue(const std::string &camera, const double &deltaTime)
+{
+    
+        modelMatrixSKY = vmml::create_translation(modelMatrixTAL.get_translation())*vmml::create_translation(vmml::Vector3f(0.0f, -225.0f,2000.0f))*vmml::create_scaling(vmml::Vector3f(2000.f));
+    
+    vmml::Matrix4f viewMatrix = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
+
+    
+    ShaderPtr shader = bRenderer().getObjects()->getShader("SKY");
+    if (shader.get())
+    {
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixSKY", modelMatrixSKY);
+        
+        
+        vmml::Matrix3f normalMatrixSKY;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixSKY)), normalMatrixSKY);
+        shader->setUniform("NormalMatrixSKY", normalMatrixSKY);
+        
+        
+        
+        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
+        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
+        
+        shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
+        shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
+        shader->setUniform("Ia", vmml::Vector3f(1.f));
+        shader->setUniform("Id", vmml::Vector3f(1.f));
+        shader->setUniform("Is", vmml::Vector3f(1.f));
+    }
+    else
+    {
+        bRenderer::log("No shader available.");
+    }
+    
+    bRenderer().getModelRenderer()->drawModel("skybox", "camera", modelMatrixSKY, std::vector<std::string>({ }));
+
+    
+    
+    
+    
+    }
 
 /* Update render queue */
 void RenderProject::updateRenderQueue(const std::string &camera, const double &deltaTime)
@@ -245,7 +291,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     //modelMatrixTerrain *= modelMatrixTAL;
     
-    modelMatrixSKY = vmml::create_translation(modelMatrixTAL.get_translation())*vmml::create_translation(vmml::Vector3f(0.0f, -225.0f,2000.0f))*vmml::create_scaling(vmml::Vector3f(1500.f));
+
     
     //turn plane right
     hit_Terrain=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
@@ -343,35 +389,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     {
         bRenderer::log("No shader available.");
     }
-    shader = bRenderer().getObjects()->getShader("SKY");
-    if (shader.get())
-    {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
-        shader->setUniform("ViewMatrix", viewMatrix);
-        shader->setUniform("ViewMatrix", viewMatrix);
-        shader->setUniform("modelMatrixSKY", modelMatrixSKY);
-        
-        
-        vmml::Matrix3f normalMatrixSKY;
-        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixSKY)), normalMatrixSKY);
-        shader->setUniform("NormalMatrixSKY", normalMatrixSKY);
-        
-        
-        
-        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
-        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
-        
-        shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
-        shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
-        shader->setUniform("Ia", vmml::Vector3f(1.f));
-        shader->setUniform("Id", vmml::Vector3f(1.f));
-        shader->setUniform("Is", vmml::Vector3f(1.f));
-    }
-    else
-    {
-        bRenderer::log("No shader available.");
-    }
-
+  
 
 
     
@@ -385,7 +403,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("Zep", "camera", modelMatrixZep, std::vector<std::string>({ }));
-    bRenderer().getModelRenderer()->drawModel("skybox", "camera", modelMatrixSKY, std::vector<std::string>({ }));
 
 }
 
