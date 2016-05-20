@@ -90,7 +90,7 @@ void main()
     highp float xxx = length(EyePos+vVertex);
     highp float sel = 1.0-(log(xxx/-1.0))/(log(1.0/-1.0));
     
-    selector.y = ((xxx/3200.0)-(1.0))*(-1.0);
+    selector.y = ((xxx/3900.0)-(1.0))*(-1.0);
     
     
     //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
