@@ -39,6 +39,8 @@ varying highp vec3 wsInterpolatedEye;
 varying highp vec3 wsInterpolatedNormal;
 
 varying highp float dist;
+varying highp vec4 vVertex;
+
 
 
 void main()
@@ -80,7 +82,7 @@ void main()
     
     
     wsInterpolatedNormal = normalize(NormalMatrixTAL * Normal);
-    wsInterpolatedEye = normalize(vec3(EyePos) - (modelMatrixTAL * Position).xyz);
+    wsInterpolatedEye = (vec3(EyePos) - (modelMatrixTAL * Position).xyz);
     
     
     
@@ -90,4 +92,5 @@ void main()
     
     gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
     dist = sqrt(dot( wsInterpolatedEye, wsInterpolatedEye));
+    vVertex = gl_Position;
 }

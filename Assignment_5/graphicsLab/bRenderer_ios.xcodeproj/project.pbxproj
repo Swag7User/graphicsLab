@@ -43,6 +43,8 @@
 		A889BC461CECA5CE00370DBC /* LOD_map2_orig.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC451CECA5CE00370DBC /* LOD_map2_orig.png */; };
 		A889BC481CECA69F00370DBC /* AER_map3_orig.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC471CECA69F00370DBC /* AER_map3_orig.png */; };
 		A889BC4A1CECA86500370DBC /* AER_map3_orig_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC491CECA86500370DBC /* AER_map3_orig_sm.png */; };
+		A8F8D54F1CEF000E00707F04 /* debug.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F8D54D1CEF000E00707F04 /* debug.png */; };
+		A8F8D5501CEF000E00707F04 /* ydebug.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F8D54E1CEF000E00707F04 /* ydebug.png */; };
 		B44186971BA331E300604D7F /* RenderProject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B44186961BA331E300604D7F /* RenderProject.cpp */; };
 		B47949AF1BA6742B00B5E9DC /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = B47949921BA6742B00B5E9DC /* config.json */; };
 		B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B47949C41BA6743D00B5E9DC /* LICENSE.txt */; };
@@ -179,6 +181,8 @@
 		A889BC451CECA5CE00370DBC /* LOD_map2_orig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LOD_map2_orig.png; sourceTree = "<group>"; };
 		A889BC471CECA69F00370DBC /* AER_map3_orig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AER_map3_orig.png; sourceTree = "<group>"; };
 		A889BC491CECA86500370DBC /* AER_map3_orig_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AER_map3_orig_sm.png; sourceTree = "<group>"; };
+		A8F8D54D1CEF000E00707F04 /* debug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = debug.png; sourceTree = "<group>"; };
+		A8F8D54E1CEF000E00707F04 /* ydebug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ydebug.png; sourceTree = "<group>"; };
 		B44186941BA331E300604D7F /* RenderProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderProject.h; sourceTree = "<group>"; };
 		B44186961BA331E300604D7F /* RenderProject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderProject.cpp; sourceTree = "<group>"; };
 		B47949921BA6742B00B5E9DC /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -421,18 +425,20 @@
 				A889BC2E1CEC9B4700370DBC /* skybox */,
 				52CA707F1CC6651900269197 /* TAL.frag */,
 				52CA70811CC6652700269197 /* TAL.vert */,
+				A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */,
+				A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */,
 				52BDFA6E1CC68DEA0002163D /* Color.tif */,
 				A889BC491CECA86500370DBC /* AER_map3_orig_sm.png */,
 				A889BC3F1CEC9B6500370DBC /* SKY.frag */,
+				A8F8D54D1CEF000E00707F04 /* debug.png */,
+				A8F8D54E1CEF000E00707F04 /* ydebug.png */,
 				A889BC471CECA69F00370DBC /* AER_map3_orig.png */,
 				A889BC451CECA5CE00370DBC /* LOD_map2_orig.png */,
 				A889BC401CEC9B6500370DBC /* SKY.vert */,
 				526351BD1CCF9F410040FA1A /* Terrain_50000.mtl */,
 				A889BC431CECA3FA00370DBC /* LOD_map3_orig.png */,
 				526351BE1CCF9F410040FA1A /* Terrain_50000.obj */,
-				A85E11CB1CC4FC2F00D4418A /* TAL16OBJ.mtl */,
 				A85E11E11CC512AE00D4418A /* Normal_Map.tif */,
-				A85E11CC1CC4FC2F00D4418A /* TAL16OBJ.obj */,
 				A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */,
 				540DDD7D1CA020B700DE3FCC /* diffuse.png */,
 				540DDD7B1CA0058A00DE3FCC /* guy.mtl */,
@@ -768,6 +774,7 @@
 				A889BC411CEC9B6500370DBC /* SKY.frag in Resources */,
 				A889BC3A1CEC9B4700370DBC /* right_test.png in Resources */,
 				A889BC421CEC9B6500370DBC /* SKY.vert in Resources */,
+				A8F8D5501CEF000E00707F04 /* ydebug.png in Resources */,
 				540DDD781CA0024A00DE3FCC /* guy.frag in Resources */,
 				A889BC3D1CEC9B4700370DBC /* skybox.obj in Resources */,
 				526351C01CCF9F410040FA1A /* Terrain_50000.obj in Resources */,
@@ -795,6 +802,7 @@
 				A85E11CE1CC4FC2F00D4418A /* TAL16OBJ.mtl in Resources */,
 				82E648121CE21E7F00AD6876 /* camo.jpg in Resources */,
 				A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */,
+				A8F8D54F1CEF000E00707F04 /* debug.png in Resources */,
 				82E648141CE21EE000AD6876 /* bloomcamo.jpg in Resources */,
 				B4CB8CD01B72E43300FE041B /* Project-Info.plist in Resources */,
 				A889BC391CEC9B4700370DBC /* middle_test.png in Resources */,

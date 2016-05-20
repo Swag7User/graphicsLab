@@ -38,6 +38,7 @@ varying highp vec3 wsInterpolatedEye;
 varying highp vec3 wsInterpolatedNormal;
 
 varying highp float dist;
+varying highp vec4 vVertex;
 
 void main()
 {
@@ -73,7 +74,7 @@ void main()
 //        specularVarying = vec4(clamp(specular, 0.0, 1.0), 1.0);
 //    }
     wsInterpolatedNormal = normalize(NormalMatrix * Normal);
-    wsInterpolatedEye = normalize(vec3(EyePos) - (modelMatrixTerrain * Position).xyz);
+    wsInterpolatedEye = vec3(EyePos) - (modelMatrixTerrain * Position).xyz;
     
     
     texCoordVarying = TexCoord;
@@ -82,5 +83,6 @@ void main()
 
     gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
     dist = sqrt(dot( wsInterpolatedEye, wsInterpolatedEye));
+    vVertex = gl_Position;
 
 }
