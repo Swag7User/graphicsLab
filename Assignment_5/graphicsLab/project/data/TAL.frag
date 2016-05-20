@@ -102,5 +102,5 @@ void main()
     highp vec4 color = texture2D(DiffuseMap,selector.st);
     //texture2DProj(bloomcamo.jpg, texCoordVarying);
     
-    gl_FragColor = (color) ;
+    gl_FragColor = (color) + specular;
 }
