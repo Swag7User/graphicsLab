@@ -1,8 +1,8 @@
 uniform highp mat4 ViewMatrix;
-uniform highp mat4 modelMatrixCL;
+uniform highp mat4 modelMatrixCL3;
 uniform highp mat4 ProjectionMatrix;
 
-uniform mediump mat3 NormalMatrixCL;
+uniform mediump mat3 NormalMatrixCL3;
 
 uniform mediump vec4 LightPos;
 uniform mediump vec3 lightDir;
@@ -49,8 +49,8 @@ varying highp vec4 vVertex;
 void main()
 {
     
-    mediump vec4 pos = modelMatrixCL * posVarying;
-    mediump vec3 normal = normalize(NormalMatrixCL * normalVarying);
+    mediump vec4 pos = modelMatrixCL3 * posVarying;
+    mediump vec3 normal = normalize(NormalMatrixCL3 * normalVarying);
     mediump vec3 n = normal ;
     mediump vec3 l = normalize(vec3(LightPos-pos)) ;
     
