@@ -7,6 +7,7 @@ vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f
 vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
 vmml::Matrix4f modelMatrixZep = vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
 vmml::Matrix4f modelMatrixSKY = vmml::create_translation(modelMatrixTerrain.get_translation()) * vmml::create_scaling(vmml::Vector3f(1.f));
+vmml::Matrix4f modelMatrixCL = vmml::create_translation(modelMatrixTerrain.get_translation())*vmml::create_translation(vmml::Vector3f(0.0f, 700.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(30.f));
 vmml::AABBf hit_TAL;
 vmml::AABBf hit_Zep;
 vmml::AABBf hit_Terrain;
@@ -14,10 +15,12 @@ ShaderPtr guyShader;
 ShaderPtr TALShader;
 ShaderPtr ZepShader;
 ShaderPtr SKYShader;
+ShaderPtr CLShader;
 PropertiesPtr guyProperties;
 PropertiesPtr TALProperties;
 PropertiesPtr ZepProperties;
 PropertiesPtr SKYProperties;
+PropertiesPtr CLProperties;
 
 double _time = 0;
 double _pitchSum;
@@ -63,6 +66,7 @@ void RenderProject::initFunction()
     
     ZepShader = bRenderer().getObjects()->loadShaderFile("Zep", 0, false, false, false, false, false);
     SKYShader = bRenderer().getObjects()->loadShaderFile("SKY", 0, false, false, false, false, false);
+    CLShader = bRenderer().getObjects()->loadShaderFile("CL", 0, false, false, false, false, false);
 
 
     
@@ -71,6 +75,7 @@ void RenderProject::initFunction()
     TALProperties = bRenderer().getObjects()->createProperties("TALProperties");
     ZepProperties = bRenderer().getObjects()->createProperties("ZepProperties");
     SKYProperties = bRenderer().getObjects()->createProperties("SKYProperties");
+    CLProperties = bRenderer().getObjects()->createProperties("CLProperties");
     
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
@@ -79,6 +84,7 @@ void RenderProject::initFunction()
     hit_Zep=bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties)->getBoundingBoxObjectSpace();
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     bRenderer().getObjects()->loadObjModel("skybox.obj", false, true, SKYShader, SKYProperties);
+    bRenderer().getObjects()->loadObjModel("clouds.obj", false, true, CLShader, CLProperties);
     
     // create camera
     bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
@@ -380,6 +386,32 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         bRenderer::log("No shader available.");
     }
   
+    shader = bRenderer().getObjects()->getShader("CL");
+    if (shader.get())
+    {
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixCL", modelMatrixCL);
+        
+        
+        vmml::Matrix3f normalMatrixCL;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixCL)), normalMatrixCL);
+        shader->setUniform("NormalMatrixCL", normalMatrixCL);
+        
+        
+        
+        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
+        
+        shader->setUniform("Ia", vmml::Vector3f(1.f));
+        shader->setUniform("Id", vmml::Vector3f(1.f));
+        shader->setUniform("Is", vmml::Vector3f(1.f));
+    }
+    else
+    {
+        bRenderer::log("No shader available.");
+    }
+    
 
 
     
@@ -393,6 +425,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("Zep", "camera", modelMatrixZep, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("clouds", "camera", modelMatrixCL, std::vector<std::string>({ }));
 
 }
 
