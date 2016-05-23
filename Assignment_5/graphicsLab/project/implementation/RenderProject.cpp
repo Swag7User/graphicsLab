@@ -112,7 +112,7 @@ void RenderProject::initFunction()
     CL5Properties = bRenderer().getObjects()->createProperties("CL5Properties");
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
-    hit_Terrain=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
+    hit_Terrain=bRenderer().getObjects()->loadObjModel("terraintree.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
     //hit_TAL=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
     hit_Zep=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
@@ -368,7 +368,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     //turn plane right
-    hit_Terrain_size=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
+    hit_Terrain_size=bRenderer().getObjects()->loadObjModel("terraintree.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
     vmml::AABBf hit_TAL_size=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
     //hit_Zep=vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
     hit_Zep_size=bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties)->getBoundingBoxObjectSpace();
@@ -588,7 +588,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
-    bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("terraintree", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("Zep", "camera", modelMatrixZep, std::vector<std::string>({ }));
