@@ -2,6 +2,7 @@
 #ifdef __OBJC__
 #import <CoreMotion/CoreMotion.h>
 #endif
+//xcode sucks
 vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
 ;
 vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
