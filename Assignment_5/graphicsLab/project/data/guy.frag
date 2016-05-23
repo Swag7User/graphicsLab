@@ -67,6 +67,8 @@ void main()
     //   specular = pow(specAngle, shininess);
     //TEST PUSH
     
+    
+    
     //Bling Phong shading here
     specular = vec4(0.0);
     if (dot(normalVarying, l) > 0.0)
@@ -96,12 +98,25 @@ void main()
     //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
     highp vec4 color;
     highp vec4 color2;
-    if((((PosPlane.x) - (posVarying.x)) < 10.0 && ((PosPlane.x) - (posVarying.x)) > -10.0) &&  (((PosPlane.z) - (posVarying.z)) < 10.0 && ((PosPlane.z) - (posVarying.z)) > -10.0)){
-        color = vec4(0.0,0.0,0.0,1.0);
+    highp vec4 color3;
+    
+    highp float deltax=abs((PosPlane.x) - (posVarying.x));
+    highp float deltaz=abs((PosPlane.z) - (posVarying.z));
+    highp float deltadelta=abs(deltax-deltaz);
+    highp float deltaLength=sqrt(deltax*deltax*deltaz*deltaz);
+    
+    if(deltax< 9.0  && deltaz < 9.0 && deltaLength<25.0){
+        
+        color3 = texture2D(DiffuseMap, selector.st);
+        color2 = texture2D(SpecularMap, texCoordVarying.st);
+        
+        color = vec4(0.05,0.05,0.05,1.0);
+        gl_FragColor =  (color+(color2*color3*0.6));
     }
     else{
     color = texture2D(DiffuseMap, selector.st);
     color2 = texture2D(SpecularMap, texCoordVarying.st);
+    gl_FragColor =  ((color)+(color2*0.1));
     }
     //highp vec4 color2 = texture2DProj(SpecularMap,texCoordVarying,((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0);
     
@@ -112,6 +127,6 @@ void main()
     //color=(2.0*no)/(f+n)
     
     //gl_FragColor = (color*0.666 + color2*0.333) ;
-    gl_FragColor =  ((color)+(color2*0.1));
+    
 }
 
