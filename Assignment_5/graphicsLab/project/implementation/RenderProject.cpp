@@ -30,6 +30,13 @@ double _time = 0;
 double _pitchSum;
 //CMMotionManager *cmMotionManager=CMMotionManager();
 float angle=0.f;
+
+
+int square_max=4;
+int line_max=100000;
+int square_count=0;
+int line_count=0;
+
 /* Initialize the Project */
 void RenderProject::init()
 {
@@ -238,6 +245,33 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
             modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
         }
     }
+    
+     modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 1.0f));
+    //move Zeppelin
+    if (square_count==0) {
+        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 1.0f));
+    }
+    if (square_count==1) {
+        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(-1.0f, 0.0f, 0.0f));
+    }
+    if (square_count==2) {
+        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f,-1.0f));
+    }
+    if (square_count==3) {
+        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(1.0f, 0.0f, 0.0f));
+    }
+    if (square_count>=square_max) {
+        square_count=0;
+    }
+    if (line_count>=line_max) {
+        square_count++;
+        line_count=0;
+    }
+    line_count++;
+    
+
+    
+    
     //modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
 
     
@@ -300,6 +334,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //bRenderer().getObjects()->getCamera("camera")->setPosition(cameraPos);
     
     //modelMatrixTerrain *= modelMatrixTAL;
+    
+    //modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
     
 
     

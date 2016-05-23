@@ -1,7 +1,7 @@
 
-uniform mediump mat4 ViewMatrix;
-uniform mediump mat4 modelMatrixZep;
-uniform mediump mat4 ProjectionMatrix;
+uniform highp mat4 ViewMatrix;
+uniform highp mat4 modelMatrixZep;
+uniform highp mat4 ProjectionMatrix;
 
 uniform mediump mat3 NormalMatrixZep;
 
