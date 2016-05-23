@@ -613,7 +613,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     
-    viewMatrix=modelMatrixW;
+    modelMatrixW=vmml::create_translation(modelMatrixTerrain.get_translation());
     
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("terraintree", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
@@ -626,7 +626,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     bRenderer().getModelRenderer()->drawModel("clouds3", "camera", modelMatrixCL3, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("clouds4", "camera", modelMatrixCL4, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("clouds5", "camera", modelMatrixCL5, std::vector<std::string>({ }));
-    //bRenderer().getModelRenderer()->drawModel("W", "camera", modelMatrixW, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("winning", "camera", modelMatrixW, std::vector<std::string>({ }));
     
 
 }
