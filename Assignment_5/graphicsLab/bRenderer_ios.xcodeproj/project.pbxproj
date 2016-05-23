@@ -11,6 +11,27 @@
 		52CA70821CC6652700269197 /* TAL.vert in Resources */ = {isa = PBXBuildFile; fileRef = 52CA70811CC6652700269197 /* TAL.vert */; };
 		540DDD781CA0024A00DE3FCC /* guy.frag in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD751CA0024A00DE3FCC /* guy.frag */; };
 		540DDD7A1CA0024A00DE3FCC /* guy.vert in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD771CA0024A00DE3FCC /* guy.vert */; };
+		829B48B21CF31F9900A89681 /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 829B48A71CF31F9900A89681 /* cloud.png */; };
+		829B48B31CF31F9900A89681 /* clouds.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 829B48A81CF31F9900A89681 /* clouds.mtl */; };
+		829B48B41CF31F9900A89681 /* clouds.obj in Resources */ = {isa = PBXBuildFile; fileRef = 829B48A91CF31F9900A89681 /* clouds.obj */; };
+		829B48B51CF31F9900A89681 /* clouds2.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 829B48AA1CF31F9900A89681 /* clouds2.mtl */; };
+		829B48B61CF31F9900A89681 /* clouds2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 829B48AB1CF31F9900A89681 /* clouds2.obj */; };
+		829B48B71CF31F9900A89681 /* clouds3.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 829B48AC1CF31F9900A89681 /* clouds3.mtl */; };
+		829B48B81CF31F9900A89681 /* clouds3.obj in Resources */ = {isa = PBXBuildFile; fileRef = 829B48AD1CF31F9900A89681 /* clouds3.obj */; };
+		829B48B91CF31F9900A89681 /* clouds4.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 829B48AE1CF31F9900A89681 /* clouds4.mtl */; };
+		829B48BA1CF31F9900A89681 /* clouds4.obj in Resources */ = {isa = PBXBuildFile; fileRef = 829B48AF1CF31F9900A89681 /* clouds4.obj */; };
+		829B48BB1CF31F9900A89681 /* clouds5.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 829B48B01CF31F9900A89681 /* clouds5.mtl */; };
+		829B48BC1CF31F9900A89681 /* clouds5.obj in Resources */ = {isa = PBXBuildFile; fileRef = 829B48B11CF31F9900A89681 /* clouds5.obj */; };
+		829B48BF1CF31FAB00A89681 /* CL.frag in Resources */ = {isa = PBXBuildFile; fileRef = 829B48BD1CF31FAB00A89681 /* CL.frag */; };
+		829B48C01CF31FAB00A89681 /* CL.vert in Resources */ = {isa = PBXBuildFile; fileRef = 829B48BE1CF31FAB00A89681 /* CL.vert */; };
+		829B48C91CF31FB900A89681 /* CL2.frag in Resources */ = {isa = PBXBuildFile; fileRef = 829B48C11CF31FB900A89681 /* CL2.frag */; };
+		829B48CA1CF31FB900A89681 /* CL2.vert in Resources */ = {isa = PBXBuildFile; fileRef = 829B48C21CF31FB900A89681 /* CL2.vert */; };
+		829B48CB1CF31FB900A89681 /* CL3.frag in Resources */ = {isa = PBXBuildFile; fileRef = 829B48C31CF31FB900A89681 /* CL3.frag */; };
+		829B48CC1CF31FB900A89681 /* CL3.vert in Resources */ = {isa = PBXBuildFile; fileRef = 829B48C41CF31FB900A89681 /* CL3.vert */; };
+		829B48CD1CF31FB900A89681 /* CL4.frag in Resources */ = {isa = PBXBuildFile; fileRef = 829B48C51CF31FB900A89681 /* CL4.frag */; };
+		829B48CE1CF31FB900A89681 /* CL4.vert in Resources */ = {isa = PBXBuildFile; fileRef = 829B48C61CF31FB900A89681 /* CL4.vert */; };
+		829B48CF1CF31FB900A89681 /* CL5.frag in Resources */ = {isa = PBXBuildFile; fileRef = 829B48C71CF31FB900A89681 /* CL5.frag */; };
+		829B48D01CF31FB900A89681 /* CL5.vert in Resources */ = {isa = PBXBuildFile; fileRef = 829B48C81CF31FB900A89681 /* CL5.vert */; };
 		82DC60C51CE5D23A00EF7560 /* Zep.frag in Resources */ = {isa = PBXBuildFile; fileRef = 82DC60C31CE5D23A00EF7560 /* Zep.frag */; };
 		82DC60C61CE5D23A00EF7560 /* Zep.vert in Resources */ = {isa = PBXBuildFile; fileRef = 82DC60C41CE5D23A00EF7560 /* Zep.vert */; };
 		82DC60CD1CE5D41500EF7560 /* Zep.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 82DC60CB1CE5D41500EF7560 /* Zep.mtl */; };
@@ -156,6 +177,27 @@
 		52CA70811CC6652700269197 /* TAL.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TAL.vert; sourceTree = "<group>"; };
 		540DDD751CA0024A00DE3FCC /* guy.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = guy.frag; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
 		540DDD771CA0024A00DE3FCC /* guy.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = guy.vert; sourceTree = "<group>"; };
+		829B48A71CF31F9900A89681 /* cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud.png; sourceTree = "<group>"; };
+		829B48A81CF31F9900A89681 /* clouds.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds.mtl; sourceTree = "<group>"; };
+		829B48A91CF31F9900A89681 /* clouds.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds.obj; sourceTree = "<group>"; };
+		829B48AA1CF31F9900A89681 /* clouds2.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds2.mtl; sourceTree = "<group>"; };
+		829B48AB1CF31F9900A89681 /* clouds2.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds2.obj; sourceTree = "<group>"; };
+		829B48AC1CF31F9900A89681 /* clouds3.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds3.mtl; sourceTree = "<group>"; };
+		829B48AD1CF31F9900A89681 /* clouds3.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds3.obj; sourceTree = "<group>"; };
+		829B48AE1CF31F9900A89681 /* clouds4.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds4.mtl; sourceTree = "<group>"; };
+		829B48AF1CF31F9900A89681 /* clouds4.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds4.obj; sourceTree = "<group>"; };
+		829B48B01CF31F9900A89681 /* clouds5.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds5.mtl; sourceTree = "<group>"; };
+		829B48B11CF31F9900A89681 /* clouds5.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds5.obj; sourceTree = "<group>"; };
+		829B48BD1CF31FAB00A89681 /* CL.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = CL.frag; path = skybox/CL.frag; sourceTree = "<group>"; };
+		829B48BE1CF31FAB00A89681 /* CL.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = CL.vert; path = skybox/CL.vert; sourceTree = "<group>"; };
+		829B48C11CF31FB900A89681 /* CL2.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CL2.frag; sourceTree = "<group>"; };
+		829B48C21CF31FB900A89681 /* CL2.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CL2.vert; sourceTree = "<group>"; };
+		829B48C31CF31FB900A89681 /* CL3.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CL3.frag; sourceTree = "<group>"; };
+		829B48C41CF31FB900A89681 /* CL3.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CL3.vert; sourceTree = "<group>"; };
+		829B48C51CF31FB900A89681 /* CL4.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CL4.frag; sourceTree = "<group>"; };
+		829B48C61CF31FB900A89681 /* CL4.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CL4.vert; sourceTree = "<group>"; };
+		829B48C71CF31FB900A89681 /* CL5.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CL5.frag; sourceTree = "<group>"; };
+		829B48C81CF31FB900A89681 /* CL5.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CL5.vert; sourceTree = "<group>"; };
 		82DC60C31CE5D23A00EF7560 /* Zep.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Zep.frag; sourceTree = "<group>"; };
 		82DC60C41CE5D23A00EF7560 /* Zep.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Zep.vert; sourceTree = "<group>"; };
 		82DC60CB1CE5D41500EF7560 /* Zep.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Zep.mtl; sourceTree = "<group>"; };
@@ -394,6 +436,34 @@
 			name = externalLibraries;
 			sourceTree = "<group>";
 		};
+		829B48A61CF31F5B00A89681 /* clouds */ = {
+			isa = PBXGroup;
+			children = (
+				829B48BD1CF31FAB00A89681 /* CL.frag */,
+				829B48BE1CF31FAB00A89681 /* CL.vert */,
+				829B48C11CF31FB900A89681 /* CL2.frag */,
+				829B48C21CF31FB900A89681 /* CL2.vert */,
+				829B48C31CF31FB900A89681 /* CL3.frag */,
+				829B48C41CF31FB900A89681 /* CL3.vert */,
+				829B48C51CF31FB900A89681 /* CL4.frag */,
+				829B48C61CF31FB900A89681 /* CL4.vert */,
+				829B48C71CF31FB900A89681 /* CL5.frag */,
+				829B48C81CF31FB900A89681 /* CL5.vert */,
+				829B48A71CF31F9900A89681 /* cloud.png */,
+				829B48A81CF31F9900A89681 /* clouds.mtl */,
+				829B48A91CF31F9900A89681 /* clouds.obj */,
+				829B48AA1CF31F9900A89681 /* clouds2.mtl */,
+				829B48AB1CF31F9900A89681 /* clouds2.obj */,
+				829B48AC1CF31F9900A89681 /* clouds3.mtl */,
+				829B48AD1CF31F9900A89681 /* clouds3.obj */,
+				829B48AE1CF31F9900A89681 /* clouds4.mtl */,
+				829B48AF1CF31F9900A89681 /* clouds4.obj */,
+				829B48B01CF31F9900A89681 /* clouds5.mtl */,
+				829B48B11CF31F9900A89681 /* clouds5.obj */,
+			);
+			name = clouds;
+			sourceTree = "<group>";
+		};
 		A806B8FF1CF2FC3B007149CD /* cloud */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,6 +562,7 @@
 				A8BFF2151CEF6D4400D63D59 /* Terrain */,
 				A8BFF2111CEF6C4A00D63D59 /* Plane */,
 				A8BFF1FD1CEF36F300D63D59 /* Color.png */,
+				829B48A61CF31F5B00A89681 /* clouds */,
 				A806B8FF1CF2FC3B007149CD /* cloud */,
 				A8BFF2141CEF6D1600D63D59 /* Zeppelin */,
 				A889BC2E1CEC9B4700370DBC /* skybox */,
@@ -820,25 +891,37 @@
 				A8BFF1FE1CEF36F300D63D59 /* Color.png in Resources */,
 				A8BFF2051CEF5EC500D63D59 /* Terrain_50000.mtl in Resources */,
 				A889BC3B1CEC9B4700370DBC /* rightright_test.png in Resources */,
+				829B48CA1CF31FB900A89681 /* CL2.vert in Resources */,
+				829B48CC1CF31FB900A89681 /* CL3.vert in Resources */,
+				829B48C01CF31FAB00A89681 /* CL.vert in Resources */,
 				A806B9051CF30095007149CD /* cloud.png in Resources */,
 				A8BFF2081CEF621700D63D59 /* iceburn.png in Resources */,
 				A8F8D55A1CEF1F1B00707F04 /* HLG_map3_orig.png in Resources */,
+				829B48CB1CF31FB900A89681 /* CL3.frag in Resources */,
 				A889BC461CECA5CE00370DBC /* LOD_map2_orig.png in Resources */,
 				A889BC481CECA69F00370DBC /* AER_map3_orig.png in Resources */,
 				B4794A311BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				A8BFF2191CEF700900D63D59 /* TAL16OBJ.obj in Resources */,
+				829B48BF1CF31FAB00A89681 /* CL.frag in Resources */,
+				829B48B41CF31F9900A89681 /* clouds.obj in Resources */,
+				829B48B71CF31F9900A89681 /* clouds3.mtl in Resources */,
 				A889BC411CEC9B6500370DBC /* SKY.frag in Resources */,
 				A806B9081CF301C4007149CD /* CL.frag in Resources */,
 				A889BC3A1CEC9B4700370DBC /* right_test.png in Resources */,
 				A889BC421CEC9B6500370DBC /* SKY.vert in Resources */,
 				A8F8D5501CEF000E00707F04 /* ydebug.png in Resources */,
+				829B48BB1CF31F9900A89681 /* clouds5.mtl in Resources */,
+				829B48BC1CF31F9900A89681 /* clouds5.obj in Resources */,
 				A8F8D55E1CEF235700707F04 /* HLG_map3_orig_2.png in Resources */,
 				540DDD781CA0024A00DE3FCC /* guy.frag in Resources */,
+				829B48C91CF31FB900A89681 /* CL2.frag in Resources */,
 				A889BC3D1CEC9B4700370DBC /* skybox.obj in Resources */,
 				A8F8D55C1CEF227900707F04 /* HLG_map3_orig_smut.png in Resources */,
+				829B48D01CF31FB900A89681 /* CL5.vert in Resources */,
 				82DC60C51CE5D23A00EF7560 /* Zep.frag in Resources */,
 				A889BC381CEC9B4700370DBC /* left_test.png in Resources */,
 				A889BC441CECA3FA00370DBC /* LOD_map3_orig.png in Resources */,
+				829B48CF1CF31FB900A89681 /* CL5.frag in Resources */,
 				B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				82DC60C61CE5D23A00EF7560 /* Zep.vert in Resources */,
 				A889BC4A1CECA86500370DBC /* AER_map3_orig_sm.png in Resources */,
@@ -847,12 +930,16 @@
 				540DDD7A1CA0024A00DE3FCC /* guy.vert in Resources */,
 				A889BC3E1CEC9B4700370DBC /* top.jpg in Resources */,
 				B47949AF1BA6742B00B5E9DC /* config.json in Resources */,
+				829B48B81CF31F9900A89681 /* clouds3.obj in Resources */,
 				A8BFF2181CEF700900D63D59 /* TAL16OBJ.mtl in Resources */,
 				A889BC3C1CEC9B4700370DBC /* skybox.mtl in Resources */,
 				A8BFF20E1CEF682F00D63D59 /* iceburn5.png in Resources */,
 				A8BFF21B1CEF714500D63D59 /* fire.jpg in Resources */,
+				829B48B61CF31F9900A89681 /* clouds2.obj in Resources */,
 				B4794A301BA6743D00B5E9DC /* LICENSE.txt in Resources */,
+				829B48B31CF31F9900A89681 /* clouds.mtl in Resources */,
 				52CA70821CC6652700269197 /* TAL.vert in Resources */,
+				829B48B51CF31F9900A89681 /* clouds2.mtl in Resources */,
 				A8BFF2131CEF6CED00D63D59 /* bottom_test.jpg in Resources */,
 				A806B9091CF301C4007149CD /* CL.vert in Resources */,
 				A806B9021CF2FC56007149CD /* clouds.mtl in Resources */,
@@ -860,10 +947,15 @@
 				82DC60CE1CE5D41500EF7560 /* Zep.obj in Resources */,
 				82DC60CD1CE5D41500EF7560 /* Zep.mtl in Resources */,
 				A8BFF2061CEF5EC500D63D59 /* Terrain_50000.obj in Resources */,
+				829B48CD1CF31FB900A89681 /* CL4.frag in Resources */,
 				82E648121CE21E7F00AD6876 /* camo.jpg in Resources */,
 				A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */,
+				829B48B21CF31F9900A89681 /* cloud.png in Resources */,
+				829B48BA1CF31F9900A89681 /* clouds4.obj in Resources */,
 				A8F8D54F1CEF000E00707F04 /* debug.png in Resources */,
 				82E648141CE21EE000AD6876 /* bloomcamo.jpg in Resources */,
+				829B48B91CF31F9900A89681 /* clouds4.mtl in Resources */,
+				829B48CE1CF31FB900A89681 /* CL4.vert in Resources */,
 				A8BFF2101CEF6A0700D63D59 /* metal.png in Resources */,
 				B4CB8CD01B72E43300FE041B /* Project-Info.plist in Resources */,
 				A889BC391CEC9B4700370DBC /* middle_test.png in Resources */,
