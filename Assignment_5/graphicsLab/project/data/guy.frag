@@ -94,10 +94,15 @@ void main()
     
     
     //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
-    
-    highp vec4 color = texture2D(DiffuseMap, selector.st);
-    highp vec4 color2 = texture2D(SpecularMap, texCoordVarying.st);
-    
+    highp vec4 color;
+    highp vec4 color2;
+    if((((PosPlane.x) - (posVarying.x)) < 10.0 && ((PosPlane.x) - (posVarying.x)) > -10.0) &&  (((PosPlane.z) - (posVarying.z)) < 10.0 && ((PosPlane.z) - (posVarying.z)) > -10.0)){
+        color = vec4(0.0,0.0,0.0,1.0);
+    }
+    else{
+    color = texture2D(DiffuseMap, selector.st);
+    color2 = texture2D(SpecularMap, texCoordVarying.st);
+    }
     //highp vec4 color2 = texture2DProj(SpecularMap,texCoordVarying,((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0);
     
     //highp float depth=texture2D(DiffuseMap,texCoordVarying.xy).r;

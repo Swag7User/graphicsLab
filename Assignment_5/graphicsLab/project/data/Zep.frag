@@ -38,8 +38,18 @@ varying lowp vec4 diffuseVarying;
 varying lowp vec4 specularVarying;
 varying lowp vec4 texCoordVarying;
 
+varying highp vec3 wsEyePosition;
+varying highp vec3 wsInterpolatedEye;
+varying highp vec3 wsInterpolatedNormal;
+
+varying highp float dist;
+varying highp vec4 vVertex;
+
+
 void main()
 {
+    
+    
     
     mediump vec4 pos = modelMatrixZep * posVarying;
     mediump vec3 normal = normalize(NormalMatrixZep * normalVarying);
@@ -74,22 +84,26 @@ void main()
         highp vec3 spec = Ks * pow(dot(normalVarying,h), Ns) * Is;
         specular = vec4(clamp(spec,0.0,1.0),1.0);
     }
+    //uiiuugjefejjfifiuerguifernfnrifgnregebg
+    
+    highp vec3 wsNormal = normalize(wsInterpolatedNormal);
+    highp vec3 wsEye = normalize(vec3(vVertex));
+    highp vec2 selector;
+    selector.x = (1.0 + dot(wsNormal,wsEye))/2.0;
+    
+    highp float xxx = length(EyePos+vVertex);
+    highp float sel = 1.0-(log(xxx/-1.0))/(log(1.0/-1.0));
+    
+    selector.y = (xxx/4000.0);
+    
+    //selector.y = dist/10.0;
     
     
     //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
     
-    mediump vec4 color2;
-    
-//    if (intensity > 0.95){
-//        color2 = vec4(0.7,0.7,0.7,1.0);}
-//    else if (intensity > 0.5){
-//        color2 = vec4(0.6,0.6,0.6,1.0);}
-//    else if (intensity > 0.25){
-//        color2 = vec4(0.4,0.4,0.4,1.0);}
-//    else{
-//        color2 = vec4(0.2,0.2,0.2,1.0);}
-    mediump vec4 color = texture2DProj(DiffuseMap,texCoordVarying);
+    highp vec4 color = texture2D(DiffuseMap,selector.st);
     //texture2DProj(bloomcamo.jpg, texCoordVarying);
     
-    gl_FragColor = (ambient + diffuse ) * (color) + specular;
+    gl_FragColor = (color) + specular;
+
 }

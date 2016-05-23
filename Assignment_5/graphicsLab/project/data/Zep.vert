@@ -34,10 +34,19 @@ varying lowp vec4 texCoordVarying;
 varying mediump vec4 posVarying;       // pos in world space
 varying mediump vec3 normalVarying;    // normal in world space
 
+
+varying highp vec3 wsEyePosition;
+varying highp vec3 wsInterpolatedEye;
+varying highp vec3 wsInterpolatedNormal;
+
+varying highp float dist;
+varying highp vec4 vVertex;
+
+
 void main()
 {
-    //    mediump vec4 pos = modelMatrixTAL * Position;
-    //    mediump vec3 normal = normalize(NormalMatrixTAL * Normal);
+    //    mediump vec4 pos = modelMatrixZep * Position;
+    //    mediump vec3 normal = normalize(NormalMatrixZep * Normal);
     //texCoordVarying = TexCoord;
     
     //ambientVarying = vec4(Ka * Ia, 1.0);
@@ -73,9 +82,14 @@ void main()
     
     
     
+    wsInterpolatedNormal = normalize(NormalMatrixZep * Normal);
+    wsInterpolatedEye = (vec3(EyePos) - (modelMatrixZep * Position).xyz);
+    
     texCoordVarying = TexCoord;
     posVarying = modelMatrixZep * Position;
     normalVarying = normalize(NormalMatrixZep * Normal);
     
     gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
+    dist = sqrt(dot( wsInterpolatedEye, wsInterpolatedEye));
+    vVertex = gl_Position;
 }
