@@ -18,7 +18,6 @@ uniform mediump float Ns;   // specular material exponent (shininess)
 uniform lowp vec3 Ia;   // ambient light intensity
 uniform lowp vec3 Id;   // diffuse light intensity
 uniform lowp vec3 Is;   // specular light intensity
-uniform lowp vec3 PosZEP;
 
 
 attribute vec4 Position;

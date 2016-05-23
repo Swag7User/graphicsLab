@@ -20,6 +20,8 @@ uniform lowp vec3 Ia;   // ambient light intensity
 uniform lowp vec3 Id;   // diffuse light intensity
 uniform lowp vec3 Is;   // specular light intensity
 uniform lowp vec3 PosPlane;
+uniform lowp vec3 PosZEP;
+
 
 uniform sampler2D DiffuseMap;
 uniform sampler2D SpecularMap;
@@ -108,8 +110,20 @@ void main()
     highp float deltadelta=abs(deltax-deltaz);
     highp float deltaLength=sqrt(deltax*deltax*deltaz*deltaz);
     
+    highp float deltaxzep=abs((PosZEP.x) - (posVarying.x));
+    highp float deltazzep=abs((PosZEP.z) - (posVarying.z));
+    highp float deltadeltazep=abs(deltaxzep-deltazzep);
+    highp float deltaLengthzep=sqrt(deltaxzep*deltaxzep*deltazzep*deltazzep);
+    
     if(deltax< 9.0  && deltaz < 9.0 && deltaLength<25.0){
         
+        color3 = texture2D(DiffuseMap, selector.st);
+        color2 = texture2D(SpecularMap, texCoordVarying.st);
+        
+        color = vec4(0.05,0.05,0.05,1.0);
+        gl_FragColor =  (color+(color2*color3*0.6));
+    }
+    else if(deltaxzep< 20.0  && deltazzep < 20.0 && deltaLengthzep<100.0){
         color3 = texture2D(DiffuseMap, selector.st);
         color2 = texture2D(SpecularMap, texCoordVarying.st);
         
@@ -122,6 +136,7 @@ void main()
     gl_FragColor =  ((color)+(color2*0.1));
     }
     //highp vec4 color2 = texture2DProj(SpecularMap,texCoordVarying,((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0);
+
     
     //highp float depth=texture2D(DiffuseMap,texCoordVarying.xy).r;
     //highp vec4 blure = texture2DProj(DiffuseMap,texCoordVarying,bias);
