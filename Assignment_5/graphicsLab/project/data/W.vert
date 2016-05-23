@@ -76,7 +76,7 @@ void main()
     //        mediump vec3 specular = Ks * pow(dot(n,h),Ns) * Is;
     //        specularVarying = vec4(Wamp(specular, 0.0, 1.0), 1.0);
     //    }
-    
+    //hhh
     
     //    intensity = dot(normalize(lightDir), normalVarying);
     
