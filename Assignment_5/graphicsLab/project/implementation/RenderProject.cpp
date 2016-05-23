@@ -452,7 +452,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixZep", modelMatrixZep);
-        
+        shader->setUniform("PosZEP", vmml::Vector3f(modelMatrixZep.get_translation()));
+
         
         vmml::Matrix3f normalMatrixZep;
         vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixZep)), normalMatrixZep);

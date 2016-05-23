@@ -45,10 +45,9 @@ varying highp vec3 wsInterpolatedNormal;
 varying highp float dist;
 varying highp vec4 vVertex;
 
-
 void main()
 {
-    
+
     mediump vec4 pos = modelMatrixTAL * posVarying;
     mediump vec3 normal = normalize(NormalMatrixTAL * normalVarying);
     mediump vec3 n = normal ;

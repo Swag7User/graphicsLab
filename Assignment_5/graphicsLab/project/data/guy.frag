@@ -46,8 +46,11 @@ varying highp vec3 wsInterpolatedNormal;
 varying highp float dist;
 varying highp vec4 vVertex;
 
+
+
 void main()
 {
+
     // TODO: implement Phong Shading (per-fragment lighting)
     //ambient here
     ambient = vec4(Ka * Ia, 1.0);
@@ -118,6 +121,9 @@ void main()
     color2 = texture2D(SpecularMap, texCoordVarying.st);
     gl_FragColor =  ((color)+(color2*0.1));
     }
+//    if (length((PosPlane) - (vec3(posVarying))) > 1000.0 ) {
+//        color *= 1.05;
+//    }
     //highp vec4 color2 = texture2DProj(SpecularMap,texCoordVarying,((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0);
     
     //highp float depth=texture2D(DiffuseMap,texCoordVarying.xy).r;
@@ -130,3 +136,5 @@ void main()
     
 }
 
+
+}

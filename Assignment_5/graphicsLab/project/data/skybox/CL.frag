@@ -45,10 +45,9 @@ varying highp vec3 wsInterpolatedNormal;
 varying highp float dist;
 varying highp vec4 vVertex;
 
-
 void main()
 {
-    
+
     mediump vec4 pos = modelMatrixCL * posVarying;
     mediump vec3 normal = normalize(NormalMatrixCL * normalVarying);
     mediump vec3 n = normal ;
@@ -102,5 +101,5 @@ void main()
     highp vec4 color = texture2D(DiffuseMap,selector.st);
     //texture2DProj(bloomcamo.jpg, texCoordVarying);
     
-    gl_FragColor = (color) + specular;
+
 }
