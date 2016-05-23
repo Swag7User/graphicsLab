@@ -1,9 +1,9 @@
 
 uniform highp mat4 ViewMatrix;
-uniform highp mat4 modelMatrixCL;
+uniform highp mat4 modelMatrixW;
 uniform highp mat4 ProjectionMatrix;
 
-uniform mediump mat3 NormalMatrixCL;
+uniform mediump mat3 NormalMatrixW;
 
 uniform mediump vec4 LightPos;
 uniform mediump vec3 lightDir;
@@ -45,8 +45,8 @@ varying highp vec4 vVertex;
 
 void main()
 {
-    //    mediump vec4 pos = modelMatrixCL * Position;
-    //    mediump vec3 normal = normalize(NormalMatrixCL * Normal);
+    //    mediump vec4 pos = modelMatrixW * Position;
+    //    mediump vec3 normal = normalize(NormalMatrixW * Normal);
     //texCoordVarying = TexCoord;
     
     //ambientVarying = vec4(Ka * Ia, 1.0);
@@ -62,8 +62,8 @@ void main()
     ////    }
     ////
     //    intensity = dot(n,l) ;
-    //    lowp vec3 diffuse = Kd * clamp(intensity, 0.0, 1.0) * Id;
-    //    diffuseVarying = vec4(clamp(diffuse, 0.0, 1.0), 1.0);
+    //    lowp vec3 diffuse = Kd * Wamp(intensity, 0.0, 1.0) * Id;
+    //    diffuseVarying = vec4(Wamp(diffuse, 0.0, 1.0), 1.0);
     //
     //    // TODO: If vertex is lit, calculate specular term in view space using the Blinn-Phong model
     //    specularVarying = vec4(0.0);
@@ -74,21 +74,21 @@ void main()
     //        mediump vec3 h = normalize(l + eyeVec)/* / (length(l + eyeVec)))*/;
     //
     //        mediump vec3 specular = Ks * pow(dot(n,h),Ns) * Is;
-    //        specularVarying = vec4(clamp(specular, 0.0, 1.0), 1.0);
+    //        specularVarying = vec4(Wamp(specular, 0.0, 1.0), 1.0);
     //    }
     
     
     //    intensity = dot(normalize(lightDir), normalVarying);
     
     
-    wsInterpolatedNormal = normalize(NormalMatrixCL * Normal);
-    wsInterpolatedEye = (vec3(EyePos) - (modelMatrixCL * Position).xyz);
+    wsInterpolatedNormal = normalize(NormalMatrixW * Normal);
+    wsInterpolatedEye = (vec3(EyePos) - (modelMatrixW * Position).xyz);
     
     
     
     texCoordVarying = TexCoord;
-    posVarying = modelMatrixCL * Position;
-    normalVarying = normalize(NormalMatrixCL * Normal);
+    posVarying = modelMatrixW * Position;
+    normalVarying = normalize(NormalMatrixW * Normal);
     
     gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
     dist = sqrt(dot( wsInterpolatedEye, wsInterpolatedEye));

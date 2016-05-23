@@ -1,8 +1,8 @@
 uniform highp mat4 ViewMatrix;
-uniform highp mat4 modelMatrixCL;
+uniform highp mat4 modelMatrixW;
 uniform highp mat4 ProjectionMatrix;
 
-uniform mediump mat3 NormalMatrixCL;
+uniform mediump mat3 NormalMatrixW;
 
 uniform mediump vec4 LightPos;
 uniform mediump vec3 lightDir;
@@ -48,8 +48,8 @@ varying highp vec4 vVertex;
 void main()
 {
 
-    mediump vec4 pos = modelMatrixCL * posVarying;
-    mediump vec3 normal = normalize(NormalMatrixCL * normalVarying);
+    mediump vec4 pos = modelMatrixW * posVarying;
+    mediump vec3 normal = normalize(NormalMatrixW * normalVarying);
     mediump vec3 n = normal ;
     mediump vec3 l = normalize(vec3(LightPos-pos)) ;
     
@@ -82,23 +82,14 @@ void main()
         specular = vec4(clamp(spec,0.0,1.0),1.0);
     }
     //uiiuugjefejjfifiuerguifernfnrifgnregebg
-    
-    highp vec3 wsNormal = normalize(wsInterpolatedNormal);
-    highp vec3 wsEye = normalize(vec3(vVertex));
-    highp vec2 selector;
-    selector.x = (1.0 + dot(wsNormal,wsEye))/2.0;
-    
-    highp float xxx = length(EyePos+vVertex);
-    highp float sel = 1.0-(log(xxx/-1.0))/(log(1.0/-1.0));
-    
-    selector.y = (xxx/4500.0);
+
     
     //selector.y = dist/10.0;
     
     
     //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
     
-    highp vec4 color = texture2D(DiffuseMap,selector.st);
+    highp vec4 color = texture2D(DiffuseMap,texCoordVarying.st);
     //texture2DProj(bloomcamo.jpg, texCoordVarying);
     
 

@@ -591,13 +591,12 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     {
         shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
         shader->setUniform("ViewMatrix", viewMatrix);
-        shader->setUniform("ViewMatrix", viewMatrix);
-        shader->setUniform("modelMatrixTAL", modelMatrixW);
+        shader->setUniform("modelMatrixW", modelMatrixW);
         
         
         vmml::Matrix3f normalMatrixW;
         vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixW)), normalMatrixW);
-        shader->setUniform("NormalMatrixTAL", normalMatrixW);
+        shader->setUniform("NormalMatrixW", normalMatrixW);
         
         
         
@@ -613,8 +612,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     
-    modelMatrixW=vmml::create_translation(modelMatrixTerrain.get_translation());
-    
+    modelMatrixW=modelMatrixTAL*vmml::create_scaling(100.f)*vmml::create_rotation((90/M_PI_F/180), vmml::Vector3f::UNIT_Y);
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("terraintree", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
