@@ -121,9 +121,6 @@ void main()
     color2 = texture2D(SpecularMap, texCoordVarying.st);
     gl_FragColor =  ((color)+(color2*0.1));
     }
-//    if (length((PosPlane) - (vec3(posVarying))) > 1000.0 ) {
-//        color *= 1.05;
-//    }
     //highp vec4 color2 = texture2DProj(SpecularMap,texCoordVarying,((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0);
     
     //highp float depth=texture2D(DiffuseMap,texCoordVarying.xy).r;
@@ -134,7 +131,4 @@ void main()
     
     //gl_FragColor = (color*0.666 + color2*0.333) ;
     
-}
-
-
 }
