@@ -48,11 +48,32 @@ varying highp vec3 wsInterpolatedNormal;
 varying highp float dist;
 varying highp vec4 vVertex;
 
+lowp vec4 fogColor;
+
+struct fogParameters{
+    
+    highp float fDensity;
+    highp float fStart;
+    highp float fEnd;
+    highp vec4 fogColor;
+    int iFogEquation;
+} fogParams;
+
+
+
 
 
 void main()
 {
-
+    
+    //fogParameters
+    fogParams.fDensity = 0.04;
+    fogParams.fStart = 10.0;
+    fogParams.fEnd = 20.0;
+    fogParams.fogColor = vec4(0.9, 0.3, 0.3, 0.01);
+    fogParams.iFogEquation = 2;
+    
+    
     // TODO: implement Phong Shading (per-fragment lighting)
     //ambient here
     ambient = vec4(Ka * Ia, 1.0);
@@ -71,7 +92,6 @@ void main()
     //   float specAngle = max(dot(halfDir, normal), 0.0);
     //   specular = pow(specAngle, shininess);
     //TEST PUSH
-    
     
     
     //Bling Phong shading here
@@ -98,7 +118,7 @@ void main()
     highp float sel = 1.0-(log(xxx/-1.0))/(log(1.0/-1.0));
     
     selector.y = ((xxx/4500.0)-(1.0))*(-1.0);
-    
+    bool happend=false;
     
     //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
     highp vec4 color;
@@ -119,7 +139,7 @@ void main()
         
         color3 = texture2D(DiffuseMap, selector.st);
         color2 = texture2D(SpecularMap, texCoordVarying.st);
-        
+        happend=true;
         color = vec4(0.05,0.05,0.05,1.0);
         gl_FragColor =  (color+(color2*color3*0.6));
     }
@@ -129,11 +149,13 @@ void main()
         
         color = vec4(0.05,0.05,0.05,1.0);
         gl_FragColor =  (color+(color2*color3*0.6));
+        happend=true;
     }
     else{
     color = texture2D(DiffuseMap, selector.st);
     color2 = texture2D(SpecularMap, texCoordVarying.st);
     gl_FragColor =  ((color)+(color2*0.1));
+        happend=false;
     }
     //highp vec4 color2 = texture2DProj(SpecularMap,texCoordVarying,((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0);
 
@@ -145,5 +167,29 @@ void main()
     //color=(2.0*no)/(f+n)
     
     //gl_FragColor = (color*0.666 + color2*0.333) ;
+    
+    
+    highp float fFogCoord = abs(EyePos.y/EyePos.w);
+    
+    highp float fogFactor;
+    
+    highp float fResult = 0.0;
+    
+    fResult = exp(-fogParams.fDensity*fFogCoord);
+    
+    fogFactor = fResult;
+    
+    
+    highp float depth = deltaLength;
+    highp float fogFactorIntensity = (1.0-(1.0/(100.0/deltadelta)));
+    
+    
+    //if(!happend){
+    
+  //      gl_FragColor = mix(gl_FragColor,fogParams.fogColor, fogFactorIntensity*fogParams.);
+  // }
+    
+    
+    
     
 }

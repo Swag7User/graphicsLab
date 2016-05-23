@@ -5,6 +5,8 @@
 vmml::Matrix4f defaultTranslation= vmml::create_translation(vmml::Vector3f(2700.0f, 0.0f, 2700.0f));
 vmml::Matrix4f modelMatrixTerrain = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.0f));
 ;
+vmml::Matrix4f modelMatrixW = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.0f));
+
 vmml::Matrix4f modelMatrixTAL = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
 vmml::Matrix4f modelMatrixZep = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
 vmml::Matrix4f modelMatrixSKY = defaultTranslation*vmml::create_translation(modelMatrixTerrain.get_translation()) * vmml::create_scaling(vmml::Vector3f(1.f));
@@ -28,6 +30,7 @@ ShaderPtr CL2Shader;
 ShaderPtr CL3Shader;
 ShaderPtr CL4Shader;
 ShaderPtr CL5Shader;
+ShaderPtr WShader;
 PropertiesPtr guyProperties;
 PropertiesPtr TALProperties;
 PropertiesPtr ZepProperties;
@@ -37,6 +40,7 @@ PropertiesPtr CL2Properties;
 PropertiesPtr CL3Properties;
 PropertiesPtr CL4Properties;
 PropertiesPtr CL5Properties;
+PropertiesPtr WProperties;
 
 double _time = 0;
 double _pitchSum;
@@ -98,6 +102,7 @@ void RenderProject::initFunction()
     CL3Shader = bRenderer().getObjects()->loadShaderFile("CL3", 0, false, false, false, false, false);
     CL4Shader = bRenderer().getObjects()->loadShaderFile("CL4", 0, false, false, false, false, false);
     CL5Shader = bRenderer().getObjects()->loadShaderFile("CL5", 0, false, false, false, false, false);
+    WShader = bRenderer().getObjects()->loadShaderFile("W", 0, false, false, false, false, false);
 
     
     // create additional properties for a model
@@ -110,6 +115,7 @@ void RenderProject::initFunction()
     CL3Properties = bRenderer().getObjects()->createProperties("CL3Properties");
     CL4Properties = bRenderer().getObjects()->createProperties("CL4Properties");
     CL5Properties = bRenderer().getObjects()->createProperties("CL5Properties");
+    WProperties = bRenderer().getObjects()->createProperties("WProperties");
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
     hit_Terrain=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
@@ -122,6 +128,7 @@ void RenderProject::initFunction()
     bRenderer().getObjects()->loadObjModel("clouds3.obj", false, true, CL3Shader, CL3Properties);
     bRenderer().getObjects()->loadObjModel("clouds4.obj", false, true, CL4Shader, CL4Properties);
     bRenderer().getObjects()->loadObjModel("clouds5.obj", false, true, CL5Shader, CL5Properties);
+    bRenderer().getObjects()->loadObjModel("winning.obj", false, true, WShader, WProperties);
     // create camera
     bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
     
@@ -579,13 +586,34 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         bRenderer::log("No shader available.");
     }
     
+    shader = bRenderer().getObjects()->getShader("W");
+    if (shader.get())
+    {
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixTAL", modelMatrixW);
+        
+        
+        vmml::Matrix3f normalMatrixW;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixW)), normalMatrixW);
+        shader->setUniform("NormalMatrixTAL", normalMatrixW);
+        
+        
+        
+        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
+        
+        shader->setUniform("Ia", vmml::Vector3f(1.f));
+        shader->setUniform("Id", vmml::Vector3f(1.f));
+        shader->setUniform("Is", vmml::Vector3f(1.f));
+    }
 
 
     
 
     
     
-
+    viewMatrix=modelMatrixW;
     
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("Terrain_50000", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
@@ -598,6 +626,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     bRenderer().getModelRenderer()->drawModel("clouds3", "camera", modelMatrixCL3, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("clouds4", "camera", modelMatrixCL4, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("clouds5", "camera", modelMatrixCL5, std::vector<std::string>({ }));
+    //bRenderer().getModelRenderer()->drawModel("W", "camera", modelMatrixW, std::vector<std::string>({ }));
     
 
 }
