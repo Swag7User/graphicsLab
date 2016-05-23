@@ -45,9 +45,13 @@ float angle=0.f;
 
 
 int square_max=4;
-int line_max=100000;
+int line_max=500;
 int square_count=0;
 int line_count=0;
+int turning_counter=0;
+int turning_max=50;
+
+bool is_turning=false;
 
 /* Initialize the Project */
 void RenderProject::init()
@@ -221,8 +225,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     float rotX=-(float)(bRenderer().getInput()->getGyroscopeRoll()/150);
     float rotY=(float)(bRenderer().getInput()->getGyroscopePitch()/32);
     
-    vmml::Matrix4f rotationX = vmml::create_rotation(rotX, vmml::Vector3f::UNIT_X);
-    vmml::Matrix4f rotationY = vmml::create_rotation(rotY, vmml::Vector3f::UNIT_Y);
+    vmml::Matrix4f rotationX = vmml::create_rotation(-rotX, vmml::Vector3f::UNIT_X);
+    vmml::Matrix4f rotationY = vmml::create_rotation(-rotY, vmml::Vector3f::UNIT_Y);
     vmml::Matrix4f rotationZ = vmml::create_rotation(0.0f, vmml::Vector3f::UNIT_Z);
     //print("EY THIS IS ROATION:"+bRenderer().);
     /*** Guy ***/
@@ -267,30 +271,33 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         }
     }
     
-     modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 1.0f));
     //move Zeppelin
-    if (square_count==0) {
-        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 1.0f));
+    if (square_count==0&!is_turning) {
+        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f));
     }
-    if (square_count==1) {
-        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(-1.0f, 0.0f, 0.0f));
+    if ((square_count==1)&!is_turning) {
+        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f));
     }
-    if (square_count==2) {
-        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f,-1.0f));
+    if (square_count==2&!is_turning) {
+        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f,10.0f));
     }
-    if (square_count==3) {
-        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(1.0f, 0.0f, 0.0f));
+    if (square_count==3&!is_turning) {
+        modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f));
+    }
+    if (line_count>=line_max) {
+        square_count++;
+     //   is_turning=true;
+        line_count=0;
     }
     if (square_count>=square_max) {
         square_count=0;
     }
-    if (line_count>=line_max) {
-        square_count++;
-        line_count=0;
-    }
     line_count++;
+    if (line_count%6==0) {
+        modelMatrixZep*=vmml::create_rotation((90/(line_max/6)*M_PI_F/180), vmml::Vector3f::UNIT_Y);
+    }
     
-
+    
     
     
     //modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
