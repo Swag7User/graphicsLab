@@ -8,7 +8,11 @@ vmml::Matrix4f modelMatrixTerrain = defaultTranslation*vmml::create_translation(
 vmml::Matrix4f modelMatrixTAL = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
 vmml::Matrix4f modelMatrixZep = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
 vmml::Matrix4f modelMatrixSKY = defaultTranslation*vmml::create_translation(modelMatrixTerrain.get_translation()) * vmml::create_scaling(vmml::Vector3f(1.f));
-vmml::Matrix4f modelMatrixCL = defaultTranslation*vmml::create_translation(modelMatrixTerrain.get_translation())*vmml::create_translation(vmml::Vector3f(0.0f, 700.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(30.f));
+vmml::Matrix4f modelMatrixCL = vmml::create_translation(modelMatrixTerrain.get_translation())*vmml::create_translation(vmml::Vector3f(129.0f, 720.0f, 290.f)) * vmml::create_scaling(vmml::Vector3f(50.f));
+vmml::Matrix4f modelMatrixCL2 =vmml::create_translation(modelMatrixTerrain.get_translation())*vmml::create_translation(vmml::Vector3f(0.0f, 700.0f, 0.0f)) * vmml::create_scaling(vmml::Vector3f(40.f));
+vmml::Matrix4f modelMatrixCL3 =vmml::create_translation(modelMatrixTerrain.get_translation())*vmml::create_translation(vmml::Vector3f(330.0f, 690.0f, 120.f)) * vmml::create_scaling(vmml::Vector3f(60.f));
+vmml::Matrix4f modelMatrixCL4 =vmml::create_translation(modelMatrixTerrain.get_translation())*vmml::create_translation(vmml::Vector3f(-330.0f, 700.0f, -400.f)) * vmml::create_scaling(vmml::Vector3f(35.f));
+vmml::Matrix4f modelMatrixCL5 =vmml::create_translation(modelMatrixTerrain.get_translation())*vmml::create_translation(vmml::Vector3f(-300.0f, 640.0f, 470.f)) * vmml::create_scaling(vmml::Vector3f(70.f));
 vmml::AABBf hit_TAL;
 vmml::AABBf hit_Zep;
 vmml::AABBf hit_Zep_size;
@@ -20,11 +24,19 @@ ShaderPtr TALShader;
 ShaderPtr ZepShader;
 ShaderPtr SKYShader;
 ShaderPtr CLShader;
+ShaderPtr CL2Shader;
+ShaderPtr CL3Shader;
+ShaderPtr CL4Shader;
+ShaderPtr CL5Shader;
 PropertiesPtr guyProperties;
 PropertiesPtr TALProperties;
 PropertiesPtr ZepProperties;
 PropertiesPtr SKYProperties;
 PropertiesPtr CLProperties;
+PropertiesPtr CL2Properties;
+PropertiesPtr CL3Properties;
+PropertiesPtr CL4Properties;
+PropertiesPtr CL5Properties;
 
 double _time = 0;
 double _pitchSum;
@@ -71,7 +83,10 @@ void RenderProject::initFunction()
     ZepShader = bRenderer().getObjects()->loadShaderFile("Zep", 0, false, false, false, false, false);
     SKYShader = bRenderer().getObjects()->loadShaderFile("SKY", 0, false, false, false, false, false);
     CLShader = bRenderer().getObjects()->loadShaderFile("CL", 0, false, false, false, false, false);
-
+    CL2Shader = bRenderer().getObjects()->loadShaderFile("CL2", 0, false, false, false, false, false);
+    CL3Shader = bRenderer().getObjects()->loadShaderFile("CL3", 0, false, false, false, false, false);
+    CL4Shader = bRenderer().getObjects()->loadShaderFile("CL4", 0, false, false, false, false, false);
+    CL5Shader = bRenderer().getObjects()->loadShaderFile("CL5", 0, false, false, false, false, false);
 
     
     // create additional properties for a model
@@ -80,7 +95,10 @@ void RenderProject::initFunction()
     ZepProperties = bRenderer().getObjects()->createProperties("ZepProperties");
     SKYProperties = bRenderer().getObjects()->createProperties("SKYProperties");
     CLProperties = bRenderer().getObjects()->createProperties("CLProperties");
-    
+    CL2Properties = bRenderer().getObjects()->createProperties("CL2Properties");
+    CL3Properties = bRenderer().getObjects()->createProperties("CL3Properties");
+    CL4Properties = bRenderer().getObjects()->createProperties("CL4Properties");
+    CL5Properties = bRenderer().getObjects()->createProperties("CL5Properties");
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
     hit_Terrain=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
@@ -89,7 +107,10 @@ void RenderProject::initFunction()
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     bRenderer().getObjects()->loadObjModel("skybox.obj", false, true, SKYShader, SKYProperties);
     bRenderer().getObjects()->loadObjModel("clouds.obj", false, true, CLShader, CLProperties);
-    
+    bRenderer().getObjects()->loadObjModel("clouds2.obj", false, true, CL2Shader, CL2Properties);
+    bRenderer().getObjects()->loadObjModel("clouds3.obj", false, true, CL3Shader, CL3Properties);
+    bRenderer().getObjects()->loadObjModel("clouds4.obj", false, true, CL4Shader, CL4Properties);
+    bRenderer().getObjects()->loadObjModel("clouds5.obj", false, true, CL5Shader, CL5Properties);
     // create camera
     bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
     
@@ -412,7 +433,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     {
         shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
         shader->setUniform("ViewMatrix", viewMatrix);
-        shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixCL", modelMatrixCL);
         
         
@@ -424,9 +444,90 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         
         shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
         
-        shader->setUniform("Ia", vmml::Vector3f(1.f));
-        shader->setUniform("Id", vmml::Vector3f(1.f));
-        shader->setUniform("Is", vmml::Vector3f(1.f));
+    }
+    else
+    {
+        bRenderer::log("No shader available.");
+    }
+    shader = bRenderer().getObjects()->getShader("CL2");
+    if (shader.get())
+    {
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixCL2", modelMatrixCL2);
+        
+        
+        vmml::Matrix3f normalMatrixCL2;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixCL2)), normalMatrixCL2);
+        shader->setUniform("NormalMatrixCL2", normalMatrixCL2);
+        
+        
+        
+        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
+        
+    }
+    else
+    {
+        bRenderer::log("No shader available.");
+    }
+    shader = bRenderer().getObjects()->getShader("CL3");
+    if (shader.get())
+    {
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixCL3", modelMatrixCL3);
+        
+        
+        vmml::Matrix3f normalMatrixCL3;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixCL3)), normalMatrixCL3);
+        shader->setUniform("NormalMatrixCL3", normalMatrixCL3);
+        
+        
+        
+        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
+        
+    }
+    else
+    {
+        bRenderer::log("No shader available.");
+    }
+    shader = bRenderer().getObjects()->getShader("CL4");
+    if (shader.get())
+    {
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixCL4", modelMatrixCL4);
+        
+        
+        vmml::Matrix3f normalMatrixCL4;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixCL4)), normalMatrixCL4);
+        shader->setUniform("NormalMatrixCL4", normalMatrixCL4);
+        
+        
+        
+        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
+        
+    }
+    else
+    {
+        bRenderer::log("No shader available.");
+    }
+    shader = bRenderer().getObjects()->getShader("CL5");
+    if (shader.get())
+    {
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixCL5", modelMatrixCL5);
+        
+        
+        vmml::Matrix3f normalMatrixCL5;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixCL5)), normalMatrixCL5);
+        shader->setUniform("NormalMatrixCL5", normalMatrixCL5);
+        
+        
+        
+        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
+        
     }
     else
     {
@@ -446,7 +547,13 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("Zep", "camera", modelMatrixZep, std::vector<std::string>({ }));
+    // multiple clouds are drawn here
     bRenderer().getModelRenderer()->drawModel("clouds", "camera", modelMatrixCL, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("clouds2", "camera", modelMatrixCL2, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("clouds3", "camera", modelMatrixCL3, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("clouds4", "camera", modelMatrixCL4, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("clouds5", "camera", modelMatrixCL5, std::vector<std::string>({ }));
+    
 
 }
 
