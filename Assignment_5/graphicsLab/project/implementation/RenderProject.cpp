@@ -2,15 +2,19 @@
 #ifdef __OBJC__
 #import <CoreMotion/CoreMotion.h>
 #endif
-vmml::Matrix4f modelMatrixTerrain = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 5.5f));
+vmml::Matrix4f defaultTranslation= vmml::create_translation(vmml::Vector3f(2700.0f, 0.0f, 2700.0f));
+vmml::Matrix4f modelMatrixTerrain = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.0f));
 ;
-vmml::Matrix4f modelMatrixTAL = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
-vmml::Matrix4f modelMatrixZep = vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
-vmml::Matrix4f modelMatrixSKY = vmml::create_translation(modelMatrixTerrain.get_translation()) * vmml::create_scaling(vmml::Vector3f(1.f));
-vmml::Matrix4f modelMatrixCL = vmml::create_translation(modelMatrixTerrain.get_translation())*vmml::create_translation(vmml::Vector3f(0.0f, 700.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(30.f));
+vmml::Matrix4f modelMatrixTAL = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
+vmml::Matrix4f modelMatrixZep = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
+vmml::Matrix4f modelMatrixSKY = defaultTranslation*vmml::create_translation(modelMatrixTerrain.get_translation()) * vmml::create_scaling(vmml::Vector3f(1.f));
+vmml::Matrix4f modelMatrixCL = defaultTranslation*vmml::create_translation(modelMatrixTerrain.get_translation())*vmml::create_translation(vmml::Vector3f(0.0f, 700.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(30.f));
 vmml::AABBf hit_TAL;
 vmml::AABBf hit_Zep;
+vmml::AABBf hit_Zep_size;
+//vmml::AABBf hit_Zep;
 vmml::AABBf hit_Terrain;
+vmml::AABBf hit_Terrain_size;
 ShaderPtr guyShader;
 ShaderPtr TALShader;
 ShaderPtr ZepShader;
@@ -80,8 +84,8 @@ void RenderProject::initFunction()
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
     hit_Terrain=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
-    hit_TAL=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
-    hit_Zep=bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties)->getBoundingBoxObjectSpace();
+    //hit_TAL=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
+    hit_Zep=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
     bRenderer().getObjects()->loadObjModel("skybox.obj", false, true, SKYShader, SKYProperties);
     bRenderer().getObjects()->loadObjModel("clouds.obj", false, true, CLShader, CLProperties);
@@ -229,10 +233,12 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     // translate, rotate and scale
-//    if (hit_Terrain.isIn(modelMatrixTAL.get_translation())|hit_Zep.isIn(modelMatrixTAL.get_translation())) {
-//        modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
-//    }
-    modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
+    if (hit_TAL.getMin().y()>=-150.0f) {
+        if(!hit_Zep.isIn(hit_TAL.getMax()-vmml::Vector3f(8.0f,8.0f,8.0f))){
+            modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
+        }
+    }
+    //modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
 
     
     vmml::Vector3f camTranslation = modelMatrixTAL.get_translation();
@@ -298,12 +304,27 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     //turn plane right
-    hit_Terrain=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
-    hit_TAL=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
-    hit_Zep=bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties)->getBoundingBoxObjectSpace();
+    hit_Terrain_size=bRenderer().getObjects()->loadObjModel("Terrain_50000.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
+    vmml::AABBf hit_TAL_size=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
+    //hit_Zep=vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
+    hit_Zep_size=bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties)->getBoundingBoxObjectSpace();
     
     
+    
+    //hit_Zep.set(center_zep.x(), center_zep.y(), center_zep.z(), hit_Zep.getMax()-hit_Zep.getCenter());
+   // hit_TAL.set(hit_TAL.getMin()+modelMatrixTAL.get_translation(),hit_TAL.getMax()+modelMatrixTAL.get_translation() );
+    hit_TAL.setMin(hit_TAL_size.getMin()+modelMatrixTAL.get_translation() );
+    hit_TAL.setMax(hit_TAL_size.getMax()+modelMatrixTAL.get_translation() );
+    
+    hit_Terrain.setMin(hit_Terrain_size.getMin()+modelMatrixTerrain.get_translation() );
+    hit_Terrain.setMax(hit_Terrain_size.getMax()+modelMatrixTerrain.get_translation() );
 
+    hit_Zep.setMin(hit_Zep_size.getMin()*0.1+modelMatrixZep.get_translation() );
+    hit_Zep.setMax(hit_Zep_size.getMax()*0.1+modelMatrixZep.get_translation() );
+    
+    //vmml::AABB hit_TAL_real=vmml::AABB(hit_TAL.getMin()+modelMatrixTAL.get_translation(),hit_TAL.getMax()+modelMatrixTAL.get_translation() );
+    
+    
     
     ShaderPtr shader = bRenderer().getObjects()->getShader("guy");
 
