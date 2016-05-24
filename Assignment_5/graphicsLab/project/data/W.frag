@@ -90,6 +90,8 @@ void main()
     //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
     
     highp vec4 color = texture2D(DiffuseMap,texCoordVarying.st);
+    gl_FragColor =  color;
+    
     //texture2DProj(bloomcamo.jpg, texCoordVarying);
     
 

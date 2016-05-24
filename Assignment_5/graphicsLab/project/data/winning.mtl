@@ -1,13 +1,56 @@
 # Blender MTL File: 'skybox.obj'
-# Material Count: 1
+# Material Count: 6
 
-newmtl wonmt
-Ns 94.117647
+newmtl Material~0
+Kd 0.7 0.7 0.7
+Ka 0 0 0
+Ks 0 0 0
+d 1
+
+newmtl skybox_country_paths_back1
+Ns 96.078431
 Ka 0.678336 0.678336 0.678336
 Kd 0.588138 0.588138 0.588138
 Ks 0.607843 0.607843 0.607843
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
 d 1.000000
-illum 2
+map_Kd winning.jpg
+
+newmtl skybox_country_paths_bottom1
+Ns 96.078431
+Ka 0.678336 0.678336 0.678336
+Kd 0.588138 0.588138 0.588138
+Ks 0.607843 0.607843 0.607843
+d 1.000000
+map_Kd winning.jpg
+
+newmtl skybox_country_paths_front1
+Ns 96.078431
+Ka 0.669952 0.669952 0.669952
+Kd 0.580868 0.580868 0.580868
+Ks 0.600330 0.600330 0.600330
+d 1.000000
+map_Kd winning.jpg
+
+newmtl skybox_country_paths_left1
+Ns 96.078431
+Ka 0.678336 0.678336 0.678336
+Kd 0.588138 0.588138 0.588138
+Ks 0.607843 0.607843 0.607843
+d 1.000000
+map_Kd winning.jpg
+
+newmtl skybox_country_paths_right1
+Ns 96.078431
+Ka 0.678336 0.678336 0.678336
+Kd 0.967581 0.967581 0.967581
+Ks 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd winning.jpg
+
+newmtl skybox_country_paths_top1
+Ns 96.078431
+Ka 0.678336 0.678336 0.678336
+Kd 0.588138 0.588138 0.588138
+Ks 0.607843 0.607843 0.607843
+d 1.000000
 map_Kd winning.jpg

@@ -167,22 +167,22 @@ void main()
     //color=(2.0*no)/(f+n)
     
     //gl_FragColor = (color*0.666 + color2*0.333) ;
-    
-    
-    highp float fFogCoord = abs(EyePos.y/EyePos.w);
-    
-    highp float fogFactor;
-    
-    highp float fResult = 0.0;
-    
-    fResult = exp(-fogParams.fDensity*fFogCoord);
-    
-    fogFactor = fResult;
-    
-    
-    highp float depth = deltaLength;
-    highp float fogFactorIntensity = (1.0-(1.0/(100.0/deltadelta)));
-    
+//    
+//    
+//    highp float fFogCoord = abs(EyePos.y/EyePos.w);
+//    
+//    highp float fogFactor;
+//    
+//    highp float fResult = 0.0;
+//    
+//    fResult = exp(-fogParams.fDensity*fFogCoord);
+//    
+//    fogFactor = fResult;
+//    
+//    
+//    highp float depth = deltaLength;
+//    highp float fogFactorIntensity = (1.0-(1.0/(100.0/deltadelta)));
+//    
     
     //if(!happend){
     

@@ -2,10 +2,10 @@
 #ifdef __OBJC__
 #import <CoreMotion/CoreMotion.h>
 #endif
-vmml::Matrix4f defaultTranslation= vmml::create_translation(vmml::Vector3f(2700.0f, 0.0f, 2700.0f));
+vmml::Matrix4f defaultTranslation= vmml::create_translation(vmml::Vector3f(1000.0f, 1000.0f, 1000.0f));
 vmml::Matrix4f modelMatrixTerrain = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.0f));
 ;
-vmml::Matrix4f modelMatrixW = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.0f));
+vmml::Matrix4f modelMatrixW = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f))* vmml::create_scaling(vmml::Vector3f(10.f));
 
 vmml::Matrix4f modelMatrixTAL = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
 vmml::Matrix4f modelMatrixZep = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
@@ -31,6 +31,7 @@ ShaderPtr CL3Shader;
 ShaderPtr CL4Shader;
 ShaderPtr CL5Shader;
 ShaderPtr WShader;
+ShaderPtr spriteW;
 PropertiesPtr guyProperties;
 PropertiesPtr TALProperties;
 PropertiesPtr ZepProperties;
@@ -41,6 +42,7 @@ PropertiesPtr CL3Properties;
 PropertiesPtr CL4Properties;
 PropertiesPtr CL5Properties;
 PropertiesPtr WProperties;
+bool player_won=false;
 
 double _time = 0;
 double _pitchSum;
@@ -54,6 +56,7 @@ int square_count=0;
 int line_count=0;
 int turning_counter=0;
 int turning_max=50;
+
 
 bool is_turning=false;
 
@@ -129,6 +132,8 @@ void RenderProject::initFunction()
     bRenderer().getObjects()->loadObjModel("clouds4.obj", false, true, CL4Shader, CL4Properties);
     bRenderer().getObjects()->loadObjModel("clouds5.obj", false, true, CL5Shader, CL5Properties);
     bRenderer().getObjects()->loadObjModel("winning.obj", false, true, WShader, WProperties);
+   // auto sspriteW=bRenderer().getObjects()->createSprite("winning", "winning.png");
+    
     // create camera
     bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
     
@@ -276,6 +281,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         if(!hit_Zep.isIn(hit_TAL.getMax()-vmml::Vector3f(8.0f,8.0f,8.0f))){
             modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
         }
+        else{
+            player_won=true;
+        }
     }
     
     //move Zeppelin
@@ -394,7 +402,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     hit_Zep.setMax(hit_Zep_size.getMax()*0.1+modelMatrixZep.get_translation() );
     
     //vmml::AABB hit_TAL_real=vmml::AABB(hit_TAL.getMin()+modelMatrixTAL.get_translation(),hit_TAL.getMax()+modelMatrixTAL.get_translation() );
-    
+    if (player_won) {
+        bRenderer().getObjects()->getCamera("camera")->setPosition(modelMatrixW.get_translation());
+    }
     
     
     ShaderPtr shader = bRenderer().getObjects()->getShader("guy");
@@ -612,7 +622,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     
-    modelMatrixW=modelMatrixTAL*vmml::create_scaling(100.f)*vmml::create_rotation((90/M_PI_F/180), vmml::Vector3f::UNIT_Y);
+    //modelMatrixW*=vmml::create_rotation((90/M_PI_F/180), vmml::Vector3f::UNIT_Y);
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("terraintree", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
@@ -625,6 +635,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     bRenderer().getModelRenderer()->drawModel("clouds4", "camera", modelMatrixCL4, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("clouds5", "camera", modelMatrixCL5, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("winning", "camera", modelMatrixW, std::vector<std::string>({ }));
+    //bRenderer().getModelRenderer()->drawModel(
     
 
 }
