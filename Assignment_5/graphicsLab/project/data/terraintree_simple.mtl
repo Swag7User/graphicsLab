@@ -1,5 +1,5 @@
-# Blender MTL File: 'terraintree.blend'
-# Material Count: 131
+# Blender MTL File: 'terraintree_simple.blend'
+# Material Count: 7
 
 newmtl Material.001
 Ns 94.117647
@@ -24,26 +24,17 @@ illum 2
 map_Kd AER_map3_orig_sm_bam.png
 map_Ks  Color.png
 
-newmtl Material.004
-Ns 94.117647
-Ka 1.000000 1.000000 1.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-map_Kd iceburn5.png
-
 newmtl snow
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
+Kd 0.9800000 0.9800000 0.9800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
+map_Kd iceburn5.png
+
 
 newmtl tree
 Ns 96.078431
@@ -54,6 +45,8 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
+map_Kd HLG_map1_orig.png
+
 
 newmtl trunk
 Ns 96.078431
@@ -64,3 +57,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
+map_Kd BKL_map2_orig.png

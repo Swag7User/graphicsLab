@@ -2,7 +2,7 @@
 #ifdef __OBJC__
 #import <CoreMotion/CoreMotion.h>
 #endif
-vmml::Matrix4f defaultTranslation= vmml::create_translation(vmml::Vector3f(1000.0f, 1000.0f, 1000.0f));
+vmml::Matrix4f defaultTranslation= vmml::create_translation(vmml::Vector3f(2700.0f, 0.0f, 2700.0f));
 vmml::Matrix4f modelMatrixTerrain = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.0f));
 ;
 vmml::Matrix4f modelMatrixW = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f))* vmml::create_scaling(vmml::Vector3f(10.f));
@@ -58,6 +58,7 @@ int turning_counter=0;
 int turning_max=50;
 int counterW=1;
 int counterWmax=100;
+float boostb = 1;
 
 bool is_turning=false;
 
@@ -122,7 +123,7 @@ void RenderProject::initFunction()
     WProperties = bRenderer().getObjects()->createProperties("WProperties");
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
-    hit_Terrain=bRenderer().getObjects()->loadObjModel("terraintree.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
+    hit_Terrain=bRenderer().getObjects()->loadObjModel("terraintree_simple.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
     //hit_TAL=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
     hit_Zep=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
     // automatically generates a shader with a maximum of 4 lights (number of lights may vary between 0 and 4 during rendering without performance loss)
@@ -250,9 +251,32 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     for (auto t = touchMap.begin(); t != touchMap.end(); ++t)
     {
         Touch touch = t->second;
-        rotation = (touch.currentPositionX - touch.startPositionX) / 100;
-        if (++i > 1)
-            break;
+        if (touch.startPositionX < bRenderer().getView()->getWidth()/2) {
+            rotation = (touch.currentPositionX - touch.startPositionX) / 100;
+            if (++i > 1)
+                break;
+        }
+        else{
+            
+            TouchMap touchMap3 = bRenderer().getInput()->getTouches();
+            int i2 = 0;
+            for (auto t = touchMap3.begin(); t != touchMap3.end(); ++t)
+            {
+                Touch touchy = t->second;
+                if (touchy.startPositionY < bRenderer().getView()->getHeight()/2) {
+                    if(boostb < 3.0){
+                    boostb += 0.025;
+                    }
+                }
+                else{
+                    if (boostb >0.5) {
+                        boostb -= 0.025;
+                    }
+                }
+            }
+            
+         }
+       
     }
     // get input rotation
     TouchMap touchMap2 = bRenderer().getInput()->getTouches();
@@ -261,9 +285,11 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     for (auto t = touchMap2.begin(); t != touchMap2.end(); ++t)
     {
         Touch touch = t->second;
+        if (touch.startPositionX < bRenderer().getView()->getWidth()/2) {
         rotation2 = (touch.currentPositionY - touch.startPositionY) / 100;
         if (++i2 > 1)
             break;
+        }
     }
     
     
@@ -283,7 +309,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     // translate, rotate and scale
     if (hit_TAL.getMin().y()>=-150.0f) {
         if(!hit_Zep.isIn(hit_TAL.getMax()-vmml::Vector3f(8.0f,8.0f,8.0f))){
-            modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
+            modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f*boostb, 0.0f));
         }
         else{
             player_won=true;
@@ -291,16 +317,16 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
     
     //move Zeppelin
-    if (square_count==0&!is_turning) {
+    if (square_count==0&&!is_turning) {
         modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f));
     }
     if ((square_count==1)&!is_turning) {
         modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f));
     }
-    if (square_count==2&!is_turning) {
+    if (square_count==2&&!is_turning) {
         modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f,10.0f));
     }
-    if (square_count==3&!is_turning) {
+    if (square_count==3&&!is_turning) {
         modelMatrixZep *= vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f));
     }
     if (line_count>=line_max) {
@@ -387,7 +413,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
     //turn plane right
-    hit_Terrain_size=bRenderer().getObjects()->loadObjModel("terraintree.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
+    hit_Terrain_size=bRenderer().getObjects()->loadObjModel("terraintree_simple.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
     vmml::AABBf hit_TAL_size=bRenderer().getObjects()->loadObjModel("TAL16OBJ.obj", false, true, TALShader, TALProperties)->getBoundingBoxObjectSpace();
     //hit_Zep=vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
     hit_Zep_size=bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties)->getBoundingBoxObjectSpace();
@@ -629,7 +655,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     //modelMatrixW*=vmml::create_rotation((90/M_PI_F/180), vmml::Vector3f::UNIT_Y);
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
-    bRenderer().getModelRenderer()->drawModel("terraintree", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
+    bRenderer().getModelRenderer()->drawModel("terraintree_simple", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
     bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("Zep", "camera", modelMatrixZep, std::vector<std::string>({ }));
