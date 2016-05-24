@@ -49,6 +49,8 @@
 		829B48F11CF32A1100A89681 /* texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 829B48E11CF32A1100A89681 /* texture.png */; };
 		82BD675D1CF47A7C00F5C650 /* winning.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 82BD675B1CF47A7C00F5C650 /* winning.mtl */; };
 		82BD675E1CF47A7C00F5C650 /* winning.obj in Resources */ = {isa = PBXBuildFile; fileRef = 82BD675C1CF47A7C00F5C650 /* winning.obj */; };
+		82DB7BF71CF4AA2F00F5B0EC /* blurShader.vert in Resources */ = {isa = PBXBuildFile; fileRef = 82DB7BF51CF4AA2E00F5B0EC /* blurShader.vert */; };
+		82DB7BF81CF4AA2F00F5B0EC /* blurShader.frag in Resources */ = {isa = PBXBuildFile; fileRef = 82DB7BF61CF4AA2F00F5B0EC /* blurShader.frag */; };
 		82DC60C51CE5D23A00EF7560 /* Zep.frag in Resources */ = {isa = PBXBuildFile; fileRef = 82DC60C31CE5D23A00EF7560 /* Zep.frag */; };
 		82DC60C61CE5D23A00EF7560 /* Zep.vert in Resources */ = {isa = PBXBuildFile; fileRef = 82DC60C41CE5D23A00EF7560 /* Zep.vert */; };
 		82DC60CD1CE5D41500EF7560 /* Zep.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 82DC60CB1CE5D41500EF7560 /* Zep.mtl */; };
@@ -236,6 +238,8 @@
 		829B48E11CF32A1100A89681 /* texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture.png; sourceTree = "<group>"; };
 		82BD675B1CF47A7C00F5C650 /* winning.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = winning.mtl; sourceTree = "<group>"; };
 		82BD675C1CF47A7C00F5C650 /* winning.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = winning.obj; sourceTree = "<group>"; };
+		82DB7BF51CF4AA2E00F5B0EC /* blurShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blurShader.vert; sourceTree = "<group>"; };
+		82DB7BF61CF4AA2F00F5B0EC /* blurShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blurShader.frag; sourceTree = "<group>"; };
 		82DC60C31CE5D23A00EF7560 /* Zep.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Zep.frag; sourceTree = "<group>"; };
 		82DC60C41CE5D23A00EF7560 /* Zep.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Zep.vert; sourceTree = "<group>"; };
 		82DC60CB1CE5D41500EF7560 /* Zep.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Zep.mtl; sourceTree = "<group>"; };
@@ -617,6 +621,8 @@
 		B47949841BA6742B00B5E9DC /* data */ = {
 			isa = PBXGroup;
 			children = (
+				82DB7BF51CF4AA2E00F5B0EC /* blurShader.vert */,
+				82DB7BF61CF4AA2F00F5B0EC /* blurShader.frag */,
 				82BD675B1CF47A7C00F5C650 /* winning.mtl */,
 				82BD675C1CF47A7C00F5C650 /* winning.obj */,
 				A8A286091CF36488009B08A1 /* W.frag */,
@@ -958,6 +964,7 @@
 				829B48CA1CF31FB900A89681 /* CL2.vert in Resources */,
 				829B48CC1CF31FB900A89681 /* CL3.vert in Resources */,
 				829B48C01CF31FAB00A89681 /* CL.vert in Resources */,
+				82DB7BF81CF4AA2F00F5B0EC /* blurShader.frag in Resources */,
 				A8BFF2081CEF621700D63D59 /* iceburn.png in Resources */,
 				A8F8D55A1CEF1F1B00707F04 /* HLG_map3_orig.png in Resources */,
 				829B48CB1CF31FB900A89681 /* CL3.frag in Resources */,
@@ -1033,6 +1040,7 @@
 				A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */,
 				829B48B21CF31F9900A89681 /* cloud.png in Resources */,
 				829B48BA1CF31F9900A89681 /* clouds4.obj in Resources */,
+				82DB7BF71CF4AA2F00F5B0EC /* blurShader.vert in Resources */,
 				A8F8D54F1CEF000E00707F04 /* debug.png in Resources */,
 				829B48EB1CF32A1100A89681 /* HLG_map1_orig.png in Resources */,
 				829B48F11CF32A1100A89681 /* texture.png in Resources */,

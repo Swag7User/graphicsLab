@@ -32,6 +32,7 @@ ShaderPtr CL4Shader;
 ShaderPtr CL5Shader;
 ShaderPtr WShader;
 ShaderPtr spriteW;
+ShaderPtr blurShader;
 PropertiesPtr guyProperties;
 PropertiesPtr TALProperties;
 PropertiesPtr ZepProperties;
@@ -43,6 +44,7 @@ PropertiesPtr CL4Properties;
 PropertiesPtr CL5Properties;
 PropertiesPtr WProperties;
 bool player_won=false;
+GLint defaultFBO;
 
 double _time = 0;
 double _pitchSum;
@@ -135,6 +137,16 @@ void RenderProject::initFunction()
     bRenderer().getObjects()->loadObjModel("clouds5.obj", false, true, CL5Shader, CL5Properties);
     bRenderer().getObjects()->loadObjModel("winning.obj", false, true, WShader, WProperties);
    // auto sspriteW=bRenderer().getObjects()->createSprite("winning", "winning.png");
+    
+    // postprocessing
+    bRenderer().getObjects()->createFramebuffer("fbo");					// create framebuffer object
+    bRenderer().getObjects()->createTexture("fbo_texture1", 0.f,0.f);	// create texture to bind to the fbo
+    bRenderer().getObjects()->createTexture("fbo_texture2", 0.f, 0.f);	// create texture to bind to the fbo
+    blurShader = bRenderer().getObjects()->loadShaderFile("blurShader", 0, false, false, false, false, false);			// load shader that blurs the texture
+    MaterialPtr blurMaterial = bRenderer().getObjects()->createMaterial("blurMaterial", blurShader);								// create an empty material to assign either texture1 or texture2 to
+    bRenderer().getObjects()->createSprite("blurSprite", blurMaterial);																// create a sprite using the material created above
+    
+
     
     // create camera
     bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
@@ -647,7 +659,42 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         shader->setUniform("Is", vmml::Vector3f(1.f));
         shader->setUniform("counter", (float)(counterW));
     }
-
+    
+    //BLUR    DOING STAFF¨
+    float boostb=1.0;
+    if(boostb>1.0){
+    bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth() / 5, bRenderer().getView()->getHeight() / 5);		// reduce viewport size
+    defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
+    bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture1"), false);	// bind the fbo
+    }
+    shader = bRenderer().getObjects()->getShader("blurShader");
+    if (shader.get())
+    {
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixTAL", modelMatrixTAL);
+        
+        
+        vmml::Matrix3f normalMatrixTAL;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
+        shader->setUniform("NormalMatrixTAL", normalMatrixTAL);
+        
+        
+        
+        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
+        shader->setUniform("EyePos", eyePos);
+        
+        shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
+        shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
+        
+        shader->setUniform("fbo_texture", bRenderer().getObjects()->getTexture("fbo_texture1"));
+        shader->setUniform("speed" ,boostb);
+        //uniform sampler2D fbo_texture;
+    }
+    else
+    {
+        bRenderer::log("No shader available.");
+    }
 
     
 
@@ -667,6 +714,29 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     bRenderer().getModelRenderer()->drawModel("clouds5", "camera", modelMatrixCL5, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("winning", "camera", modelMatrixW, std::vector<std::string>({ }));
     //bRenderer().getModelRenderer()->drawModel(
+    
+    /// End post processing ///
+    /*** Blur ***/
+    // translate
+    vmml::Matrix4f modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, -0.5));
+    // blur vertically and horizontally
+    if (boostb>1.0) {
+    bool b = true;
+    int numberOfBlurSteps = 3;
+    for (int i = 0; i < numberOfBlurSteps; i++) {
+        if (i == numberOfBlurSteps - 1){
+            bRenderer().getObjects()->getFramebuffer("fbo")->unbind(defaultFBO); //unbind (original fbo will be bound)
+            bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());								// reset vieport size
+        }
+        else
+            bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture(b ? "fbo_texture2" : "fbo_texture1"), false);
+        bRenderer().getObjects()->getMaterial("blurMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture(b ? "fbo_texture1" : "fbo_texture2"));
+        bRenderer().getObjects()->getMaterial("blurMaterial")->setScalar("isVertical", static_cast<GLfloat>(b));
+        // draw
+        bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("blurSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
+        b = !b;
+    }
+    }
     
 
 }
