@@ -45,6 +45,8 @@ varying highp vec3 wsInterpolatedNormal;
 varying highp float dist;
 varying highp vec4 vVertex;
 
+uniform highp float counter;
+
 void main()
 {
 
@@ -86,10 +88,28 @@ void main()
     
     //selector.y = dist/10.0;
     
-    
     //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
     
     highp vec4 color = texture2D(DiffuseMap,texCoordVarying.st);
+    if (color.x>0.95) {
+        color.x=1.0-(counter/50.0);
+        if (counter>50.0) {
+            color.x=0.0+((counter-50.0)/50.0);
+        }
+    }
+    if (color.y>0.95) {
+        color.y=1.0-(counter/50.0);
+        if (counter>50.0) {
+            color.y=0.0+((counter-50.0)/50.0);
+        }
+    }
+    if (color.z>0.95) {
+        color.z=1.0-(counter/50.0);
+        if (counter>50.0) {
+            color.z=0.0+((counter-50.0)/50.0);
+        }
+    }
+    
     gl_FragColor =  color;
     
     //texture2DProj(bloomcamo.jpg, texCoordVarying);

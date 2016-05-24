@@ -56,7 +56,8 @@ int square_count=0;
 int line_count=0;
 int turning_counter=0;
 int turning_max=50;
-
+int counterW=1;
+int counterWmax=100;
 
 bool is_turning=false;
 
@@ -266,7 +267,10 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
     
     
-    
+    counterW++;
+    if (counterW>=counterWmax) {
+        counterW=1;
+    }
     // TODO: implement solar system here
     
     //vmml::Matrix4f modelMatrixTerrain = vmml::create_scaling(vmml::Vector3f(0.6f));
@@ -615,6 +619,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         shader->setUniform("Ia", vmml::Vector3f(1.f));
         shader->setUniform("Id", vmml::Vector3f(1.f));
         shader->setUniform("Is", vmml::Vector3f(1.f));
+        shader->setUniform("counter", (float)(counterW));
     }
 
 
