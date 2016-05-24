@@ -661,7 +661,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
     
     //BLUR    DOING STAFF¨
-    float boostb=1.0;
     if(boostb>1.0){
     bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth() / 5, bRenderer().getView()->getHeight() / 5);		// reduce viewport size
     defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
