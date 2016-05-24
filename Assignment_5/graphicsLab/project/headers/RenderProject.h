@@ -52,9 +52,6 @@ private:
     /* Update render queue */
     void updateRenderQueue(const std::string &camera, const double &deltaTime);
 
-    /* Update render queue */
-    void updateSKYQueue(const std::string &camera, const double &deltaTime);
-
 	/* Camera movement */
 	void updateCamera(const std::string &camera, const double &deltaTime);
 
