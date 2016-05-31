@@ -651,7 +651,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     //BLUR    DOING STAFF¨
     if(boostb>1.0){
-    bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth() / 5, bRenderer().getView()->getHeight() / 5);		// reduce viewport size
+    bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());		// reduce viewport size
     defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
     bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture1"), false);	// bind the fbo
     }
@@ -711,7 +711,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     // blur vertically and horizontally
     if (boostb>1.0) {
     bool b = true;
-    int numberOfBlurSteps = 3;
+    int numberOfBlurSteps = 1;
     for (int i = 0; i < numberOfBlurSteps; i++) {
         if (i == numberOfBlurSteps - 1){
             bRenderer().getObjects()->getFramebuffer("fbo")->unbind(defaultFBO); //unbind (original fbo will be bound)
@@ -726,7 +726,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         b = !b;
     }
     }
-    
 
 }
 
