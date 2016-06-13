@@ -50,6 +50,9 @@ varying highp vec4 vVertex;
 
 lowp vec4 fogColor;
 
+layout (location = 0) out vec4 FragColor;
+layout (location = 1) out vec4 BrightColor;
+
 struct fogParameters{
     
     highp float fDensity;
@@ -141,20 +144,32 @@ void main()
         color2 = texture2D(SpecularMap, texCoordVarying.st);
         happend=true;
         color = vec4(0.05,0.05,0.05,1.0);
-        gl_FragColor =  (color+(color2*color3*0.6));
+        FragColor =  (color+(color2*color3*0.6));
+        // Check whether fragment output is higher than threshold, if so output as brightness color
+        float brightness = dot(FragColor.rgb, vec3(0.2126, 0.7152, 0.0722));
+        if(brightness > 1.0)
+            BrightColor = vec4(FragColor.rgb, 1.0);
     }
     else if(deltaxzep< 20.0  && deltazzep < 20.0 && deltaLengthzep<100.0){
         color3 = texture2D(DiffuseMap, selector.st);
         color2 = texture2D(SpecularMap, texCoordVarying.st);
         
         color = vec4(0.05,0.05,0.05,1.0);
-        gl_FragColor =  (color+(color2*color3*0.6));
+        FragColor =  (color+(color2*color3*0.6));
+        // Check whether fragment output is higher than threshold, if so output as brightness color
+        float brightness = dot(FragColor.rgb, vec3(0.2126, 0.7152, 0.0722));
+        if(brightness > 1.0)
+            BrightColor = vec4(FragColor.rgb, 1.0);
         happend=true;
     }
     else{
     color = texture2D(DiffuseMap, selector.st);
     color2 = texture2D(SpecularMap, texCoordVarying.st);
-    gl_FragColor =  ((color)+(color2*0.1));
+    FragColor =  ((color)+(color2*0.1));
+        // Check whether fragment output is higher than threshold, if so output as brightness color
+        float brightness = dot(FragColor.rgb, vec3(0.2126, 0.7152, 0.0722));
+        if(brightness > 1.0)
+            BrightColor = vec4(FragColor.rgb, 1.0);
         happend=false;
     }
     //highp vec4 color2 = texture2DProj(SpecularMap,texCoordVarying,((posVarying.z-PosPlane.z)+(posVarying.x-PosPlane.x))/100.0);

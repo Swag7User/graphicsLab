@@ -147,7 +147,33 @@ void RenderProject::initFunction()
     bRenderer().getObjects()->createSprite("blurSprite", blurMaterial);																// create a sprite using the material created above
     
 
+    // Set up floating point framebuffer to render scene to
+    GLuint hdrFBO;
+    int SCR_WIDTH = bRenderer().getView()->getWidth();
+    int SCR_HEIGHT = bRenderer().getView()->getHeight();
+    glGenFramebuffers(1, &hdrFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
+    GLuint colorBuffers[2];
+    glGenTextures(2, colorBuffers);
+    for (GLuint i = 0; i < 2; i++)
+    {
+        glBindTexture(GL_TEXTURE_2D, colorBuffers[i]);
+        glTexImage2D(
+                     GL_TEXTURE_2D, 0, GL_RGB16F, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_FLOAT, NULL
+                     );
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        // attach texture to framebuffer
+        glFramebufferTexture2D(
+                               GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, colorBuffers[i], 0
+                               );
+    }
     
+    GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+    glDrawBuffers(2, attachments);
+
     // create camera
     bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
     
@@ -705,6 +731,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //bRenderer().getModelRenderer()->drawModel(
     
     /// End post processing ///
+    /*** Bloom ***/
+    
+    
     /*** Blur ***/
     // translate
     vmml::Matrix4f modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, -0.5));
