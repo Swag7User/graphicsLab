@@ -44,6 +44,7 @@ PropertiesPtr CL4Properties;
 PropertiesPtr CL5Properties;
 PropertiesPtr WProperties;
 bool player_won=false;
+bool player_lost=false;
 GLint defaultFBO;
 
 double _time = 0;
@@ -288,6 +289,11 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
             player_won=true;
         }
     }
+    else{
+        if(!player_won){
+            player_lost=true;
+        }
+    }
     
     //move Zeppelin
     if (square_count==0&&!is_turning) {
@@ -406,6 +412,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     //vmml::AABB hit_TAL_real=vmml::AABB(hit_TAL.getMin()+modelMatrixTAL.get_translation(),hit_TAL.getMax()+modelMatrixTAL.get_translation() );
     if (player_won) {
+        bRenderer().getObjects()->getCamera("camera")->setPosition(modelMatrixW.get_translation());
+    }
+    if (player_lost) {
         bRenderer().getObjects()->getCamera("camera")->setPosition(modelMatrixW.get_translation());
     }
     
@@ -618,6 +627,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
         
         shader->setUniform("Ia", vmml::Vector3f(1.f));
+        shader->setUniform("end", player_lost);
         shader->setUniform("Id", vmml::Vector3f(1.f));
         shader->setUniform("Is", vmml::Vector3f(1.f));
         shader->setUniform("counter", (float)(counterW));

@@ -18,8 +18,13 @@ uniform lowp vec3 Ia;   // ambient light intensity
 uniform lowp vec3 Id;   // diffuse light intensity
 uniform lowp vec3 Is;   // specular light intensity
 
+uniform bool end;   // ambient light intensity
+
+
 uniform sampler2D DiffuseMap;
 uniform sampler2D BloomMap;
+uniform sampler2D SpecularMap;
+
 
 
 lowp vec4 ambient;
@@ -91,6 +96,9 @@ void main()
     //    highp vec4 color = vec4(0.7,0.1,0.4,1); // TODO: read color from DiffuseMap
     
     highp vec4 color = texture2D(DiffuseMap,texCoordVarying.st);
+    if (end) {
+        color = texture2D(SpecularMap,texCoordVarying.st);
+    }
     if (color.x>0.95) {
         color.x=1.0-(counter/50.0);
         if (counter>50.0) {
@@ -109,6 +117,8 @@ void main()
             color.z=0.0+((counter-50.0)/50.0);
         }
     }
+    
+
     
     gl_FragColor =  color;
     

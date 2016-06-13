@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-               BuildableName = "bRenderer_ios.app"
+               BuildableName = "Kamikaze Flight.app"
                BlueprintName = "bRenderer_ios"
                ReferencedContainer = "container:bRenderer_ios.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "bRenderer_ios.app"
+            BuildableName = "Kamikaze Flight.app"
             BlueprintName = "bRenderer_ios"
             ReferencedContainer = "container:bRenderer_ios.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "bRenderer_ios.app"
+            BuildableName = "Kamikaze Flight.app"
             BlueprintName = "bRenderer_ios"
             ReferencedContainer = "container:bRenderer_ios.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "bRenderer_ios.app"
+            BuildableName = "Kamikaze Flight.app"
             BlueprintName = "bRenderer_ios"
             ReferencedContainer = "container:bRenderer_ios.xcodeproj">
          </BuildableReference>
