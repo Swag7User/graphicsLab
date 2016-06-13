@@ -469,32 +469,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
 
     
-    shader = bRenderer().getObjects()->getShader("TAL");
-    if (shader.get())
-    {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
-        shader->setUniform("ViewMatrix", viewMatrix);
-        shader->setUniform("ViewMatrix", viewMatrix);
-        shader->setUniform("modelMatrixTAL", modelMatrixTAL);
-        
-        
-        vmml::Matrix3f normalMatrixTAL;
-        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
-        shader->setUniform("NormalMatrixTAL", normalMatrixTAL);
-        
-        
-        
-        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
-                
-        shader->setUniform("Ia", vmml::Vector3f(1.f));
-        shader->setUniform("Id", vmml::Vector3f(1.f));
-        shader->setUniform("Is", vmml::Vector3f(1.f));
-    }
-    else
-    {
-        bRenderer::log("No shader available.");
-    }
-    
     shader = bRenderer().getObjects()->getShader("Zep");
     if (shader.get())
     {
@@ -678,6 +652,32 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         shader->setUniform("fbo_texture", bRenderer().getObjects()->getTexture("fbo_texture1"));
         shader->setUniform("speed" ,boostb);
         //uniform sampler2D fbo_texture;
+    }
+    else
+    {
+        bRenderer::log("No shader available.");
+    }
+    
+    shader = bRenderer().getObjects()->getShader("TAL");
+    if (shader.get())
+    {
+        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("modelMatrixTAL", modelMatrixTAL);
+        
+        
+        vmml::Matrix3f normalMatrixTAL;
+        vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
+        shader->setUniform("NormalMatrixTAL", normalMatrixTAL);
+        
+        
+        
+        shader->setUniform("EyePos", bRenderer().getObjects()->getCamera("camera")->getPosition());
+        
+        shader->setUniform("Ia", vmml::Vector3f(1.f));
+        shader->setUniform("Id", vmml::Vector3f(1.f));
+        shader->setUniform("Is", vmml::Vector3f(1.f));
     }
     else
     {

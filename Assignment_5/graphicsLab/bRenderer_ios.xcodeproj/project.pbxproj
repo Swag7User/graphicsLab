@@ -59,6 +59,7 @@
 		82E648141CE21EE000AD6876 /* bloomcamo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82E648131CE21EE000AD6876 /* bloomcamo.jpg */; };
 		A85E11D01CC4FC2F00D4418A /* TALTS.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */; };
 		A85E11E41CC512AE00D4418A /* Normal_Map.tif in Resources */ = {isa = PBXBuildFile; fileRef = A85E11E11CC512AE00D4418A /* Normal_Map.tif */; };
+		A86911A11D0E9F1D002EA7E1 /* icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A86911A01D0E9F1D002EA7E1 /* icon.jpg */; };
 		A889BC381CEC9B4700370DBC /* left_test.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC301CEC9B4700370DBC /* left_test.png */; };
 		A889BC391CEC9B4700370DBC /* middle_test.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC311CEC9B4700370DBC /* middle_test.png */; };
 		A889BC3A1CEC9B4700370DBC /* right_test.png in Resources */ = {isa = PBXBuildFile; fileRef = A889BC321CEC9B4700370DBC /* right_test.png */; };
@@ -248,6 +249,7 @@
 		82E648131CE21EE000AD6876 /* bloomcamo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bloomcamo.jpg; sourceTree = "<group>"; };
 		A85E11CD1CC4FC2F00D4418A /* TALTS.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TALTS.jpg; sourceTree = "<group>"; };
 		A85E11E11CC512AE00D4418A /* Normal_Map.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Normal_Map.tif; sourceTree = "<group>"; };
+		A86911A01D0E9F1D002EA7E1 /* icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icon.jpg; sourceTree = "<group>"; };
 		A889BC301CEC9B4700370DBC /* left_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_test.png; sourceTree = "<group>"; };
 		A889BC311CEC9B4700370DBC /* middle_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middle_test.png; sourceTree = "<group>"; };
 		A889BC321CEC9B4700370DBC /* right_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_test.png; sourceTree = "<group>"; };
@@ -432,7 +434,7 @@
 		B4CB8CA71B72E43300FE041B /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		B4CB8CA81B72E43300FE041B /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		B508EAA61B5486B40031B783 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		B51CD54C1ACC481700994714 /* bRenderer_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bRenderer_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B51CD54C1ACC481700994714 /* Kamikaze Flight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kamikaze Flight.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B59A67941ACC8BA900E3EB9B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		B59A67961ACC8BB200E3EB9B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B59A67981ACC8BCC00E3EB9B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -463,7 +465,7 @@
 				B47949BF1BA6743D00B5E9DC /* bRenderer */,
 				B4CB8C7E1B72E43300FE041B /* project */,
 				29B97323FDCFA39411CA2CEA /* externalLibraries */,
-				B51CD54C1ACC481700994714 /* bRenderer_ios.app */,
+				B51CD54C1ACC481700994714 /* Kamikaze Flight.app */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -513,6 +515,7 @@
 		829B48D11CF32A1100A89681 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				A86911A01D0E9F1D002EA7E1 /* icon.jpg */,
 				A8A285FF1CF35E1B009B08A1 /* maxresdefault.jpg */,
 				A8A285F91CF34BF5009B08A1 /* LOD_mapsan3_orig.png */,
 				A8A285F71CF349A1009B08A1 /* LOD_mapsan2_orig.png */,
@@ -916,7 +919,7 @@
 			);
 			name = bRenderer_ios;
 			productName = Framework;
-			productReference = B51CD54C1ACC481700994714 /* bRenderer_ios.app */;
+			productReference = B51CD54C1ACC481700994714 /* Kamikaze Flight.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -983,6 +986,7 @@
 				A889BC3A1CEC9B4700370DBC /* right_test.png in Resources */,
 				A8A285F61CF3483C009B08A1 /* LOD_mapsan_orig.png in Resources */,
 				829B48E31CF32A1100A89681 /* AER_map1_orig.png in Resources */,
+				A86911A11D0E9F1D002EA7E1 /* icon.jpg in Resources */,
 				A889BC421CEC9B6500370DBC /* SKY.vert in Resources */,
 				A8A286001CF35E1B009B08A1 /* maxresdefault.jpg in Resources */,
 				A8F8D5501CEF000E00707F04 /* ydebug.png in Resources */,
@@ -1187,7 +1191,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = bRenderer_ios;
+				PRODUCT_NAME = "Kamikaze Flight";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -1226,7 +1230,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = bRenderer_ios;
+				PRODUCT_NAME = "Kamikaze Flight";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
