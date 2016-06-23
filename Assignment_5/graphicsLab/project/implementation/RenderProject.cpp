@@ -6,7 +6,6 @@ vmml::Matrix4f defaultTranslation= vmml::create_translation(vmml::Vector3f(2700.
 vmml::Matrix4f modelMatrixTerrain = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.0f));
 ;
 vmml::Matrix4f modelMatrixW = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f))* vmml::create_scaling(vmml::Vector3f(10.f));
-
 vmml::Matrix4f modelMatrixTAL = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
 vmml::Matrix4f modelMatrixZep = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
 vmml::Matrix4f modelMatrixSKY = defaultTranslation*vmml::create_translation(modelMatrixTerrain.get_translation()) * vmml::create_scaling(vmml::Vector3f(1.f));
@@ -49,6 +48,7 @@ GLint defaultFBO;
 
 double _time = 0;
 double _pitchSum = 0;
+double _rollSum = 0;
 vmml::Vector3f _initialAircraftOrientation(0.0f, 0.0f, -1.0f);
 vmml::Vector3f _cameraOffset(0.0f, 0.0f, 10.0f);
 vmml::Vector3f _newAircraftPosition(0.0f, 0.0f, 0.0f);
@@ -212,14 +212,13 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     _time += deltaTime;
     float angle = _time * 0.9;
-    int timer = 1;
-    int start = 2;
     
-    _pitchSum += bRenderer().getInput()->getGyroscopePitch()* 1.0f;
+    _pitchSum += bRenderer().getInput()->getGyroscopePitch()* 0.02f;
+    _rollSum += bRenderer().getInput()->getGyroscopeRoll()*0.02f;
 
     
-    vmml::Matrix4f rotationX = vmml::create_rotation((float)bRenderer().getInput()->getGyroscopeRoll() - 0.8f, vmml::Vector3f::UNIT_X);
-    vmml::Matrix4f rotationY = vmml::create_rotation((float)_pitchSum, vmml::Vector3f::UNIT_Y);
+    vmml::Matrix4f rotationX = vmml::create_rotation(-(float)_rollSum, vmml::Vector3f::UNIT_X);
+    vmml::Matrix4f rotationY = vmml::create_rotation(-(float)_pitchSum, vmml::Vector3f::UNIT_Y);
     vmml::Matrix4f rotationZ = vmml::create_rotation(2 * (float)bRenderer().getInput()->getGyroscopePitch(), vmml::Vector3f::UNIT_Z);
     
     vmml::Vector3f newAircraftOrientation;/* = rotationY * rotationX * _initialAircraftOrientation;*/
@@ -287,15 +286,15 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     if (hit_TAL.getMin().y()>=-150.0f) {
         if(!hit_Zep.isIn(hit_TAL.getMax()-vmml::Vector3f(8.0f,8.0f,8.0f))){
             //modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f*boostb, 0.0f));
-            newAircraftOrientation = rotationY * rotationX * _initialAircraftOrientation;
-            _newAircraftPosition += newAircraftOrientation * _speed*boostb;
+            newAircraftOrientation = rotationY * rotationX *vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(270*M_PI_F/180), vmml::Vector3f::UNIT_Z);
+            _newAircraftPosition += newAircraftOrientation * -_speed*boostb;
             
             vmml::Matrix4f translation = vmml::create_translation(_newAircraftPosition);
             
-            modelMatrixTAL = translation * rotationY * rotationZ;
+            modelMatrixTAL = translation * rotationY * rotationZ * rotationX *vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);;
             
             _eyePos = modelMatrixTAL * _cameraOffset;
-            viewMatrix = bRenderer().getObjects()->getCamera("camera")->lookAt(_eyePos, _newAircraftPosition, vmml::Vector3f::UP);
+           // viewMatrix = bRenderer().getObjects()->getCamera("camera")->lookAt(_eyePos, _newAircraftPosition, vmml::Vector3f::UP);
         }
         else{
             player_won=true;
@@ -339,9 +338,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     //modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
 
     
-    //vmml::Vector3f camTranslation = modelMatrixTAL.get_translation();
+    vmml::Vector3f camTranslation = modelMatrixTAL.get_translation();
     
-    //bRenderer().getObjects()->getCamera("camera")->setPosition(-(camTranslation));
+    bRenderer().getObjects()->getCamera("camera")->setPosition(-(camTranslation));
     
     
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
