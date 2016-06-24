@@ -50,8 +50,8 @@ void main()
 
     highp vec4 pos = modelMatrixTAL * posVarying;
     mediump vec3 normal = normalize(NormalMatrixTAL * normalVarying);
-    mediump vec3 n = normal ;
-    mediump vec3 l = normalize(vec3(LightPos-pos)) ;
+    highp vec3 n = normal ;
+    highp vec3 l = normalize(vec3(LightPos-pos)) ;
     
     intensity = dot(n,l) ;
     

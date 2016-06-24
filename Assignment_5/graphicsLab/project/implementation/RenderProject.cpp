@@ -51,7 +51,7 @@ double _pitchSum = 0;
 double _rollSum = 0;
 vmml::Vector3f _initialAircraftOrientation(0.0f, 0.0f, -1.0f);
 vmml::Vector3f _cameraOffset(0.0f, 1.0f, 0.0f);
-vmml::Vector3f _newAircraftPosition(2700.0f, 0.0f, 2700.0f);
+vmml::Vector3f _newAircraftPosition(0.0f, 0.0f, 0.0f);
 vmml::Vector3f _eyePos(0.0f, 0.0f, 0.0f);
 float _speed = 1.0f;
 
@@ -309,6 +309,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
             modelMatrixTAL = translation * rotationY * rotationZ * rotationX *vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
             
             _eyePos = modelMatrixTAL * vmml::create_translation(vmml::Vector3f(0.0f, 10.0f, -1.0f)) * _cameraOffset;
+            
+            bRenderer().getObjects()->getCamera("camera")->setPosition(_eyePos);
           
             float x = modelMatrixTAL.get_translation().x();
             float y = modelMatrixTAL.get_translation().y();
@@ -705,7 +707,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
       bRenderer().getModelRenderer()->drawModel("skybox", "camera", modelMatrixSKY, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("terraintree_simple", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
     //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
-    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
+    //bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
     bRenderer().getModelRenderer()->drawModel("Zep", "camera", modelMatrixZep, std::vector<std::string>({ }));
     // multiple clouds are drawn here
     bRenderer().getModelRenderer()->drawModel("clouds", "camera", modelMatrixCL, std::vector<std::string>({ }));
@@ -738,6 +740,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         b = !b;
     }
     }
+    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
 
 }
 

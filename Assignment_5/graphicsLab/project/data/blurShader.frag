@@ -6,27 +6,39 @@ precision lowp float;
 uniform sampler2D fbo_texture;
 
 varying vec4 texCoordVarying;
-varying vec2 v_blurTexCoords[14];
-uniform highp float speed;
 
-void main()
+
+varying vec2 uv;
+const float sampleDist = 1.0;
+const float sampleStrength = 2.2;
+
+void main(void)
 {
+    float samples[10];
+    samples[0] = -0.08;
+    samples[1] = -0.05;
+    samples[2] = -0.03;
+    samples[3] = -0.02;
+    samples[4] = -0.01;
+    samples[5] =  0.01;
+    samples[6] =  0.02;
+    samples[7] =  0.03;
+    samples[8] =  0.05;
+    samples[9] =  0.08;
     
-    gl_FragColor = vec4(0.0,0.0,0.0,1.0);
-    //gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[ 0])*0.0044299121055113265*speed;
-    //gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[ 1])*0.00895781211794*speed;
-    //gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[ 2])*0.0215963866053*speed;
-    //gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[ 3])*0.0443683338718*speed;
-    //gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[ 4])*0.0776744219933*speed;
-    gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[ 5])*0.115876621105*speed;
-    gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[ 6])*0.147308056121*speed;
-    gl_FragColor += texture2D(fbo_texture, texCoordVarying.st )*0.159576912161*speed;
-    gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[ 7])*0.147308056121*speed;
-    gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[ 8])*0.115876621105*speed;
-    //gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[ 9])*0.0776744219933*speed;
-    //gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[10])*0.0443683338718*speed;
-    //gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[11])*0.0215963866053*speed;
-    //gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[12])*0.00895781211794*speed;
-    //gl_FragColor += texture2D(fbo_texture, v_blurTexCoords[13])*0.0044299121055113265*speed;
+    vec2 dir = 0.5 - uv;
+    float dist = sqrt(dir.x*dir.x + dir.y*dir.y);
+    dir = dir/dist;
     
+    vec4 color = texture2D(fbo_texture,uv);
+    vec4 sum = color;
+    
+    for (int i = 0; i < 10; i++)
+        sum += texture2D( fbo_texture, uv + dir * samples[i] * sampleDist );
+    
+    sum *= 1.0/11.0;
+    float t = dist * sampleStrength;
+    t = clamp( t ,0.0,1.0);
+    
+    gl_FragColor = mix( color, sum, t );
 }
