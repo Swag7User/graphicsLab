@@ -50,8 +50,8 @@ double _time = 0;
 double _pitchSum = 0;
 double _rollSum = 0;
 vmml::Vector3f _initialAircraftOrientation(0.0f, 0.0f, -1.0f);
-vmml::Vector3f _cameraOffset(0.0f, 0.0f, 10.0f);
-vmml::Vector3f _newAircraftPosition(0.0f, 0.0f, 0.0f);
+vmml::Vector3f _cameraOffset(0.0f, 1.0f, 0.0f);
+vmml::Vector3f _newAircraftPosition(2700.0f, 0.0f, 2700.0f);
 vmml::Vector3f _eyePos(0.0f, 0.0f, 0.0f);
 float _speed = 1.0f;
 
@@ -70,6 +70,21 @@ int counterWmax=100;
 float boostb = 1;
 
 bool is_turning=false;
+
+vmml::Matrix4f lookAt(vmml::Vector3f eye, vmml::Vector3f target, vmml::Vector3f up)
+{
+    vmml::Vector3f zaxis = -vmml::normalize(eye - target);
+    vmml::Vector3f xaxis = vmml::normalize(vmml::cross<3>(up, zaxis));
+    vmml::Vector3f yaxis = vmml::cross<3>(zaxis, xaxis);
+    
+    vmml::Matrix4f view;
+    view.set_row(0, vmml::Vector4f(xaxis.x(), xaxis.y(), xaxis.z(), -vmml::dot(xaxis, eye)));
+    view.set_row(1, vmml::Vector4f(yaxis.x(), yaxis.y(), yaxis.z(), -vmml::dot(yaxis, eye)));
+    view.set_row(2, vmml::Vector4f(zaxis.x(), zaxis.y(), zaxis.z(), -vmml::dot(zaxis, eye)));
+    view.set_row(3, vmml::Vector4f(0, 0, 0, 1.0));
+    
+    return view;
+}
 
 /* Initialize the Project */
 void RenderProject::init()
@@ -217,7 +232,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     _rollSum += bRenderer().getInput()->getGyroscopeRoll()*0.02f;
 
     
-    vmml::Matrix4f rotationX = vmml::create_rotation(-(float)_rollSum, vmml::Vector3f::UNIT_X);
+    vmml::Matrix4f rotationX = vmml::create_rotation(-(float)bRenderer().getInput()->getGyroscopeRoll(), vmml::Vector3f::UNIT_X);
     vmml::Matrix4f rotationY = vmml::create_rotation(-(float)_pitchSum, vmml::Vector3f::UNIT_Y);
     vmml::Matrix4f rotationZ = vmml::create_rotation(2 * (float)bRenderer().getInput()->getGyroscopePitch(), vmml::Vector3f::UNIT_Z);
     
@@ -279,7 +294,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
    
     
-    vmml::Matrix4f viewMatrix = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
+    vmml::Matrix4f viewMatrix;// = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
     
     
     // translate, rotate and scale
@@ -291,10 +306,15 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
             
             vmml::Matrix4f translation = vmml::create_translation(_newAircraftPosition);
             
-            modelMatrixTAL = translation * rotationY * rotationZ * rotationX *vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);;
+            modelMatrixTAL = translation * rotationY * rotationZ * rotationX *vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
             
-            _eyePos = modelMatrixTAL * _cameraOffset;
-           // viewMatrix = bRenderer().getObjects()->getCamera("camera")->lookAt(_eyePos, _newAircraftPosition, vmml::Vector3f::UP);
+            _eyePos = modelMatrixTAL * vmml::create_translation(vmml::Vector3f(0.0f, 10.0f, -1.0f)) * _cameraOffset;
+          
+            float x = modelMatrixTAL.get_translation().x();
+            float y = modelMatrixTAL.get_translation().y();
+            float z = modelMatrixTAL.get_translation().z();
+            
+            viewMatrix = lookAt(_eyePos, _newAircraftPosition, vmml::Vector3f::UP);
         }
         else{
             player_won=true;
@@ -340,7 +360,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     vmml::Vector3f camTranslation = modelMatrixTAL.get_translation();
     
-    bRenderer().getObjects()->getCamera("camera")->setPosition(-(camTranslation));
+    //bRenderer().getObjects()->getCamera("camera")->setPosition(-(camTranslation));
     
     
     vmml::Matrix4f rotationMatrix = vmml::create_rotation(rotation, vmml::Vector3f::UNIT_Y);
@@ -355,13 +375,13 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
    
-    bRenderer().getObjects()->getCamera("camera")->rotateCamera(rotation2/100, 0.0f, 0.0f);
+   // bRenderer().getObjects()->getCamera("camera")->rotateCamera(rotation2/100, 0.0f, 0.0f);
 
-    bRenderer().getObjects()->getCamera("camera")->rotateCamera(0.0f, rotation/100, 0.0f);
+   // bRenderer().getObjects()->getCamera("camera")->rotateCamera(0.0f, rotation/100, 0.0f);
     
-    bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation2/100)*-10.0f);
+   // bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation2/100)*-10.0f);
     
-    bRenderer().getObjects()->getCamera("camera")->moveCameraUpward(sin(rotation2/100)*10.0f);
+   // bRenderer().getObjects()->getCamera("camera")->moveCameraUpward(sin(rotation2/100)*10.0f);
     
    // camTranslation.z() = camTranslation.z() - 10.0f;
     

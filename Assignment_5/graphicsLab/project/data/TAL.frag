@@ -30,7 +30,7 @@ lowp vec4 texCoord;
 mediump float intensity;
 
 
-varying mediump vec4 posVarying;       // pos in world space
+varying highp vec4 posVarying;       // pos in world space
 varying mediump vec3 normalVarying;    // normal in world space
 
 varying lowp vec4 ambientVarying;
@@ -48,7 +48,7 @@ varying highp vec4 vVertex;
 void main()
 {
 
-    mediump vec4 pos = modelMatrixTAL * posVarying;
+    highp vec4 pos = modelMatrixTAL * posVarying;
     mediump vec3 normal = normalize(NormalMatrixTAL * normalVarying);
     mediump vec3 n = normal ;
     mediump vec3 l = normalize(vec3(LightPos-pos)) ;
