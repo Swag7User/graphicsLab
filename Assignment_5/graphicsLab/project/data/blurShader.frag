@@ -9,8 +9,6 @@ varying vec4 texCoordVarying;
 
 
 varying vec2 uv;
-const float sampleDist = 1.0;
-const float sampleStrength = 2.2;
 
 void main(void)
 {
@@ -34,10 +32,10 @@ void main(void)
     vec4 sum = color;
     
     for (int i = 0; i < 10; i++)
-        sum += texture2D( fbo_texture, uv + dir * samples[i] * sampleDist );
+        sum += texture2D( fbo_texture, uv + dir * samples[i]);
     
     sum *= 1.0/11.0;
-    float t = dist * sampleStrength;
+    float t = dist;
     t = clamp( t ,0.0,1.0);
     
     gl_FragColor = mix( color, sum, t );
