@@ -53,7 +53,7 @@ vmml::Vector3f _initialAircraftOrientation(0.0f, 0.0f, -1.0f);
 vmml::Vector3f _cameraOffset(0.0f, 1.0f, 0.0f);
 vmml::Vector3f _newAircraftPosition(0.0f, 0.0f, 0.0f);
 vmml::Vector3f _eyePos(0.0f, 0.0f, 0.0f);
-float _speed = 1.0f;
+float _speed = 5.0f;
 
 //CMMotionManager *cmMotionManager=CMMotionManager();
 float angle=0.f;

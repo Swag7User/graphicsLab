@@ -1,9 +1,10 @@
 $B_SHADER_VERSION
 #ifdef GL_ES
-precision lowp float;
+precision highp float;
 #endif
 
 uniform sampler2D fbo_texture;
+uniform float speed;
 
 varying vec4 texCoordVarying;
 
@@ -35,7 +36,7 @@ void main(void)
         sum += texture2D( fbo_texture, uv + dir * samples[i]);
     
     sum *= 1.0/11.0;
-    float t = dist;
+    float t = dist * speed;
     t = clamp( t ,0.0,1.0);
     
     gl_FragColor = mix( color, sum, t );
