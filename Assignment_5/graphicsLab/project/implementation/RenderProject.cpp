@@ -35,7 +35,7 @@ vmml::Matrix4f projectionMatrix;
 vmml::Matrix4f defaultTranslation= vmml::create_translation(vmml::Vector3f(2700.0f, 0.0f, 2700.0f));
 vmml::Matrix4f modelMatrixTerrain = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.0f));
 ;
-vmml::Matrix4f modelMatrixW = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f))* vmml::create_scaling(vmml::Vector3f(10.f));
+vmml::Matrix4f modelMatrixW = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 10.0f)) * vmml::create_scaling(vmml::Vector3f(10.f));
 vmml::Matrix4f modelMatrixTAL = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.f)) * vmml::create_scaling(vmml::Vector3f(1.f))*vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
 vmml::Matrix4f modelMatrixZep = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 100.0f, 500.f))*vmml::create_scaling(vmml::Vector3f(0.1f,0.1f,0.1f));
 vmml::Matrix4f modelMatrixSKY = defaultTranslation*vmml::create_translation(modelMatrixTerrain.get_translation()) * vmml::create_scaling(vmml::Vector3f(1.f));
@@ -392,14 +392,20 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
+    
+    if(!_running){
+        rotation2 = bRenderer().getInput()->getGyroscopeRoll();
+        rotation = bRenderer().getInput()->getGyroscopePitch();
+        
+        bRenderer().getObjects()->getCamera("camera")->rotateCamera(rotation2/100, 0.0f, 0.0f);
+        
+        bRenderer().getObjects()->getCamera("camera")->rotateCamera(0.0f, rotation/100, 0.0f);
+        
+        bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation2/100)*-10.0f);
+        
+        bRenderer().getObjects()->getCamera("camera")->moveCameraUpward(sin(rotation2/100)*10.0f);
+    }
    
-    bRenderer().getObjects()->getCamera("camera")->rotateCamera(rotation2/100, 0.0f, 0.0f);
-
-    bRenderer().getObjects()->getCamera("camera")->rotateCamera(0.0f, rotation/100, 0.0f);
-    
-    bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation2/100)*-10.0f);
-    
-    bRenderer().getObjects()->getCamera("camera")->moveCameraUpward(sin(rotation2/100)*10.0f);
     
     //camTranslation.z() = camTranslation.z() - 10.0f;
     
@@ -418,9 +424,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     hit_Zep_size=bRenderer().getObjects()->loadObjModel("Zep.obj", false, true, ZepShader, ZepProperties)->getBoundingBoxObjectSpace();
     
     
-    
-    //hit_Zep.set(center_zep.x(), center_zep.y(), center_zep.z(), hit_Zep.getMax()-hit_Zep.getCenter());
-   // hit_TAL.set(hit_TAL.getMin()+modelMatrixTAL.get_translation(),hit_TAL.getMax()+modelMatrixTAL.get_translation() );
     hit_TAL.setMin(hit_TAL_size.getMin()+modelMatrixTAL.get_translation() );
     hit_TAL.setMax(hit_TAL_size.getMax()+modelMatrixTAL.get_translation() );
     
@@ -429,8 +432,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     hit_Zep.setMin(hit_Zep_size.getMin()*0.1+modelMatrixZep.get_translation() );
     hit_Zep.setMax(hit_Zep_size.getMax()*0.1+modelMatrixZep.get_translation() );
-    
-    //vmml::AABB hit_TAL_real=vmml::AABB(hit_TAL.getMin()+modelMatrixTAL.get_translation(),hit_TAL.getMax()+modelMatrixTAL.get_translation() );
+
     if (player_won) {
         bRenderer().getObjects()->getCamera("camera")->setPosition(modelMatrixW.get_translation());
     }
