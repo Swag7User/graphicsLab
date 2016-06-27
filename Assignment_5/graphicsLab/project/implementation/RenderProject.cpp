@@ -2,6 +2,36 @@
 #ifdef __OBJC__
 #import <CoreMotion/CoreMotion.h>
 #endif
+
+vmml::Matrix4f lookAt(vmml::Vector3f eye, vmml::Vector3f target, vmml::Vector3f up)
+{
+    vmml::Vector3f zaxis = -vmml::normalize(eye - target);
+    vmml::Vector3f xaxis = vmml::normalize(vmml::cross<3>(up, zaxis));
+    vmml::Vector3f yaxis = vmml::cross<3>(zaxis, xaxis);
+    
+    vmml::Matrix4f view;
+    view.set_row(0, vmml::Vector4f(xaxis.x(), xaxis.y(), xaxis.z(), -vmml::dot(xaxis, eye)));
+    view.set_row(1, vmml::Vector4f(yaxis.x(), yaxis.y(), yaxis.z(), -vmml::dot(yaxis, eye)));
+    view.set_row(2, vmml::Vector4f(zaxis.x(), zaxis.y(), zaxis.z(), -vmml::dot(zaxis, eye)));
+    view.set_row(3, vmml::Vector4f(0, 0, 0, 1.0));
+    
+    return view;
+}
+
+vmml::Matrix4f perspective(float fovy, float aspect, float zNear, float zFar)
+{
+    float f = 1.0 / tanf((fovy * (M_PI_F / 180.0)) / 2.0);
+    
+    vmml::Matrix4f perspective;
+    perspective.set_row(0, vmml::Vector4f(f / aspect, 0, 0, 0));
+    perspective.set_row(1, vmml::Vector4f(0, f, 0, 0));
+    perspective.set_row(2, vmml::Vector4f(0, 0, (zFar + zNear) / (zNear - zFar), (2.0 * zFar * zNear) / (zNear - zFar)));
+    perspective.set_row(3, vmml::Vector4f(0, 0, -1.0, 0));
+    
+    return perspective;
+}
+
+vmml::Matrix4f projectionMatrix = perspective(60.0, 1024.0 / 768, 1.0, 500.0);
 vmml::Matrix4f defaultTranslation= vmml::create_translation(vmml::Vector3f(2700.0f, 0.0f, 2700.0f));
 vmml::Matrix4f modelMatrixTerrain = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.0f));
 ;
@@ -71,20 +101,6 @@ float boostb = 1;
 
 bool is_turning=false;
 
-vmml::Matrix4f lookAt(vmml::Vector3f eye, vmml::Vector3f target, vmml::Vector3f up)
-{
-    vmml::Vector3f zaxis = -vmml::normalize(eye - target);
-    vmml::Vector3f xaxis = vmml::normalize(vmml::cross<3>(up, zaxis));
-    vmml::Vector3f yaxis = vmml::cross<3>(zaxis, xaxis);
-    
-    vmml::Matrix4f view;
-    view.set_row(0, vmml::Vector4f(xaxis.x(), xaxis.y(), xaxis.z(), -vmml::dot(xaxis, eye)));
-    view.set_row(1, vmml::Vector4f(yaxis.x(), yaxis.y(), yaxis.z(), -vmml::dot(yaxis, eye)));
-    view.set_row(2, vmml::Vector4f(zaxis.x(), zaxis.y(), zaxis.z(), -vmml::dot(zaxis, eye)));
-    view.set_row(3, vmml::Vector4f(0, 0, 0, 1.0));
-    
-    return view;
-}
 
 /* Initialize the Project */
 void RenderProject::init()
@@ -172,7 +188,6 @@ void RenderProject::initFunction()
     
     // create camera
     bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
-    
     
     // Update render queue
     updateRenderQueue("camera", 0.0f);
@@ -294,13 +309,12 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
    
     
-    vmml::Matrix4f viewMatrix;// = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
+    vmml::Matrix4f viewMatrix; // = bRenderer().getObjects()->getCamera("camera")->getViewMatrix();
     
     
     // translate, rotate and scale
     if (hit_TAL.getMin().y()>=-150.0f) {
         if(!hit_Zep.isIn(hit_TAL.getMax()-vmml::Vector3f(8.0f,8.0f,8.0f))){
-            //modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f*boostb, 0.0f));
             newAircraftOrientation = rotationY * rotationX *vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(270*M_PI_F/180), vmml::Vector3f::UNIT_Z);
             _newAircraftPosition += newAircraftOrientation * -_speed*boostb;
             
@@ -354,13 +368,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         modelMatrixZep*=vmml::create_rotation((90/(line_max/6)*M_PI_F/180), vmml::Vector3f::UNIT_Y);
     }
     
-    
-    
-    
-    //modelMatrixTAL *= vmml::create_translation(vmml::Vector3f(0.0f, -1.0f, 0.0f));
 
-    
-    vmml::Vector3f camTranslation = modelMatrixTAL.get_translation();
+    //vmml::Vector3f camTranslation = modelMatrixTAL.get_translation();
     
     //bRenderer().getObjects()->getCamera("camera")->setPosition(-(camTranslation));
     
@@ -377,15 +386,15 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     rotationMatrix = vmml::create_rotation(rotation2, vmml::Vector3f::UNIT_X);
    
-   // bRenderer().getObjects()->getCamera("camera")->rotateCamera(rotation2/100, 0.0f, 0.0f);
+    bRenderer().getObjects()->getCamera("camera")->rotateCamera(rotation2/100, 0.0f, 0.0f);
 
-   // bRenderer().getObjects()->getCamera("camera")->rotateCamera(0.0f, rotation/100, 0.0f);
+    bRenderer().getObjects()->getCamera("camera")->rotateCamera(0.0f, rotation/100, 0.0f);
     
-   // bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation2/100)*-10.0f);
+    bRenderer().getObjects()->getCamera("camera")->moveCameraForward(cos(rotation2/100)*-10.0f);
     
-   // bRenderer().getObjects()->getCamera("camera")->moveCameraUpward(sin(rotation2/100)*10.0f);
+    bRenderer().getObjects()->getCamera("camera")->moveCameraUpward(sin(rotation2/100)*10.0f);
     
-   // camTranslation.z() = camTranslation.z() - 10.0f;
+    //camTranslation.z() = camTranslation.z() - 10.0f;
     
     angle++;
     
@@ -428,7 +437,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixTerrain", modelMatrixTerrain);
 
@@ -457,7 +466,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     shader = bRenderer().getObjects()->getShader("SKY");
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixSKY", modelMatrixSKY);
@@ -485,7 +494,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     shader = bRenderer().getObjects()->getShader("Zep");
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixZep", modelMatrixZep);
@@ -511,7 +520,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     shader = bRenderer().getObjects()->getShader("CL");
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixCL", modelMatrixCL);
         
@@ -532,7 +541,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     shader = bRenderer().getObjects()->getShader("CL2");
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixCL2", modelMatrixCL2);
         
@@ -553,7 +562,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     shader = bRenderer().getObjects()->getShader("CL3");
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixCL3", modelMatrixCL3);
         
@@ -574,7 +583,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     shader = bRenderer().getObjects()->getShader("CL4");
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixCL4", modelMatrixCL4);
         
@@ -595,7 +604,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     shader = bRenderer().getObjects()->getShader("CL5");
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixCL5", modelMatrixCL5);
         
@@ -617,7 +626,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     shader = bRenderer().getObjects()->getShader("W");
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixW", modelMatrixW);
         
@@ -637,7 +646,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         shader->setUniform("counter", (float)(counterW));
     }
     
-    //BLUR    DOING STAFF¨
+    //BLUR
     if(boostb>1.0){
     bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());		// reduce viewport size
     defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
@@ -646,7 +655,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     shader = bRenderer().getObjects()->getShader("blurShader");
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixTAL", modelMatrixTAL);
         
@@ -675,7 +684,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     shader = bRenderer().getObjects()->getShader("TAL");
     if (shader.get())
     {
-        shader->setUniform("ProjectionMatrix", vmml::Matrix4f::IDENTITY);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("modelMatrixTAL", modelMatrixTAL);
@@ -700,23 +709,33 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 
     
 
+//      bRenderer().getModelRenderer()->drawModel("skybox", "camera", modelMatrixSKY, std::vector<std::string>({ }));
+//    bRenderer().getModelRenderer()->drawModel("terraintree_simple", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
+//    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
+//    //bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
+//    bRenderer().getModelRenderer()->drawModel("Zep", "camera", modelMatrixZep, std::vector<std::string>({ }));
+//    // multiple clouds are drawn here
+//    bRenderer().getModelRenderer()->drawModel("clouds", "camera", modelMatrixCL, std::vector<std::string>({ }));
+//    bRenderer().getModelRenderer()->drawModel("clouds2", "camera", modelMatrixCL2, std::vector<std::string>({ }));
+//    bRenderer().getModelRenderer()->drawModel("clouds3", "camera", modelMatrixCL3, std::vector<std::string>({ }));
+//    bRenderer().getModelRenderer()->drawModel("clouds4", "camera", modelMatrixCL4, std::vector<std::string>({ }));
+//    bRenderer().getModelRenderer()->drawModel("clouds5", "camera", modelMatrixCL5, std::vector<std::string>({ }));
+//    bRenderer().getModelRenderer()->drawModel("winning", "camera", modelMatrixW, std::vector<std::string>({ }));
+    
+    //drawing with view matrix
+    
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("skybox"), modelMatrixSKY, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("terraintree_simple"), modelMatrixTerrain, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("Zep"), modelMatrixZep, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds"), modelMatrixCL, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds2"), modelMatrixCL2, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds3"), modelMatrixCL3, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds4"), modelMatrixCL4, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds5"), modelMatrixCL5, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("winning"), modelMatrixW, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
     
     
-    //modelMatrixW*=vmml::create_rotation((90/M_PI_F/180), vmml::Vector3f::UNIT_Y);
-    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
-      bRenderer().getModelRenderer()->drawModel("skybox", "camera", modelMatrixSKY, std::vector<std::string>({ }));
-    bRenderer().getModelRenderer()->drawModel("terraintree_simple", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
-    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
-    //bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
-    bRenderer().getModelRenderer()->drawModel("Zep", "camera", modelMatrixZep, std::vector<std::string>({ }));
-    // multiple clouds are drawn here
-    bRenderer().getModelRenderer()->drawModel("clouds", "camera", modelMatrixCL, std::vector<std::string>({ }));
-    bRenderer().getModelRenderer()->drawModel("clouds2", "camera", modelMatrixCL2, std::vector<std::string>({ }));
-    bRenderer().getModelRenderer()->drawModel("clouds3", "camera", modelMatrixCL3, std::vector<std::string>({ }));
-    bRenderer().getModelRenderer()->drawModel("clouds4", "camera", modelMatrixCL4, std::vector<std::string>({ }));
-    bRenderer().getModelRenderer()->drawModel("clouds5", "camera", modelMatrixCL5, std::vector<std::string>({ }));
-    bRenderer().getModelRenderer()->drawModel("winning", "camera", modelMatrixW, std::vector<std::string>({ }));
-    //bRenderer().getModelRenderer()->drawModel(
+    
     
     /// End post processing ///
     /*** Blur ***/
@@ -740,7 +759,10 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         b = !b;
     }
     }
-    bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
+    //bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
+    
+    //draw with viewMatrix
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, perspective(60.0, 1024.0 / 768, 1.0, 500.0), std::vector<std::string>({}), false);
 
 }
 
