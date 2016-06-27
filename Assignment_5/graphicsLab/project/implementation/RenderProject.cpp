@@ -114,7 +114,7 @@ void RenderProject::init()
     else
         bRenderer().initRenderer(1920, 1080, false, "Assignment 5");		// windowed mode on desktop
     //bRenderer().initRenderer(View::getScreenWidth(), View::getScreenHeight(), true);		// full screen using full width and height of the screen
-    projectionMatrix = perspective(60.0, bRenderer().getView()->getAspectRatio(), 1.0, 100000.0);
+
     // start main loop
     bRenderer().runRenderer();
 }
@@ -132,6 +132,7 @@ void RenderProject::initFunction()
     _cameraSpeed = 40.0f;
     _running = true; _lastStateSpaceKey = bRenderer::INPUT_UNDEFINED;
     _viewMatrixHUD = Camera::lookAt(vmml::Vector3f(0.0f, 0.0f, 0.25f), vmml::Vector3f::ZERO, vmml::Vector3f::UP);
+    projectionMatrix = perspective(60.0, bRenderer().getView()->getAspectRatio(), 1.0, 100000.0);
     
     // set shader versions (optional)
     bRenderer().getObjects()->setShaderVersionDesktop("#version 120");
@@ -320,26 +321,30 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     // translate, rotate and scale
     if (hit_TAL.getMin().y()>=-150.0f) {
         if(!hit_Zep.isIn(hit_TAL.getMax()-vmml::Vector3f(8.0f,8.0f,8.0f))){
-            newAircraftOrientation = rotationY * rotationX *vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(270*M_PI_F/180), vmml::Vector3f::UNIT_Z);
-            _newAircraftPosition += newAircraftOrientation * -_speed*boostb;
-            
-            vmml::Matrix4f translation = vmml::create_translation(_newAircraftPosition);
-            
-            modelMatrixTAL = translation * rotationY * rotationZ * rotationX *vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
-            
-            _eyePos = modelMatrixTAL * vmml::create_translation(vmml::Vector3f(0.0f, 10.0f, -1.0f)) * _cameraOffset;
-            
-            bRenderer().getObjects()->getCamera("camera")->setPosition(_eyePos);
-          
-            
-            viewMatrix = lookAt(_eyePos, _newAircraftPosition, vmml::Vector3f::UP);
+            if(_running){
+                newAircraftOrientation = rotationY * rotationX *vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(270*M_PI_F/180), vmml::Vector3f::UNIT_Z);
+                _newAircraftPosition += newAircraftOrientation * -_speed*boostb;
+                
+                vmml::Matrix4f translation = vmml::create_translation(_newAircraftPosition);
+                
+                modelMatrixTAL = translation * rotationY * rotationZ * rotationX *vmml::create_rotation((float)(90*M_PI_F/180), vmml::Vector3f::UNIT_X)*vmml::create_rotation((float)(180*M_PI_F/180), vmml::Vector3f::UNIT_Z);
+                
+                _eyePos = modelMatrixTAL * vmml::create_translation(vmml::Vector3f(0.0f, 10.0f, -1.0f)) * _cameraOffset;
+                
+                bRenderer().getObjects()->getCamera("camera")->setPosition(_eyePos);
+                
+                
+                viewMatrix = lookAt(_eyePos, _newAircraftPosition, vmml::Vector3f::UP);
+            }
         }
         else{
+            _running = false;
             player_won=true;
         }
     }
     else{
         if(!player_won){
+            _running = false;
             player_lost=true;
         }
     }
@@ -649,7 +654,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
     
     //BLUR
-    if(boostb>1.0){
+    if(boostb>1.0 && _running){
     bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());		// reduce viewport size
     defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
     bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture1"), false);	// bind the fbo
@@ -756,7 +761,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     // translate
     vmml::Matrix4f modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, -0.5));
     // blur vertically and horizontally
-    if (boostb>1.0) {
+    if (boostb>1.0 && _running) {
     bool b = true;
     int numberOfBlurSteps = 1;
     for (int i = 0; i < numberOfBlurSteps; i++) {
