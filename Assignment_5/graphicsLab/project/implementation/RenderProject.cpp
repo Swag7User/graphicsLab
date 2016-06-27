@@ -5,9 +5,9 @@
 
 vmml::Matrix4f lookAt(vmml::Vector3f eye, vmml::Vector3f target, vmml::Vector3f up)
 {
-    vmml::Vector3f zaxis = -vmml::normalize(eye - target);
-    vmml::Vector3f xaxis = vmml::normalize(vmml::cross<3>(up, zaxis));
-    vmml::Vector3f yaxis = vmml::cross<3>(zaxis, xaxis);
+    vmml::Vector3f zaxis = vmml::normalize(eye - target);
+    vmml::Vector3f xaxis = -vmml::normalize(vmml::cross<3>(up, zaxis));
+    vmml::Vector3f yaxis = -vmml::cross<3>(zaxis, xaxis);
     
     vmml::Matrix4f view;
     view.set_row(0, vmml::Vector4f(xaxis.x(), xaxis.y(), xaxis.z(), -vmml::dot(xaxis, eye)));
@@ -31,7 +31,7 @@ vmml::Matrix4f perspective(float fovy, float aspect, float zNear, float zFar)
     return perspective;
 }
 
-vmml::Matrix4f projectionMatrix = perspective(60.0, 1024.0 / 768, 1.0, 500.0);
+vmml::Matrix4f projectionMatrix;
 vmml::Matrix4f defaultTranslation= vmml::create_translation(vmml::Vector3f(2700.0f, 0.0f, 2700.0f));
 vmml::Matrix4f modelMatrixTerrain = defaultTranslation*vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, 0.0f));
 ;
@@ -113,7 +113,7 @@ void RenderProject::init()
     else
         bRenderer().initRenderer(1920, 1080, false, "Assignment 5");		// windowed mode on desktop
     //bRenderer().initRenderer(View::getScreenWidth(), View::getScreenHeight(), true);		// full screen using full width and height of the screen
-    
+    projectionMatrix = perspective(60.0, bRenderer().getView()->getAspectRatio(), 1.0, 100000.0);
     // start main loop
     bRenderer().runRenderer();
 }
@@ -326,9 +326,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
             
             bRenderer().getObjects()->getCamera("camera")->setPosition(_eyePos);
           
-            float x = modelMatrixTAL.get_translation().x();
-            float y = modelMatrixTAL.get_translation().y();
-            float z = modelMatrixTAL.get_translation().z();
             
             viewMatrix = lookAt(_eyePos, _newAircraftPosition, vmml::Vector3f::UP);
         }
@@ -667,7 +664,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         
         
         vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
-        shader->setUniform("EyePos", eyePos);
+        shader->setUniform("EyePos", _eyePos);
         
         shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
         shader->setUniform("LightPos2", vmml::Vector4f(1.f, 1.f, .5f, 1.f));
@@ -708,7 +705,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
 
     
-
+//
 //      bRenderer().getModelRenderer()->drawModel("skybox", "camera", modelMatrixSKY, std::vector<std::string>({ }));
 //    bRenderer().getModelRenderer()->drawModel("terraintree_simple", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
 //    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
@@ -721,21 +718,22 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
 //    bRenderer().getModelRenderer()->drawModel("clouds4", "camera", modelMatrixCL4, std::vector<std::string>({ }));
 //    bRenderer().getModelRenderer()->drawModel("clouds5", "camera", modelMatrixCL5, std::vector<std::string>({ }));
 //    bRenderer().getModelRenderer()->drawModel("winning", "camera", modelMatrixW, std::vector<std::string>({ }));
-    
+//    
     //drawing with view matrix
+    glDisable(GL_CULL_FACE);
     
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("skybox"), modelMatrixSKY, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("terraintree_simple"), modelMatrixTerrain, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("Zep"), modelMatrixZep, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds"), modelMatrixCL, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds2"), modelMatrixCL2, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds3"), modelMatrixCL3, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds4"), modelMatrixCL4, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds5"), modelMatrixCL5, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("winning"), modelMatrixW, viewMatrix, projectionMatrix, std::vector<std::string>({}), false);
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("skybox"), modelMatrixSKY, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("terraintree_simple"), modelMatrixTerrain, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("Zep"), modelMatrixZep, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds"), modelMatrixCL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds2"), modelMatrixCL2, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds3"), modelMatrixCL3, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds4"), modelMatrixCL4, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds5"), modelMatrixCL5, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("winning"), modelMatrixW, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     
     
-    
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     
     /// End post processing ///
     /*** Blur ***/
@@ -760,9 +758,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
     }
     //bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
-    
-    //draw with viewMatrix
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, perspective(60.0, 1024.0 / 768, 1.0, 500.0), std::vector<std::string>({}), false);
 
 }
 
