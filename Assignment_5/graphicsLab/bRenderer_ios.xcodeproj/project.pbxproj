@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46C0ADD91D21623F007AC022 /* plane.frag in Resources */ = {isa = PBXBuildFile; fileRef = 46C0ADD81D21623F007AC022 /* plane.frag */; };
+		46C0ADDB1D216250007AC022 /* plane.vert in Resources */ = {isa = PBXBuildFile; fileRef = 46C0ADDA1D216250007AC022 /* plane.vert */; };
 		52CA70801CC6651900269197 /* TAL.frag in Resources */ = {isa = PBXBuildFile; fileRef = 52CA707F1CC6651900269197 /* TAL.frag */; };
 		52CA70821CC6652700269197 /* TAL.vert in Resources */ = {isa = PBXBuildFile; fileRef = 52CA70811CC6652700269197 /* TAL.vert */; };
 		540DDD781CA0024A00DE3FCC /* guy.frag in Resources */ = {isa = PBXBuildFile; fileRef = 540DDD751CA0024A00DE3FCC /* guy.frag */; };
@@ -199,6 +201,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		46C0ADD81D21623F007AC022 /* plane.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.frag; sourceTree = "<group>"; };
+		46C0ADDA1D216250007AC022 /* plane.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vert; sourceTree = "<group>"; };
 		52CA707F1CC6651900269197 /* TAL.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TAL.frag; sourceTree = "<group>"; };
 		52CA70811CC6652700269197 /* TAL.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TAL.vert; sourceTree = "<group>"; };
 		540DDD751CA0024A00DE3FCC /* guy.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = guy.frag; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
@@ -576,6 +580,8 @@
 				A8BFF2171CEF700900D63D59 /* TAL16OBJ.obj */,
 				52CA707F1CC6651900269197 /* TAL.frag */,
 				52CA70811CC6652700269197 /* TAL.vert */,
+				46C0ADD81D21623F007AC022 /* plane.frag */,
+				46C0ADDA1D216250007AC022 /* plane.vert */,
 			);
 			name = Plane;
 			sourceTree = "<group>";
@@ -978,6 +984,7 @@
 				A8F8D55A1CEF1F1B00707F04 /* HLG_map3_orig.png in Resources */,
 				829B48CB1CF31FB900A89681 /* CL3.frag in Resources */,
 				A889BC461CECA5CE00370DBC /* LOD_map2_orig.png in Resources */,
+				46C0ADDB1D216250007AC022 /* plane.vert in Resources */,
 				829B48E61CF32A1100A89681 /* BKL_map1_orig.png in Resources */,
 				829B48E81CF32A1100A89681 /* debug.png in Resources */,
 				829B48E41CF32A1100A89681 /* AER_map2_orig.png in Resources */,
@@ -1022,6 +1029,7 @@
 				829B48EA1CF32A1100A89681 /* DOF_map2_orig.png in Resources */,
 				82DC60C61CE5D23A00EF7560 /* Zep.vert in Resources */,
 				A889BC4A1CECA86500370DBC /* AER_map3_orig_sm_bam.png in Resources */,
+				46C0ADD91D21623F007AC022 /* plane.frag in Resources */,
 				829B48E21CF32A1100A89681 /* 2D_map.png in Resources */,
 				52CA70801CC6651900269197 /* TAL.frag in Resources */,
 				A85E11E41CC512AE00D4418A /* Normal_Map.tif in Resources */,

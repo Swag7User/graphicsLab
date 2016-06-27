@@ -62,6 +62,7 @@ ShaderPtr CL5Shader;
 ShaderPtr WShader;
 ShaderPtr spriteW;
 ShaderPtr blurShader;
+ShaderPtr planeShader;
 PropertiesPtr guyProperties;
 PropertiesPtr TALProperties;
 PropertiesPtr ZepProperties;
@@ -81,7 +82,7 @@ double _pitchSum = 0;
 double _rollSum = 0;
 vmml::Vector3f _initialAircraftOrientation(0.0f, 0.0f, -1.0f);
 vmml::Vector3f _cameraOffset(0.0f, 1.0f, 0.0f);
-vmml::Vector3f _newAircraftPosition(0.0f, 0.0f, 0.0f);
+vmml::Vector3f _newAircraftPosition(2700.0f, 0.0f, 2700.0f);
 vmml::Vector3f _eyePos(0.0f, 0.0f, 0.0f);
 float _speed = 5.0f;
 
@@ -139,7 +140,7 @@ void RenderProject::initFunction()
     // load materials and shaders before loading the model
     guyShader = bRenderer().getObjects()->loadShaderFile("guy", 0, false, false, false, false, false);				// load shader from file without lighting, the number of lights won't ever change during rendering (no variable number of lights)
     TALShader = bRenderer().getObjects()->loadShaderFile("TAL", 0, false, false, false, false, false);
-    
+    planeShader = bRenderer().getObjects()->loadShaderFile("plane", 0, false, false, false, false,false);
     ZepShader = bRenderer().getObjects()->loadShaderFile("Zep", 0, false, false, false, false, false);
     SKYShader = bRenderer().getObjects()->loadShaderFile("SKY", 0, false, false, false, false, false);
     CLShader = bRenderer().getObjects()->loadShaderFile("CL", 0, false, false, false, false, false);
@@ -184,7 +185,11 @@ void RenderProject::initFunction()
     MaterialPtr blurMaterial = bRenderer().getObjects()->createMaterial("blurMaterial", blurShader);								// create an empty material to assign either texture1 or texture2 to
     bRenderer().getObjects()->createSprite("blurSprite", blurMaterial);																// create a sprite using the material created above
     
-
+    //plane
+    bRenderer().getObjects()->createFramebuffer("plane");
+    bRenderer().getObjects()->createTexture("plane_texture", 0.f, 0.f);
+    MaterialPtr TALMaterial = bRenderer().getObjects()->createMaterial("TALMaterial", planeShader);
+    bRenderer().getObjects()->createSprite("TALSprite", TALMaterial);
     
     // create camera
     bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
@@ -678,6 +683,16 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         bRenderer::log("No shader available.");
     }
     
+    shader = bRenderer().getObjects()->getShader("plane");
+    if(shader.get()){
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
+        shader->setUniform("fbo_texture", bRenderer().getObjects()->getTexture("plane_texture"));
+    }
+    else{
+       bRenderer::log("No shader available.");
+    }
+    
     shader = bRenderer().getObjects()->getShader("TAL");
     if (shader.get())
     {
@@ -732,8 +747,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds5"), modelMatrixCL5, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("winning"), modelMatrixW, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     
+    //bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+    //bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     
     /// End post processing ///
     /*** Blur ***/
@@ -757,8 +773,15 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         b = !b;
     }
     }
-    //bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
-
+    
+    bRenderer().getObjects()->getFramebuffer("plane")->bindTexture(bRenderer().getObjects()->getTexture("plane_texture"), false);
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+    bRenderer().getObjects()->getFramebuffer("plane")->unbind(defaultFBO);
+    
+    
+    bRenderer().getObjects()->getMaterial("TALMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture("plane_texture"));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TALSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}));
 }
 
 /* Camera movement */
