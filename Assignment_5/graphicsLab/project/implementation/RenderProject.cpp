@@ -84,7 +84,7 @@ vmml::Vector3f _initialAircraftOrientation(0.0f, 0.0f, -1.0f);
 vmml::Vector3f _cameraOffset(0.0f, 1.0f, 0.0f);
 vmml::Vector3f _newAircraftPosition(2700.0f, 0.0f, 2700.0f);
 vmml::Vector3f _eyePos(0.0f, 0.0f, 0.0f);
-float _speed = 5.0f;
+float _speed = 2.0f;
 
 //CMMotionManager *cmMotionManager=CMMotionManager();
 float angle=0.f;
@@ -773,6 +773,8 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         b = !b;
     }
     }
+    
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     
     bRenderer().getObjects()->getFramebuffer("plane")->bindTexture(bRenderer().getObjects()->getTexture("plane_texture"), false);
     glClearColor(0.0, 0.0, 0.0, 0.0);
