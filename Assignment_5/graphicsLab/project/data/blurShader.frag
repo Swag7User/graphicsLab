@@ -32,7 +32,7 @@ void main(void)
     vec4 color = texture2D(fbo_texture,uv);
     vec4 sum = color;
     
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < 10; i++)
         sum += texture2D( fbo_texture, uv + dir * samples[i]);
     
     sum *= 1.0/11.0;
