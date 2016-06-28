@@ -782,7 +782,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     if(_running){
         bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());		// reduce viewport size
         defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
-        bRenderer().getObjects()->getFramebuffer("bloom")->bindTexture(bRenderer().getObjects()->getTexture("blending_texture"), false);	// bind the fbo
+        bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("blending_texture"), false);	// bind the fbo
     }
     
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("skybox"), modelMatrixSKY, viewMatrix, projectionMatrix, std::vector<std::string>({}));
@@ -799,10 +799,12 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     //bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     
-    bRenderer().getObjects()->getFramebuffer("bloom")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture3"), false);
+    bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture3"), false);
+    
     bRenderer().getObjects()->getMaterial("brightnessMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture("blending_texture"));
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("brightnessSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
     
+
     /*** Bloom ***/
     // translate
     
@@ -810,11 +812,11 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     bool b = true;		int numberOfBlurSteps = 2;
     for (int i = 0; i < numberOfBlurSteps; i++) {
         if (i == numberOfBlurSteps - 1){
-            bRenderer().getObjects()->getFramebuffer("bloom")->bindTexture(bRenderer().getObjects()->getTexture("brightness_texture"), false);
+            bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("brightness_texture"), false);
             bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());								// reset vieport size
         }
         else
-            bRenderer().getObjects()->getFramebuffer("bloom")->bindTexture(bRenderer().getObjects()->getTexture(b ? "fbo_texture4" : "fbo_texture3"), false);
+            bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture(b ? "fbo_texture4" : "fbo_texture3"), false);
         bRenderer().getObjects()->getMaterial("bloomMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture(b ? "fbo_texture3" : "fbo_texture4"));
         bRenderer().getObjects()->getMaterial("bloomMaterial")->setScalar("isVertical", static_cast<GLfloat>(b));
         // draw
@@ -822,7 +824,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         b = !b;
     }
     
-    bRenderer().getObjects()->getFramebuffer("bloom")->unbind(defaultFBO);
+    bRenderer().getObjects()->getFramebuffer("fbo")->unbind(defaultFBO);
     
     //BLUR
     if(boostb>1.0 && _running){
@@ -834,7 +836,9 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     bRenderer().getObjects()->getMaterial("blendingMaterial")->setTexture("scene", bRenderer().getObjects()->getTexture("blending_texture"));
     bRenderer().getObjects()->getMaterial("blendingMaterial")->setTexture("bloomBlur", bRenderer().getObjects()->getTexture("brightness_texture"));
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("blendingSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
-    
+
+//    bRenderer().getObjects()->getMaterial("brightnessMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture("brightness_texture"));
+//    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("brightnessSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
     
     /*** Blur ***/
     // translate

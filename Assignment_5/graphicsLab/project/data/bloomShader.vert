@@ -10,6 +10,7 @@ attribute vec4 Position;
 attribute vec4 TexCoord;
 
 varying vec4 texCoordVarying;
+varying vec2 uv;
 
 uniform float isVertical;
 
@@ -18,8 +19,11 @@ varying vec2 v_blurTexCoords[14];
 void main()
 {
     texCoordVarying = TexCoord;
-    gl_Position = ProjectionMatrix * ViewMatrix * Position;
+    vec4 pos = ProjectionMatrix * ViewMatrix * Position;
     
+    gl_Position = vec4( pos.xy, 0.0, 1.0 );
+    gl_Position = sign( gl_Position );
+    uv = (vec2( pos.x, pos.y ) + vec2(1.0) ) / vec2(2.0);
     
     if(isVertical > 0.0){
         v_blurTexCoords[ 0] = texCoordVarying.st + vec2(0.0, -0.028);
