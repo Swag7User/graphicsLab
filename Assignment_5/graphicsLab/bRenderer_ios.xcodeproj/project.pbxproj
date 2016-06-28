@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46AA09B51D2277E70070E849 /* bloomShader.vert in Resources */ = {isa = PBXBuildFile; fileRef = 46AA09B41D2277E70070E849 /* bloomShader.vert */; };
+		46AA09B71D2278590070E849 /* bloomShader.frag in Resources */ = {isa = PBXBuildFile; fileRef = 46AA09B61D2278590070E849 /* bloomShader.frag */; };
+		46AA09B91D227A9A0070E849 /* brightnessShader.vert in Resources */ = {isa = PBXBuildFile; fileRef = 46AA09B81D227A9A0070E849 /* brightnessShader.vert */; };
+		46AA09BB1D227AB40070E849 /* brightnessShader.frag in Resources */ = {isa = PBXBuildFile; fileRef = 46AA09BA1D227AB40070E849 /* brightnessShader.frag */; };
+		46AA09BD1D227D0A0070E849 /* blendingShader.frag in Resources */ = {isa = PBXBuildFile; fileRef = 46AA09BC1D227D0A0070E849 /* blendingShader.frag */; };
+		46AA09BF1D227D620070E849 /* blendingShader.vert in Resources */ = {isa = PBXBuildFile; fileRef = 46AA09BE1D227D620070E849 /* blendingShader.vert */; };
 		46C0ADD91D21623F007AC022 /* plane.frag in Resources */ = {isa = PBXBuildFile; fileRef = 46C0ADD81D21623F007AC022 /* plane.frag */; };
 		46C0ADDB1D216250007AC022 /* plane.vert in Resources */ = {isa = PBXBuildFile; fileRef = 46C0ADDA1D216250007AC022 /* plane.vert */; };
 		52CA70801CC6651900269197 /* TAL.frag in Resources */ = {isa = PBXBuildFile; fileRef = 52CA707F1CC6651900269197 /* TAL.frag */; };
@@ -201,6 +207,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		46AA09B41D2277E70070E849 /* bloomShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = bloomShader.vert; sourceTree = "<group>"; };
+		46AA09B61D2278590070E849 /* bloomShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = bloomShader.frag; sourceTree = "<group>"; };
+		46AA09B81D227A9A0070E849 /* brightnessShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = brightnessShader.vert; sourceTree = "<group>"; };
+		46AA09BA1D227AB40070E849 /* brightnessShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = brightnessShader.frag; sourceTree = "<group>"; };
+		46AA09BC1D227D0A0070E849 /* blendingShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blendingShader.frag; sourceTree = "<group>"; };
+		46AA09BE1D227D620070E849 /* blendingShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blendingShader.vert; sourceTree = "<group>"; };
 		46C0ADD81D21623F007AC022 /* plane.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.frag; sourceTree = "<group>"; };
 		46C0ADDA1D216250007AC022 /* plane.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vert; sourceTree = "<group>"; };
 		52CA707F1CC6651900269197 /* TAL.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TAL.frag; sourceTree = "<group>"; };
@@ -654,6 +666,12 @@
 				A8F8D54E1CEF000E00707F04 /* ydebug.png */,
 				A889BC431CECA3FA00370DBC /* LOD_map3_orig.png */,
 				B47949921BA6742B00B5E9DC /* config.json */,
+				46AA09B41D2277E70070E849 /* bloomShader.vert */,
+				46AA09B61D2278590070E849 /* bloomShader.frag */,
+				46AA09B81D227A9A0070E849 /* brightnessShader.vert */,
+				46AA09BA1D227AB40070E849 /* brightnessShader.frag */,
+				46AA09BC1D227D0A0070E849 /* blendingShader.frag */,
+				46AA09BE1D227D620070E849 /* blendingShader.vert */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -979,6 +997,7 @@
 				829B48CA1CF31FB900A89681 /* CL2.vert in Resources */,
 				829B48CC1CF31FB900A89681 /* CL3.vert in Resources */,
 				829B48C01CF31FAB00A89681 /* CL.vert in Resources */,
+				46AA09B51D2277E70070E849 /* bloomShader.vert in Resources */,
 				82DB7BF81CF4AA2F00F5B0EC /* blurShader.frag in Resources */,
 				A8BFF2081CEF621700D63D59 /* iceburn.png in Resources */,
 				A8F8D55A1CEF1F1B00707F04 /* HLG_map3_orig.png in Resources */,
@@ -987,6 +1006,8 @@
 				46C0ADDB1D216250007AC022 /* plane.vert in Resources */,
 				829B48E61CF32A1100A89681 /* BKL_map1_orig.png in Resources */,
 				829B48E81CF32A1100A89681 /* debug.png in Resources */,
+				46AA09BB1D227AB40070E849 /* brightnessShader.frag in Resources */,
+				46AA09BF1D227D620070E849 /* blendingShader.vert in Resources */,
 				829B48E41CF32A1100A89681 /* AER_map2_orig.png in Resources */,
 				A889BC481CECA69F00370DBC /* AER_map3_orig.png in Resources */,
 				A8B801D71CF4A02E00E87FD8 /* terraintree_simple.obj in Resources */,
@@ -1005,6 +1026,7 @@
 				A8A286001CF35E1B009B08A1 /* maxresdefault.jpg in Resources */,
 				A8F8D5501CEF000E00707F04 /* ydebug.png in Resources */,
 				829B48ED1CF32A1100A89681 /* HLG_map3_orig_smut.png in Resources */,
+				46AA09B71D2278590070E849 /* bloomShader.frag in Resources */,
 				829B48BB1CF31F9900A89681 /* clouds5.mtl in Resources */,
 				829B48EE1CF32A1100A89681 /* LOD_map1_orig.png in Resources */,
 				82BD675E1CF47A7C00F5C650 /* winning.obj in Resources */,
@@ -1028,6 +1050,7 @@
 				B4794A2A1BA6743D00B5E9DC /* LICENSE.txt in Resources */,
 				829B48EA1CF32A1100A89681 /* DOF_map2_orig.png in Resources */,
 				82DC60C61CE5D23A00EF7560 /* Zep.vert in Resources */,
+				46AA09BD1D227D0A0070E849 /* blendingShader.frag in Resources */,
 				A889BC4A1CECA86500370DBC /* AER_map3_orig_sm_bam.png in Resources */,
 				46C0ADD91D21623F007AC022 /* plane.frag in Resources */,
 				829B48E21CF32A1100A89681 /* 2D_map.png in Resources */,
@@ -1038,6 +1061,7 @@
 				A889BC3E1CEC9B4700370DBC /* top.jpg in Resources */,
 				B47949AF1BA6742B00B5E9DC /* config.json in Resources */,
 				829B48B81CF31F9900A89681 /* clouds3.obj in Resources */,
+				46AA09B91D227A9A0070E849 /* brightnessShader.vert in Resources */,
 				A8BFF2181CEF700900D63D59 /* TAL16OBJ.mtl in Resources */,
 				A889BC3C1CEC9B4700370DBC /* skybox.mtl in Resources */,
 				A8BFF20E1CEF682F00D63D59 /* iceburn5.png in Resources */,

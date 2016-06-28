@@ -63,6 +63,9 @@ ShaderPtr WShader;
 ShaderPtr spriteW;
 ShaderPtr blurShader;
 ShaderPtr planeShader;
+ShaderPtr bloomShader;
+ShaderPtr brightnessShader;
+ShaderPtr blendingShader;
 PropertiesPtr guyProperties;
 PropertiesPtr TALProperties;
 PropertiesPtr ZepProperties;
@@ -185,6 +188,23 @@ void RenderProject::initFunction()
     blurShader = bRenderer().getObjects()->loadShaderFile("blurShader", 0, false, false, false, false, false);			// load shader that blurs the texture
     MaterialPtr blurMaterial = bRenderer().getObjects()->createMaterial("blurMaterial", blurShader);								// create an empty material to assign either texture1 or texture2 to
     bRenderer().getObjects()->createSprite("blurSprite", blurMaterial);																// create a sprite using the material created above
+    
+    //bloom
+    bRenderer().getObjects()->createFramebuffer("bloom");
+    bRenderer().getObjects()->createFramebuffer("brightness");
+    bRenderer().getObjects()->createTexture("fbo_texture3", 0.f, 0.f);
+    bRenderer().getObjects()->createTexture("fbo_texture4", 0.f, 0.f);
+    bloomShader = bRenderer().getObjects()->loadShaderFile("bloomShader", 0, false, false, false, false, false);
+    MaterialPtr bloomMaterial = bRenderer().getObjects()->createMaterial("bloomMaterial", bloomShader);
+    bRenderer().getObjects()->createSprite("bloomSprite", bloomMaterial);
+    brightnessShader = bRenderer().getObjects()->loadShaderFile("brightnessShader", 0, false, false, false, false, false);
+    bRenderer().getObjects()->createTexture("brightness_texture", 0.f, 0.f);
+    MaterialPtr brightnessMaterial = bRenderer().getObjects()->createMaterial("brightnessMaterial", brightnessShader);
+    bRenderer().getObjects()->createSprite("brightnessSprite", brightnessMaterial);
+    blendingShader = bRenderer().getObjects()->loadShaderFile("blendingShader", 0, false, false, false, false, false);
+    bRenderer().getObjects()->createTexture("blending_texture", 0.f, 0.f);
+    MaterialPtr blendingMaterial = bRenderer().getObjects()->createMaterial("blendingMaterial", blendingShader);
+    bRenderer().getObjects()->createSprite("blendingSprite", blendingMaterial);
     
     //plane
     bRenderer().getObjects()->createFramebuffer("plane");
@@ -655,12 +675,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         shader->setUniform("counter", (float)(counterW));
     }
     
-    //BLUR
-    if(boostb>1.0 && _running){
-    bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());		// reduce viewport size
-    defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
-    bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture1"), false);	// bind the fbo
-    }
+    
     shader = bRenderer().getObjects()->getShader("blurShader");
     if (shader.get())
     {
@@ -700,6 +715,38 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
        bRenderer::log("No shader available.");
     }
     
+    shader = bRenderer().getObjects()->getShader("brightnessShader");
+    if(shader.get()){
+        shader->setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
+        shader->setUniform("fbo_texture", bRenderer().getObjects()->getTexture("blending_texture"));
+    }
+    else{
+        bRenderer::log("No shader available.");
+    }
+    
+    shader = bRenderer().getObjects()->getShader("bloomShader");
+    if (shader.get()){
+        shader -> setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
+        shader->setUniform("fbo_texture", bRenderer().getObjects()->getTexture("fbo_texture3"));
+    }
+    else{
+        bRenderer::log("No shader available.");
+    }
+    
+    shader = bRenderer().getObjects()->getShader("blendingShader");
+    if (shader.get()){
+        shader -> setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ProjectionMatrix", projectionMatrix);
+        shader->setUniform("scene", bRenderer().getObjects()->getTexture("blending_texture"));
+        shader->setUniform("bloomBlur", bRenderer().getObjects()->getTexture("brightness_texture"));
+        shader->setUniform("exposure", 1.0f);
+    }
+    else{
+        bRenderer::log("No shader available.");
+    }
+    
     shader = bRenderer().getObjects()->getShader("TAL");
     if (shader.get())
     {
@@ -727,22 +774,16 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     }
 
     
-//
-//      bRenderer().getModelRenderer()->drawModel("skybox", "camera", modelMatrixSKY, std::vector<std::string>({ }));
-//    bRenderer().getModelRenderer()->drawModel("terraintree_simple", "camera", modelMatrixTerrain, std::vector<std::string>({ }));
-//    //shader->setUniform("NormalMatrix", vmml::Matrix3f(modelMatrixTerrain));
-//    //bRenderer().getModelRenderer()->drawModel("TAL16OBJ", "camera", modelMatrixTAL, std::vector<std::string>({ }));
-//    bRenderer().getModelRenderer()->drawModel("Zep", "camera", modelMatrixZep, std::vector<std::string>({ }));
-//    // multiple clouds are drawn here
-//    bRenderer().getModelRenderer()->drawModel("clouds", "camera", modelMatrixCL, std::vector<std::string>({ }));
-//    bRenderer().getModelRenderer()->drawModel("clouds2", "camera", modelMatrixCL2, std::vector<std::string>({ }));
-//    bRenderer().getModelRenderer()->drawModel("clouds3", "camera", modelMatrixCL3, std::vector<std::string>({ }));
-//    bRenderer().getModelRenderer()->drawModel("clouds4", "camera", modelMatrixCL4, std::vector<std::string>({ }));
-//    bRenderer().getModelRenderer()->drawModel("clouds5", "camera", modelMatrixCL5, std::vector<std::string>({ }));
-//    bRenderer().getModelRenderer()->drawModel("winning", "camera", modelMatrixW, std::vector<std::string>({ }));
-//    
-    //drawing with view matrix
+   
     glDisable(GL_CULL_FACE);
+    vmml::Matrix4f modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, -0.5));
+    
+    //BLOOM
+    if(_running){
+        bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());		// reduce viewport size
+        defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
+        bRenderer().getObjects()->getFramebuffer("bloom")->bindTexture(bRenderer().getObjects()->getTexture("blending_texture"), false);	// bind the fbo
+    }
     
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("skybox"), modelMatrixSKY, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("terraintree_simple"), modelMatrixTerrain, viewMatrix, projectionMatrix, std::vector<std::string>({}));
@@ -758,10 +799,46 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     //bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     
-    /// End post processing ///
+    bRenderer().getObjects()->getFramebuffer("bloom")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture3"), false);
+    bRenderer().getObjects()->getMaterial("brightnessMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture("blending_texture"));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("brightnessSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
+    
+    /*** Bloom ***/
+    // translate
+    
+    // blur vertically and horizontally
+    bool b = true;		int numberOfBlurSteps = 2;
+    for (int i = 0; i < numberOfBlurSteps; i++) {
+        if (i == numberOfBlurSteps - 1){
+            bRenderer().getObjects()->getFramebuffer("bloom")->bindTexture(bRenderer().getObjects()->getTexture("brightness_texture"), false);
+            bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());								// reset vieport size
+        }
+        else
+            bRenderer().getObjects()->getFramebuffer("bloom")->bindTexture(bRenderer().getObjects()->getTexture(b ? "fbo_texture4" : "fbo_texture3"), false);
+        bRenderer().getObjects()->getMaterial("bloomMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture(b ? "fbo_texture3" : "fbo_texture4"));
+        bRenderer().getObjects()->getMaterial("bloomMaterial")->setScalar("isVertical", static_cast<GLfloat>(b));
+        // draw
+        bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("bloomSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
+        b = !b;
+    }
+    
+    bRenderer().getObjects()->getFramebuffer("bloom")->unbind(defaultFBO);
+    
+    //BLUR
+    if(boostb>1.0 && _running){
+        bRenderer().getView()->setViewportSize(bRenderer().getView()->getWidth(), bRenderer().getView()->getHeight());		// reduce viewport size
+        defaultFBO = Framebuffer::getCurrentFramebuffer();	// get current fbo to bind it again after drawing the scene
+        bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture1"), false);	// bind the fbo
+    }
+    
+    bRenderer().getObjects()->getMaterial("blendingMaterial")->setTexture("scene", bRenderer().getObjects()->getTexture("blending_texture"));
+    bRenderer().getObjects()->getMaterial("blendingMaterial")->setTexture("bloomBlur", bRenderer().getObjects()->getTexture("brightness_texture"));
+    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("blendingSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
+    
+    
     /*** Blur ***/
     // translate
-    vmml::Matrix4f modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, -0.5));
+    //vmml::Matrix4f modelMatrix = vmml::create_translation(vmml::Vector3f(0.0f, 0.0f, -0.5));
     // blur vertically and horizontally
     if (boostb>1.0 && _running) {
     bool b = true;
