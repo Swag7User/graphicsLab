@@ -165,7 +165,7 @@ void RenderProject::initFunction()
     CL3Properties = bRenderer().getObjects()->createProperties("CL3Properties");
     CL4Properties = bRenderer().getObjects()->createProperties("CL4Properties");
     CL5Properties = bRenderer().getObjects()->createProperties("CL5Properties");
-    WProperties = bRenderer().getObjects()->createProperties("WProperties");
+    //WProperties = bRenderer().getObjects()->createProperties("WProperties");
     // load model
     //bRenderer().getObjects()->loadObjModel("guy.obj", true, true, true, 0, false, false, guyProperties);
     hit_Terrain=bRenderer().getObjects()->loadObjModel("terraintree_simple.obj", false, true, guyShader, guyProperties)->getBoundingBoxObjectSpace();
@@ -178,7 +178,7 @@ void RenderProject::initFunction()
     bRenderer().getObjects()->loadObjModel("clouds3.obj", false, true, CL3Shader, CL3Properties);
     bRenderer().getObjects()->loadObjModel("clouds4.obj", false, true, CL4Shader, CL4Properties);
     bRenderer().getObjects()->loadObjModel("clouds5.obj", false, true, CL5Shader, CL5Properties);
-    bRenderer().getObjects()->loadObjModel("winning.obj", false, true, WShader, WProperties);
+    //bRenderer().getObjects()->loadObjModel("winning.obj", false, true, WShader, WProperties);
    // auto sspriteW=bRenderer().getObjects()->createSprite("winning", "winning.png");
     
     // postprocessing
@@ -211,6 +211,10 @@ void RenderProject::initFunction()
     bRenderer().getObjects()->createTexture("plane_texture", 0.f, 0.f);
     MaterialPtr TALMaterial = bRenderer().getObjects()->createMaterial("TALMaterial", planeShader);
     bRenderer().getObjects()->createSprite("TALSprite", TALMaterial);
+    
+    //endscreen
+    bRenderer().getObjects()->createSprite("winningSprite", "winning.png");
+    bRenderer().getObjects()->createSprite("losingSprite", "lost.png");
     
     // create camera
     bRenderer().getObjects()->createCamera("camera", vmml::Vector3f(.0f, 0.0f, 0.0f), vmml::Vector3f(0.f, 0.f, 0.f));
@@ -791,7 +795,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds3"), modelMatrixCL3, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds4"), modelMatrixCL4, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds5"), modelMatrixCL5, viewMatrix, projectionMatrix, std::vector<std::string>({}));
-    bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("winning"), modelMatrixW, viewMatrix, projectionMatrix, std::vector<std::string>({}));
   
     
     bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture3"), false);
@@ -867,6 +870,12 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     bRenderer().getObjects()->getMaterial("TALMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture("plane_texture"));
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TALSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}));
+    
+    if(player_won){
+        bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("winningSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}));
+    }else if(player_lost){
+        bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("losingSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}));
+    }
 }
 
 /* Camera movement */

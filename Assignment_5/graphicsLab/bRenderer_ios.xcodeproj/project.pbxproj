@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		464935811D22DFF9007173CA /* winning.png in Resources */ = {isa = PBXBuildFile; fileRef = 464935801D22DFF9007173CA /* winning.png */; };
 		46AA09B51D2277E70070E849 /* bloomShader.vert in Resources */ = {isa = PBXBuildFile; fileRef = 46AA09B41D2277E70070E849 /* bloomShader.vert */; };
 		46AA09B71D2278590070E849 /* bloomShader.frag in Resources */ = {isa = PBXBuildFile; fileRef = 46AA09B61D2278590070E849 /* bloomShader.frag */; };
 		46AA09B91D227A9A0070E849 /* brightnessShader.vert in Resources */ = {isa = PBXBuildFile; fileRef = 46AA09B81D227A9A0070E849 /* brightnessShader.vert */; };
@@ -207,6 +208,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		464935801D22DFF9007173CA /* winning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = winning.png; sourceTree = "<group>"; };
 		46AA09B41D2277E70070E849 /* bloomShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = bloomShader.vert; sourceTree = "<group>"; };
 		46AA09B61D2278590070E849 /* bloomShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = bloomShader.frag; sourceTree = "<group>"; };
 		46AA09B81D227A9A0070E849 /* brightnessShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = brightnessShader.vert; sourceTree = "<group>"; };
@@ -649,6 +651,7 @@
 				82DB7BF51CF4AA2E00F5B0EC /* blurShader.vert */,
 				82DB7BF61CF4AA2F00F5B0EC /* blurShader.frag */,
 				82BD675B1CF47A7C00F5C650 /* winning.mtl */,
+				464935801D22DFF9007173CA /* winning.png */,
 				82BD675C1CF47A7C00F5C650 /* winning.obj */,
 				A8A286091CF36488009B08A1 /* W.frag */,
 				A8A2860A1CF36488009B08A1 /* W.vert */,
@@ -1002,6 +1005,7 @@
 				A8BFF2081CEF621700D63D59 /* iceburn.png in Resources */,
 				A8F8D55A1CEF1F1B00707F04 /* HLG_map3_orig.png in Resources */,
 				829B48CB1CF31FB900A89681 /* CL3.frag in Resources */,
+				464935811D22DFF9007173CA /* winning.png in Resources */,
 				A889BC461CECA5CE00370DBC /* LOD_map2_orig.png in Resources */,
 				46C0ADDB1D216250007AC022 /* plane.vert in Resources */,
 				829B48E61CF32A1100A89681 /* BKL_map1_orig.png in Resources */,
