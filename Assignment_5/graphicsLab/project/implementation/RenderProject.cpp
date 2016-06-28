@@ -688,9 +688,6 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         vmml::compute_inverse(vmml::transpose(vmml::Matrix3f(modelMatrixTAL)), normalMatrixTAL);
         shader->setUniform("NormalMatrixTAL", normalMatrixTAL);
         
-        
-        
-        vmml::Vector4f eyePos = vmml::Vector4f(0.0f, 0.0f, 10.0f, 1.0f);
         shader->setUniform("EyePos", _eyePos);
         
         shader->setUniform("LightPos", vmml::Vector4f(.5f, 1.f, 3.5f, 1.f));
@@ -727,9 +724,10 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     shader = bRenderer().getObjects()->getShader("bloomShader");
     if (shader.get()){
-        shader -> setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("fbo_texture", bRenderer().getObjects()->getTexture("fbo_texture3"));
+        //shader->setUniform("isVertical", static_cast<GLfloat>(true));
     }
     else{
         bRenderer::log("No shader available.");
@@ -737,7 +735,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     
     shader = bRenderer().getObjects()->getShader("blendingShader");
     if (shader.get()){
-        shader -> setUniform("ViewMatrix", viewMatrix);
+        shader->setUniform("ViewMatrix", viewMatrix);
         shader->setUniform("ProjectionMatrix", projectionMatrix);
         shader->setUniform("scene", bRenderer().getObjects()->getTexture("blending_texture"));
         shader->setUniform("bloomBlur", bRenderer().getObjects()->getTexture("brightness_texture"));
@@ -794,20 +792,16 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds4"), modelMatrixCL4, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("clouds5"), modelMatrixCL5, viewMatrix, projectionMatrix, std::vector<std::string>({}));
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("winning"), modelMatrixW, viewMatrix, projectionMatrix, std::vector<std::string>({}));
-    
-    //bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
-    
-    //bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("TAL16OBJ"), modelMatrixTAL, viewMatrix, projectionMatrix, std::vector<std::string>({}));
+  
     
     bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture("fbo_texture3"), false);
     
+    glClearColor(0.0, 0.0, 0.0, 0.0);
     bRenderer().getObjects()->getMaterial("brightnessMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture("blending_texture"));
     bRenderer().getModelRenderer()->drawModel(bRenderer().getObjects()->getModel("brightnessSprite"), modelMatrix, _viewMatrixHUD, vmml::Matrix4f::IDENTITY, std::vector<std::string>({}), false);
     
 
     /*** Bloom ***/
-    // translate
-    
     // blur vertically and horizontally
     bool b = true;		int numberOfBlurSteps = 2;
     for (int i = 0; i < numberOfBlurSteps; i++) {
@@ -817,6 +811,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
         }
         else
             bRenderer().getObjects()->getFramebuffer("fbo")->bindTexture(bRenderer().getObjects()->getTexture(b ? "fbo_texture4" : "fbo_texture3"), false);
+        
         bRenderer().getObjects()->getMaterial("bloomMaterial")->setTexture("fbo_texture", bRenderer().getObjects()->getTexture(b ? "fbo_texture3" : "fbo_texture4"));
         bRenderer().getObjects()->getMaterial("bloomMaterial")->setScalar("isVertical", static_cast<GLfloat>(b));
         // draw

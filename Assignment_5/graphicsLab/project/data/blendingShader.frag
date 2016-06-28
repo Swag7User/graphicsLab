@@ -1,3 +1,7 @@
+$B_SHADER_VERSION
+#ifdef GL_ES
+precision highp float;
+#endif
 
 varying mediump vec2 texCoordVarying;
 varying mediump vec2 uv;

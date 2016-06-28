@@ -1,6 +1,6 @@
 $B_SHADER_VERSION
 #ifdef GL_ES
-precision lowp float;
+precision highp float;
 #endif
 
 uniform mat4 ModelViewMatrix;
