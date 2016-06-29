@@ -277,7 +277,7 @@ void RenderProject::updateRenderQueue(const std::string &camera, const double &d
     _rollSum += bRenderer().getInput()->getGyroscopeRoll()*0.02f;
 
     
-    vmml::Matrix4f rotationX = vmml::create_rotation(-(float)bRenderer().getInput()->getGyroscopeRoll(), vmml::Vector3f::UNIT_X);
+    vmml::Matrix4f rotationX = vmml::create_rotation(-(float)bRenderer().getInput()->getGyroscopeRoll()+0.5f, vmml::Vector3f::UNIT_X);
     vmml::Matrix4f rotationY = vmml::create_rotation(-(float)_pitchSum, vmml::Vector3f::UNIT_Y);
     vmml::Matrix4f rotationZ = vmml::create_rotation(2 * (float)bRenderer().getInput()->getGyroscopePitch(), vmml::Vector3f::UNIT_Z);
     
